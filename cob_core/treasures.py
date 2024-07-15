@@ -1,5 +1,7 @@
-from dataclasses import dataclass
 import enum
+from dataclasses import dataclass
+
+from cob_core.dice import roll
 
 
 @dataclass
@@ -22,3 +24,27 @@ class Treasure(enum.Enum):
     J = TreasureItems("6:1D6*20", "2:1D6", "3:1D3")
     K = TreasureItems("6:2D6*20", "3:1D6", "3:1D3")
     L = TreasureItems("6:3D6*20", "4:1D6", "4:1D3")
+
+    def __str__(self):
+        return f"Gold: {self.value.gold}, Jewelery: {self.value.jewelery}, Magic items: {self.value.magic_items}"
+
+    @staticmethod
+    def roll_gold(treasure: TreasureItems) -> int:
+        probability, dice_code = Treasure.parse_treasure_code(treasure.gold)
+        has_gold = roll("d6") <= probability if probability else False
+        if not has_gold:
+            return 0
+        return roll(dice_code)
+
+    @staticmethod
+    def parse_treasure_code(code: str) -> tuple[int, str] | tuple[int, None]:
+        """
+        Parse a treasure code.
+
+        :param code: a code of the treasure.
+        :type code: str.
+
+        :return: tuple[int, str] | tuple[int, None] -- probability and dice code.
+        """
+        probability, treasure_code = code.split(":")
+        return int(probability), treasure_code

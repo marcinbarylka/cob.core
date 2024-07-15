@@ -85,7 +85,10 @@ class Hero:
         if weapon not in self.weapons:
             raise ValueError("The hero does not have this weapon.")
 
-        roll_dice = dice.roll(f"d6+{self.combat_bonus + self.weapon_skill.value}")
+        if self.weapon_skill:
+            roll_dice = dice.roll(f"d6+{self.combat_bonus + self.weapon_skill.value}")
+        else:
+            roll_dice = dice.roll(f"d6+{self.combat_bonus}")
         return weapon.get_damage(roll_dice)
 
 
@@ -412,6 +415,16 @@ class Initiate(Hero):
     :param gold_marks: gold marks of the initiate
     :param XP: experience points of the initiate
     """
+
+    def add_weapon(self, weapon: Weapon):
+        """Add new weapon to the initiate."""
+        if len(self.weapons) == 2:
+            raise ValueError("The initiate already has two weapons.")
+        weapons = list(self.weapons)
+        while len(weapons) < 2:
+            weapons.append(weapon)
+        weapons.append(weapon)
+        self.weapons = weapons[0], weapons[1]
 
 
 INITIATES = [

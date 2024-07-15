@@ -13,7 +13,7 @@ from cob_core.skills import (
 )
 from cob_core.spells import Lightning, Spell
 from cob_core.treasures import Treasure
-from cob_core.weapons import Hammer, Sword, Weapon
+from cob_core.weapons import Hammer, Sword, Weapon, Monster as MonsterWeapon
 
 
 @dataclass
@@ -25,6 +25,12 @@ class Monster:
     spells: list[Spell] | None = None
     treasure: tuple[Treasure, Treasure | None] = (Treasure.A, None)
     special: Skill | None = None  # special skill for monster
+
+    def __post_init__(self):
+        if not self.weapon:
+            self.weapon = MonsterWeapon()
+
+    def get_treasure(self): ...
 
     def fight(self):
         """

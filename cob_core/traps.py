@@ -1,4 +1,4 @@
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 
 from cob_core import dice
 from cob_core.heroes import Hero, Initiate
@@ -16,7 +16,7 @@ class Trap(ABC):
         ...
 
     @abstractmethod
-    def run(self, party: list[Hero | Initiate]):
+    def run(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]):
         """
         Run trap. This method should be implemented in child classes. It should contain all the logic of the trap.
         """
@@ -29,8 +29,8 @@ class Arrow(Trap):
     def __init__(self):
         super().__init__("Arrow")
 
-    def run(): ...
-    def detrap(): ...
+    def run(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
+    def detrap(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
 
 
 class PoisonedArrow(Trap):
@@ -39,8 +39,8 @@ class PoisonedArrow(Trap):
     def __init__(self):
         super().__init__("Poisoned Arrow")
 
-    def run(): ...
-    def detrap(): ...
+    def run(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
+    def detrap(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
 
 
 class PoisonGas(Trap):
@@ -49,8 +49,8 @@ class PoisonGas(Trap):
     def __init__(self):
         super().__init__("Poison Gas")
 
-    def run(): ...
-    def detrap(): ...
+    def run(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
+    def detrap(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
 
 
 class Explosion(Trap):
@@ -59,8 +59,8 @@ class Explosion(Trap):
     def __init__(self):
         super().__init__("Explosion")
 
-    def run(): ...
-    def detrap(): ...
+    def run(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
+    def detrap(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
 
 
 class FlamingOil(Trap):
@@ -69,11 +69,11 @@ class FlamingOil(Trap):
     def __init__(self):
         super().__init__("Flaming Oil")
 
-    def run(): ...
-    def detrap(): ...
+    def run(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
+    def detrap(self, detrapper: Hero | Initiate, party: list[Hero | Initiate]): ...
 
 
-def roll_trap() -> list[Trap]:
+def roll_trap() -> list[Trap]:  # ignore
     """Roll dice for trap."""
     roll = dice.roll("d6")
     match roll:

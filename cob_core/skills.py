@@ -112,7 +112,17 @@ class DaggerSkill(WeaponSkill):
 ###### Monster skills
 
 
-class FireBreath(Skill):
+class MonsterSkill(Skill):
+    def __init__(self):
+        super().__init__(0)
+
+    def __str__(self):
+        return self.skill_name
+
+    def run(self): ...
+
+
+class FireBreath(MonsterSkill):
     """
     This class represents a fire breath skill. It is used to represent a skill of a monster.
     """
@@ -120,7 +130,7 @@ class FireBreath(Skill):
     def run(self): ...
 
 
-class Stench(Skill):
+class Stench(MonsterSkill):
     """
     This class represents a stench skill. It is used to represent a skill of a monster.
     """
@@ -128,7 +138,7 @@ class Stench(Skill):
     def run(self): ...
 
 
-class DemonSkill(Skill):
+class DemonSkill(MonsterSkill):
     """
     This class represents a demon skill. It is used to represent a skill of a monster.
     """
@@ -136,7 +146,7 @@ class DemonSkill(Skill):
     def run(self): ...
 
 
-class HailHydra(Skill):
+class HailHydra(MonsterSkill):
     """
     This class represents a hydra skill. It is used to represent a skill of a monster.
     """
@@ -144,7 +154,7 @@ class HailHydra(Skill):
     def run(self): ...
 
 
-class FleshToStone(Skill):
+class FleshToStone(MonsterSkill):
     """
     This class represents a flesh to stone skill. It is used to represent a skill of a monster.
     """
@@ -152,7 +162,7 @@ class FleshToStone(Skill):
     def run(self): ...
 
 
-class Regenerate(Skill):
+class Regenerate(MonsterSkill):
     """
     This class represents a regenerate skill. It is used to represent a skill of a monster.
     """
@@ -160,7 +170,7 @@ class Regenerate(Skill):
     def run(self): ...
 
 
-class Charm(Skill):
+class Charm(MonsterSkill):
     """
     This class represents a charm skill. It is used to represent a skill of a monster.
     """
@@ -168,7 +178,7 @@ class Charm(Skill):
     def run(self): ...
 
 
-class XTheUnknownSkill(Skill):
+class XTheUnknownSkill(MonsterSkill):
     """
     This class represents a XTheUnknown skill. It is used to represent a skill of a monster.
     """
