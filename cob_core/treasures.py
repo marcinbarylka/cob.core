@@ -2,6 +2,34 @@ import enum
 from dataclasses import dataclass
 
 from cob_core.dice import roll
+from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
+
+JEWELERY = [0, 1, 5, 10, 15, 20, 25, 35, 50, 75, 100, 150]
+MAGIC_ITEM_TYPES = ["weapon", "armor", "potion", "talisman", "medallion", "ring"]
+
+# TODO: Implement magic items
+MAGIC_ITEM = {
+    "weapon": [Sword(), Hammer(), Ax(), Bow(), Dagger(), ThrowDagger()],
+    "armor": [1, 1, 1, 2, 2, None],
+    "potion": [
+        "poison",
+        "strength",
+        "strength",
+        "charm person",
+        "charm monster",
+        "healing",
+    ],
+    "talisman": ["mind", "yellow sun", "blue sun", "red sun", "all suns", "evil"],
+    "medallion": [
+        "neut poison",
+        "potion appra",
+        "oratory",
+        "dexterity",
+        "neut poison",
+        "strangling",
+    ],
+    "ring": ["resist +1", "resist +2", "sleep", "neut poison", "heal", "resurrect"],
+}
 
 
 @dataclass
@@ -28,13 +56,25 @@ class Treasure(enum.Enum):
     def __str__(self):
         return f"Gold: {self.value.gold}, Jewelery: {self.value.jewelery}, Magic items: {self.value.magic_items}"
 
-    @staticmethod
-    def roll_gold(treasure: TreasureItems) -> int:
-        probability, dice_code = Treasure.parse_treasure_code(treasure.gold)
+    def roll_gold(self) -> int:
+        """Roll for gold."""
+        probability, dice_code = Treasure.parse_treasure_code(self.value.gold)
         has_gold = roll("d6") <= probability if probability else False
         if not has_gold:
             return 0
         return roll(dice_code)
+
+    def roll_jewelery(self) -> list[int]:
+        """Roll for jewelery."""
+        probability, dice_code = Treasure.parse_treasure_code(self.value.jewelery)
+        has_jewelery = roll("d6") <= probability if probability else False
+        if not has_jewelery:
+            return []
+        return (
+            [JEWELERY[roll("2d6")] for _ in range(roll(dice_code))] if dice_code else []
+        )
+
+    def roll_magic_items(self): ...
 
     @staticmethod
     def parse_treasure_code(code: str) -> tuple[int, str] | tuple[int, None]:
