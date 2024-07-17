@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from cob_core import dice
+from cob_core.armors import Armor
 from cob_core.skills import (
     AxSkill,
     BowSkill,
@@ -34,6 +35,7 @@ class Hero:
     :param weapon_skill: weapon skill of the hero
     :param skill: skill of the hero
     :param icon: icon of the hero
+    :param armor: armor of the hero
     :param spells: spells of the hero
     :param jewels: jewels of the hero
     :param gold_marks: gold marks of the hero
@@ -50,6 +52,7 @@ class Hero:
     weapons: tuple[Weapon, Weapon]
     weapon_skill: WeaponSkill | None
     skill: Skill
+    armor: Armor | None = None
     spells: list[Spell] = field(default_factory=list)
     jewels: list[Any] = field(default_factory=list)
     gold_marks: int = 0

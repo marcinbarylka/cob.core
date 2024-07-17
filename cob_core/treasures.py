@@ -2,34 +2,67 @@ import enum
 from dataclasses import dataclass
 from typing import Any
 
+from cob_core.armors import Armor
 from cob_core.dice import Dice, roll
+from cob_core.magic_items import (
+    AllSuns,
+    BlueSun,
+    CharmMonster,
+    CharmPerson,
+    Dexterity,
+    Evil,
+    Heal,
+    Healing,
+    Mind,
+    NeutralizePoisonRing,
+    NeutralizePoisonMedallion,
+    Oratory,
+    Poison,
+    PotionAppraisal,
+    RedSun,
+    Resistance,
+    Resurrect,
+    Sleep,
+    Strangling,
+    Strength,
+    YellowSun,
+)
 from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
 
 JEWELERY = [1, 5, 10, 15, 20, 25, 35, 50, 75, 100, 150]
 MAGIC_ITEM_TYPES = ["weapon", "armor", "potion", "talisman", "medallion", "ring"]
+WEAPON_BONUS = [1, 2, 2, 3, 3, 0]
+ARMOR_BONUS = [1, 1, 1, 2, 2, 0]
 
 # TODO: Implement magic items
 MAGIC_ITEMS = {
     "weapon": [Sword(), Hammer(), Ax(), Bow(), Dagger(), ThrowDagger()],
-    "armor": [1, 1, 1, 2, 2, None],
+    "armor": [Armor(1), Armor(1), Armor(1), Armor(2), Armor(2), Armor(0)],
     "potion": [
-        "poison",
-        "strength",
-        "strength",
-        "charm person",
-        "charm monster",
-        "healing",
+        Poison(),
+        Strength(),
+        Strength(),
+        CharmPerson(),
+        CharmMonster(),
+        Healing(),
     ],
-    "talisman": ["mind", "yellow sun", "blue sun", "red sun", "all suns", "evil"],
+    "talisman": [Mind(), YellowSun(), BlueSun(), RedSun(), AllSuns(), Evil()],
     "medallion": [
-        "neut poison",
-        "potion appra",
-        "oratory",
-        "dexterity",
-        "neut poison",
-        "strangling",
+        NeutralizePoisonMedallion(),
+        PotionAppraisal(),
+        Oratory(),
+        Dexterity(),
+        NeutralizePoisonMedallion(),
+        Strangling(),
     ],
-    "ring": ["resist +1", "resist +2", "sleep", "neut poison", "heal", "resurrect"],
+    "ring": [
+        Resistance(1),
+        Resistance(2),
+        Sleep(),
+        NeutralizePoisonRing(),
+        Heal(),
+        Resurrect(),
+    ],
 }
 
 
@@ -102,20 +135,37 @@ class Treasure(enum.Enum):
         if code:
             arbitrary_value = roll(code)
 
-        # TODO implement 'roll twice' when armor & 6.
         for _ in range(arbitrary_value):
             magic_item_type = MAGIC_ITEM_TYPES[roll("d6") - 1]
             magic_item = MAGIC_ITEMS[magic_item_type][roll("d6") - 1]
+            if magic_item_type == "armor" and not magic_item.defense:
+                magic_item.defense = self._get_armor_bonus()
+            if magic_item_type == "weapon" and not magic_item.additional_damage:
+                magic_item.additional_damage = self._get_weapon_bonus()
             result[magic_item_type].append(magic_item)
         return result
 
-    def get_treasure(self) -> dict[str, Any]:
+    def roll_treasure(self) -> dict[str, Any]:
         """Get treasure."""
         return {
             "gold": self.roll_gold(),
             "jewelery": self.roll_jewelery(),
             "magic_items": self.roll_magic_items(),
         }
+
+    def _get_weapon_bonus(self) -> int:
+        """Get weapon bonus."""
+        bonus = WEAPON_BONUS[roll("d6") - 1]
+        if not bonus:
+            return self._get_weapon_bonus() + self._get_weapon_bonus()
+        return bonus
+
+    def _get_armor_bonus(self) -> int:
+        """Get armor bonus."""
+        bonus = ARMOR_BONUS[roll("d6") - 1]
+        if not bonus:
+            return self._get_armor_bonus() + self._get_armor_bonus()
+        return bonus
 
     @staticmethod
     def parse_treasure_code(code: str) -> tuple[int, str] | tuple[int, None]:
