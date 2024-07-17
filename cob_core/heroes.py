@@ -3,20 +3,12 @@ from typing import Any
 
 from cob_core import dice
 from cob_core.armors import Armor
-from cob_core.skills import (
-    AxSkill,
-    BowSkill,
-    DaggerSkill,
-    Detrap,
-    HammerSkill,
-    Hellgate,
-    Negotiation,
-    Skill,
-    SwordSkill,
-    WeaponSkill,
-)
+from cob_core.skills import (AxSkill, BowSkill, DaggerSkill, Detrap,
+                             HammerSkill, Hellgate, Negotiation, Skill,
+                             SwordSkill, WeaponSkill)
 from cob_core.spells import MAGIC_POTENTIAL, Spell
-from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
+from cob_core.weapons import (Ax, Bow, Dagger, Hammer, Sword, ThrowDagger,
+                              Weapon)
 
 
 @dataclass
@@ -93,6 +85,124 @@ class Hero:
         else:
             roll_dice = dice.roll(f"d6+{self.combat_bonus}")
         return weapon.get_damage(roll_dice)
+
+
+class Initiate(Hero):
+    """
+    An Initiate. A character that can be played by a player. It is a weaker version of a hero.
+
+    :param name: name of the initiate
+    :param name_short: short name of the initiate
+    :param race: a race of the initiate (i.e. Human, Dwarf, Elf)
+    :param wound_points: wound points of the initiate
+    :param magic_potential: magic potential of the initiate
+    :param resistance_value: resistance value of the initiate
+    :param combat_bonus: combat bonus of the initiate
+    :param weapons: weapons of the initiate
+    :param weapon_skill: weapon skill of the initiate
+    :param skill: skill of the initiate
+    :param icon: icon of the initiate
+    :param spells: spells of the initiate
+    :param jewels: jewels of the initiate
+    :param gold_marks: gold marks of the initiate
+    :param XP: experience points of the initiate
+    """
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.magic_potential = MAGIC_POTENTIAL[dice.roll("d6") - 1]
+
+    def add_weapon(self, weapon: Weapon):
+        """Add new weapon to the initiate."""
+        if len(self.weapons) == 2:
+            raise ValueError("The initiate already has two weapons.")
+        weapons = list(self.weapons)
+        while len(weapons) < 2:
+            weapons.append(weapon)
+        weapons.append(weapon)
+        self.weapons = [weapons[0], weapons[1]]
+
+
+class Party:
+
+    def __init__(self, heroes: list[Hero | Initiate]):
+        self.ranks: list[list[Hero | Initiate | None]] = [
+            [None, None, None],
+            [None, None, None],
+        ]
+        for hero in heroes:
+            self.add_hero(hero)
+
+    def add_hero(self, hero: Hero | Initiate, position: tuple[int, int] | None = None):
+        """
+        Add a hero to the party.
+
+        :param hero: a hero to add
+        :param position: a position where to add the hero (row, column) (optional)
+        """
+        if position:
+            self.ranks[position[0]][position[1]] = hero
+            return
+
+        for rank in self.ranks:
+            if None in rank:
+                rank[rank.index(None)] = hero
+                break
+
+    def remove_hero(
+        self, hero: Hero | Initiate, position: tuple[int, int] | None = None
+    ):
+        """
+        Remove a hero from the party.
+
+        :param hero: a hero to remove
+        :param position: a position where to remove the hero (row, column) (optional)
+
+        """
+        if position:
+            self.ranks[position[0]][position[1]] = None
+            return hero
+
+        for rank in self.ranks:
+            if hero in rank:
+                rank[rank.index(hero)] = None
+                break
+
+    def swap_heroes(
+        self, hero1: Hero | Initiate, hero2: Hero | Initiate
+    ):
+        """
+        Swap two heroes in the party.
+
+        :param hero1: a hero to swap
+        :param hero2: a hero to swap
+        """
+        for rank in self.ranks:
+            if hero1 in rank and hero2 in rank:
+                rank[rank.index(hero1)], rank[rank.index(hero2)] = hero2, hero1
+                break
+
+    def get_hero(self, position: tuple[int, int]) -> Hero | Initiate | None:
+        """
+        Get a hero from the party.
+
+        :param position: a position of the hero (row, column)
+        """
+        return self.ranks[position[0]][position[1]]
+
+    def get_hero_position(self, hero: Hero | Initiate) -> tuple[int, int] | None:
+        """
+        Get a position of the hero in the party.
+
+        :param hero: a hero to get a position
+        """
+        for i, rank in enumerate(self.ranks):
+            if hero in rank:
+                return i, rank.index(hero)
+
+    @property
+    def heroes(self) -> list[Hero | Initiate]:
+        return [hero for rank in self.ranks for hero in rank if hero]
 
 
 HEROES = [
@@ -396,42 +506,6 @@ HEROES = [
         # FontMap.ZURIK.value,
     ),
 ]
-
-
-class Initiate(Hero):
-    """
-    An Initiate. A character that can be played by a player. It is a weaker version of a hero.
-
-    :param name: name of the initiate
-    :param name_short: short name of the initiate
-    :param race: a race of the initiate (i.e. Human, Dwarf, Elf)
-    :param wound_points: wound points of the initiate
-    :param magic_potential: magic potential of the initiate
-    :param resistance_value: resistance value of the initiate
-    :param combat_bonus: combat bonus of the initiate
-    :param weapons: weapons of the initiate
-    :param weapon_skill: weapon skill of the initiate
-    :param skill: skill of the initiate
-    :param icon: icon of the initiate
-    :param spells: spells of the initiate
-    :param jewels: jewels of the initiate
-    :param gold_marks: gold marks of the initiate
-    :param XP: experience points of the initiate
-    """
-
-    def __post_init__(self):
-        super().__post_init__()
-        self.magic_potential = MAGIC_POTENTIAL[dice.roll("d6") - 1]
-
-    def add_weapon(self, weapon: Weapon):
-        """Add new weapon to the initiate."""
-        if len(self.weapons) == 2:
-            raise ValueError("The initiate already has two weapons.")
-        weapons = list(self.weapons)
-        while len(weapons) < 2:
-            weapons.append(weapon)
-        weapons.append(weapon)
-        self.weapons = [weapons[0], weapons[1]]
 
 
 INITIATES = [
