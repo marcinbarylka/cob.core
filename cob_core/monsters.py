@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from cob_core.dice import roll
 from cob_core.skills import (
     Charm,
     DemonSkill,
@@ -9,11 +10,15 @@ from cob_core.skills import (
     Regenerate,
     Skill,
     Stench,
+    SwordSkill,
+    WeaponSkill,
     XTheUnknownSkill,
 )
 from cob_core.spells import Lightning, Spell
 from cob_core.treasures import Treasure
-from cob_core.weapons import Hammer, Sword, Weapon, Monster as MonsterWeapon
+from cob_core.weapons import Hammer
+from cob_core.weapons import Monster as MonsterWeapon
+from cob_core.weapons import Sword, Weapon
 
 
 @dataclass
@@ -25,18 +30,28 @@ class Monster:
     spells: list[Spell] | None = None
     treasure: tuple[Treasure, Treasure | None] = (Treasure.A, None)
     special: Skill | None = None  # special skill for monster
+    combat_bonus: int = 0
+    weapon_skill: WeaponSkill | None = None
+    is_wandering: bool = False
 
     def __post_init__(self):
         if not self.weapon:
             self.weapon = MonsterWeapon()
 
-    def get_treasure(self): ...
+    def get_treasure(self):
+        if self.is_wandering:
+            return self.treasure[1]
+        return self.treasure[0]
 
     def fight(self):
         """
         The monster fights with the hero.
         """
         ...
+
+    def cast_spell(self):
+        if not self.spells:
+            return None
 
     @property
     def is_alive(self) -> bool:
@@ -100,8 +115,7 @@ class EvilHero(Monster):
             weapon=Sword(),
             treasure=(Treasure.J, Treasure.C),
         )
-
-    # TODO: Evil Hero has a 1d6 weapon skill, that gives him a proficiency with a sword
+        self.weapon_skill = SwordSkill(roll("d6"))
 
 
 class EvilMage(Monster):

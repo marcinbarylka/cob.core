@@ -15,7 +15,7 @@ from cob_core.skills import (
     SwordSkill,
     WeaponSkill,
 )
-from cob_core.spells import Spell
+from cob_core.spells import MAGIC_POTENTIAL, Spell
 from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
 
 
@@ -49,7 +49,7 @@ class Hero:
     magic_potential: tuple[int, int, int]
     resistance_value: int
     combat_bonus: int
-    weapons: tuple[Weapon, Weapon]
+    weapons: list[Weapon]
     weapon_skill: WeaponSkill | None
     skill: Skill
     armor: Armor | None = None
@@ -104,7 +104,7 @@ HEROES = [
         (1, 1, 2),
         2,
         3,
-        (Sword(), Dagger()),
+        [Sword(), Dagger()],
         SwordSkill(1),
         Hellgate(1),
         # FontMap.ALMURIC.value,
@@ -117,7 +117,7 @@ HEROES = [
         (2, 3, 4),
         2,
         0,
-        (Sword(), ThrowDagger()),
+        [Sword(), ThrowDagger()],
         None,
         Hellgate(1),
         # FontMap.ALRIC.value,
@@ -130,7 +130,7 @@ HEROES = [
         (5, 5, 5),
         1,
         0,
-        (Sword(), ThrowDagger()),
+        [Sword(), ThrowDagger()],
         None,
         Hellgate(2),
         # FontMap.CURVENOL.value,
@@ -143,7 +143,7 @@ HEROES = [
         (3, 4, 5),
         3,
         2,
-        (Bow(), Dagger()),
+        [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(2),
         # FontMap.DALMILANDRIL.value,
@@ -156,7 +156,7 @@ HEROES = [
         (0, 0, 0),
         1,
         4,
-        (Hammer(), Sword()),
+        [Hammer(), Sword()],
         HammerSkill(1),
         Hellgate(1),
         # FontMap.DIERDRA.value,
@@ -169,7 +169,7 @@ HEROES = [
         (3, 4, 5),
         2,
         0,
-        (Bow(), ThrowDagger()),
+        [Bow(), ThrowDagger()],
         None,
         Hellgate(2),
         # FontMap.EODRED.value,
@@ -182,7 +182,7 @@ HEROES = [
         (0, 0, 0),
         2,
         6,
-        (Ax(), Dagger()),
+        [Ax(), Dagger()],
         AxSkill(3),
         Detrap(3),
         # FontMap.GERUDIRR.value,
@@ -195,7 +195,7 @@ HEROES = [
         (0, 0, 0),
         3,
         4,
-        (Bow(), Dagger()),
+        [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(2),
         # FontMap.GILITH.value,
@@ -208,7 +208,7 @@ HEROES = [
         (4, 4, 4),
         3,
         4,
-        (Ax(), Hammer()),
+        [Ax(), Hammer()],
         AxSkill(2),
         Detrap(3),
         # FontMap.GISLAN.value,
@@ -221,7 +221,7 @@ HEROES = [
         (4, 3, 2),
         3,
         4,
-        (Bow(), Dagger()),
+        [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(1),
         # FontMap.GWAIGILION.value,
@@ -234,7 +234,7 @@ HEROES = [
         (6, 5, 4),
         3,
         0,
-        (Bow(), Dagger()),
+        [Bow(), Dagger()],
         None,
         Hellgate(1),
         # FontMap.LARRAKA.value,
@@ -247,7 +247,7 @@ HEROES = [
         (0, 0, 0),
         2,
         5,
-        (Bow(), Sword()),
+        [Bow(), Sword()],
         BowSkill(2),
         Negotiation(3),
         # FontMap.LINFALAS.value,
@@ -260,7 +260,7 @@ HEROES = [
         (0, 0, 0),
         3,
         5,
-        (Sword(), Dagger()),
+        [Sword(), Dagger()],
         SwordSkill(2),
         Hellgate(2),
         # FontMap.LORD_DIL.value,
@@ -273,7 +273,7 @@ HEROES = [
         (3, 3, 3),
         2,
         0,
-        (ThrowDagger(), Bow()),
+        [ThrowDagger(), Bow()],
         BowSkill(2),
         Negotiation(2),
         # FontMap.MAYTWIST.value,
@@ -286,7 +286,7 @@ HEROES = [
         (0, 0, 0),
         2,
         4,
-        (Sword(), ThrowDagger()),
+        [Sword(), ThrowDagger()],
         SwordSkill(2),
         Hellgate(2),
         # FontMap.PALADIN_GLADE.value,
@@ -299,7 +299,7 @@ HEROES = [
         (0, 0, 0),
         3,
         4,
-        (Sword(), Dagger()),
+        [Sword(), Dagger()],
         SwordSkill(1),
         Detrap(1),
         # FontMap.RAMAN.value,
@@ -312,7 +312,7 @@ HEROES = [
         (1, 2, 3),
         2,
         4,
-        (Ax(), Bow()),
+        [Ax(), Bow()],
         AxSkill(1),
         Detrap(1),
         # FontMap.SLIGGOTH.value,
@@ -325,7 +325,7 @@ HEROES = [
         (0, 0, 0),
         2,
         5,
-        (Sword(), Dagger()),
+        [Sword(), Dagger()],
         SwordSkill(2),
         Hellgate(2),
         # FontMap.STEPHEN_PALADIN.value,
@@ -338,7 +338,7 @@ HEROES = [
         (4, 3, 2),
         2,
         1,
-        (Sword(), ThrowDagger()),
+        [Sword(), ThrowDagger()],
         SwordSkill(3),
         Hellgate(3),
         # FontMap.THEREGOND.value,
@@ -351,7 +351,7 @@ HEROES = [
         (0, 0, 0),
         2,
         5,
-        (Sword(), Bow()),
+        [Sword(), Bow()],
         SwordSkill(2),
         Hellgate(3),
         # FontMap.WELDRON.value,
@@ -364,7 +364,7 @@ HEROES = [
         (4, 3, 2),
         2,
         1,
-        (Sword(), Dagger()),
+        [Sword(), Dagger()],
         DaggerSkill(2),
         Hellgate(4),
         # FontMap.WENDOLYN.value,
@@ -377,7 +377,7 @@ HEROES = [
         (0, 0, 0),
         4,
         4,
-        (Sword(), ThrowDagger()),
+        [Sword(), ThrowDagger()],
         SwordSkill(1),
         Hellgate(3),
         # FontMap.ZARETH.value,
@@ -390,7 +390,7 @@ HEROES = [
         (3, 4, 5),
         2,
         3,
-        (Ax(), Dagger()),
+        [Ax(), Dagger()],
         AxSkill(2),
         Detrap(3),
         # FontMap.ZURIK.value,
@@ -419,6 +419,10 @@ class Initiate(Hero):
     :param XP: experience points of the initiate
     """
 
+    def __post_init__(self):
+        super().__post_init__()
+        self.magic_potential = MAGIC_POTENTIAL[dice.roll("d6") - 1]
+
     def add_weapon(self, weapon: Weapon):
         """Add new weapon to the initiate."""
         if len(self.weapons) == 2:
@@ -427,7 +431,7 @@ class Initiate(Hero):
         while len(weapons) < 2:
             weapons.append(weapon)
         weapons.append(weapon)
-        self.weapons = weapons[0], weapons[1]
+        self.weapons = [weapons[0], weapons[1]]
 
 
 INITIATES = [
@@ -437,7 +441,7 @@ INITIATES = [
         race="Human",
         wound_points=7,
         resistance_value=1,
-        weapons=(),
+        weapons=[],
         weapon_skill=SwordSkill(1),
         skill=Hellgate(1),
         combat_bonus=0,
@@ -450,7 +454,7 @@ INITIATES = [
         race="Human",
         wound_points=7,
         resistance_value=1,
-        weapons=(),
+        weapons=[],
         weapon_skill=SwordSkill(1),
         skill=Hellgate(1),
         combat_bonus=0,
@@ -463,7 +467,7 @@ INITIATES = [
         race="Human",
         wound_points=7,
         resistance_value=1,
-        weapons=(),
+        weapons=[],
         weapon_skill=SwordSkill(1),
         skill=Hellgate(1),
         combat_bonus=0,
@@ -476,7 +480,7 @@ INITIATES = [
         race="Elf",
         wound_points=5,
         resistance_value=2,
-        weapons=(),
+        weapons=[],
         weapon_skill=BowSkill(1),
         skill=Negotiation(1),
         combat_bonus=0,
@@ -489,7 +493,7 @@ INITIATES = [
         race="Elf",
         wound_points=5,
         resistance_value=2,
-        weapons=(),
+        weapons=[],
         weapon_skill=BowSkill(1),
         skill=Negotiation(1),
         combat_bonus=0,
@@ -502,7 +506,7 @@ INITIATES = [
         race="Elf",
         wound_points=5,
         resistance_value=2,
-        weapons=(),
+        weapons=[],
         weapon_skill=BowSkill(1),
         skill=Negotiation(1),
         combat_bonus=0,
@@ -515,7 +519,7 @@ INITIATES = [
         race="Dwarf",
         wound_points=6,
         resistance_value=2,
-        weapons=(),
+        weapons=[],
         weapon_skill=AxSkill(1),
         skill=Detrap(1),
         combat_bonus=0,
@@ -528,7 +532,7 @@ INITIATES = [
         race="Dwarf",
         wound_points=6,
         resistance_value=2,
-        weapons=(),
+        weapons=[],
         weapon_skill=AxSkill(1),
         skill=Detrap(1),
         combat_bonus=0,
@@ -541,7 +545,7 @@ INITIATES = [
         race="Dwarf",
         wound_points=6,
         resistance_value=2,
-        weapons=(),
+        weapons=[],
         weapon_skill=AxSkill(1),
         skill=Detrap(1),
         combat_bonus=0,

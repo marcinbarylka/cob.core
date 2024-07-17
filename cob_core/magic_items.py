@@ -36,16 +36,6 @@ class Poison(Potion):
         return f"{self.name} has been used."
 
 
-class Dexterity(Potion):
-    def __init__(self):
-        super().__init__(
-            "Dexterity", "A magical potion that increases the drinker's dexterity."
-        )
-
-    def effect(self):
-        return f"{self.name} has been used."
-
-
 class Strength(Potion):
     def __init__(self):
         super().__init__(
@@ -204,7 +194,7 @@ class Oratory(Medallion):
         return f"{self.name} has been used."
 
 
-class Dexterity(Medallion):
+class DexterityMedallion(Medallion):
     def __init__(self):
         super().__init__(
             "Medallion of Dexterity",
