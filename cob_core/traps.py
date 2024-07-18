@@ -19,7 +19,7 @@ class Trap(ABC):
         return False
 
     @abstractmethod
-    def run(self, detrapper: Hero | Initiate, party: Party) -> None:
+    def spring(self, detrapper: Hero | Initiate, party: Party) -> None:
         """
         Run trap. This method should be implemented in child classes. It should contain all the logic of the trap.
         """
@@ -32,7 +32,7 @@ class Arrow(Trap):
     def __init__(self):
         super().__init__("Arrow")
 
-    def run(self, detrapper: Hero | Initiate, party: Party):  # noqa
+    def spring(self, detrapper: Hero | Initiate, party: Party):  # noqa
         from cob_core.weapons import Bow
 
         d6 = dice.roll("d6")
@@ -46,13 +46,13 @@ class PoisonedArrow(Trap):
     def __init__(self):
         super().__init__("Poisoned Arrow")
 
-    def run(self, detrapper: Hero | Initiate, party: Party):
+    def spring(self, detrapper: Hero | Initiate, party: Party):
         from cob_core.weapons import Bow
 
         d6 = dice.roll("d6")
         wounds = Bow().get_damage(d6)
         d3 = dice.roll("d3")
-        wounds += Bow().get_damage(d3)
+        wounds += d3
         detrapper.wound_points -= wounds
 
 
@@ -62,7 +62,7 @@ class PoisonGas(Trap):
     def __init__(self):
         super().__init__("Poison Gas")
 
-    def run(self, detrapper: Hero | Initiate, party: Party):
+    def spring(self, detrapper: Hero | Initiate, party: Party):
         detrapper.wound_points -= dice.roll("d3")
 
 
@@ -72,7 +72,7 @@ class Explosion(Trap):
     def __init__(self):
         super().__init__("Explosion")
 
-    def run(self, detrapper: Hero | Initiate, party: Party):
+    def spring(self, detrapper: Hero | Initiate, party: Party):
         for hero in party.heroes:
             hero.wound_points -= 1
 
@@ -83,7 +83,7 @@ class FlamingOil(Trap):
     def __init__(self):
         super().__init__("Flaming Oil")
 
-    def run(self, detrapper: Hero | Initiate, party: Party):
+    def spring(self, detrapper: Hero | Initiate, party: Party):
         detrapper.wound_points -= dice.roll("d3")
 
 

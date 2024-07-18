@@ -3,12 +3,20 @@ from typing import Any
 
 from cob_core import dice
 from cob_core.armors import Armor
-from cob_core.skills import (AxSkill, BowSkill, DaggerSkill, Detrap,
-                             HammerSkill, Hellgate, Negotiation, Skill,
-                             SwordSkill, WeaponSkill)
+from cob_core.skills import (
+    AxSkill,
+    BowSkill,
+    DaggerSkill,
+    Detrap,
+    HammerSkill,
+    Hellgate,
+    Negotiation,
+    Skill,
+    SwordSkill,
+    WeaponSkill,
+)
 from cob_core.spells import MAGIC_POTENTIAL, Spell
-from cob_core.weapons import (Ax, Bow, Dagger, Hammer, Sword, ThrowDagger,
-                              Weapon)
+from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
 
 
 @dataclass
@@ -50,28 +58,19 @@ class Hero:
     gold_marks: int = 0
     XP: int = 0
 
-    _actual_wound_points: int = 0
+    _wound_points: int = 0
 
     def __post_init__(self):
-        self._actual_wound_points = self.wound_points
+        self._wound_points = self.wound_points
 
     @property
-    def actual_wound_points(self) -> int:
-        return self._actual_wound_points
-
-    @actual_wound_points.setter
-    def actual_wound_points(self, value: int):
-        if value > self.wound_points:
-            self._actual_wound_points = self.wound_points
-        elif value < 0:
-            self._actual_wound_points = 0
-        else:
-            self._wound_points = value
+    def max_wound_points(self):
+        return self._wound_points
 
     @property
     def is_alive(self) -> bool:
         """Check if the hero is alive."""
-        return self.actual_wound_points > 0
+        return self.wound_points > 0
 
     def fight(self, weapon: Weapon) -> int:
         """
@@ -124,7 +123,6 @@ class Initiate(Hero):
 
 
 class Party:
-
     def __init__(self, heroes: list[Hero | Initiate]):
         self.ranks: list[list[Hero | Initiate | None]] = [
             [None, None, None],
@@ -168,9 +166,7 @@ class Party:
                 rank[rank.index(hero)] = None
                 break
 
-    def swap_heroes(
-        self, hero1: Hero | Initiate, hero2: Hero | Initiate
-    ):
+    def swap_heroes(self, hero1: Hero | Initiate, hero2: Hero | Initiate):
         """
         Swap two heroes in the party.
 
