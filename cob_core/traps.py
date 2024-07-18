@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 
 from cob_core import dice
-from cob_core.heroes import Hero, Initiate, Party
+from cob_core.heroes import Hero, Initiate
+from cob_core.party import Party
 
 
 class Trap(ABC):
@@ -73,7 +74,7 @@ class Explosion(Trap):
         super().__init__("Explosion")
 
     def spring(self, detrapper: Hero | Initiate, party: Party):
-        for hero in party.heroes:
+        for hero in party.beings:
             hero.wound_points -= 1
 
 
