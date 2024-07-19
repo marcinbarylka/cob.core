@@ -2,19 +2,9 @@ from dataclasses import dataclass
 from typing import Any, Type
 
 from cob_core.dice import roll
-from cob_core.skills import (
-    Charm,
-    DemonSkill,
-    FireBreath,
-    FleshToStone,
-    HailHydra,
-    Regenerate,
-    Skill,
-    Stench,
-    SwordSkill,
-    WeaponSkill,
-    XTheUnknownSkill,
-)
+from cob_core.skills import (Charm, DemonSkill, FireBreath, FleshToStone,
+                             HailHydra, Regenerate, Skill, Stench, SwordSkill,
+                             WeaponSkill, XTheUnknownSkill)
 from cob_core.spells import Lightning, Spell
 from cob_core.treasures import Treasure
 from cob_core.weapons import Hammer
@@ -46,6 +36,25 @@ LEVEL_CHART = [
         "treasure_type": "+2",
         "experience_points": "x2",
     },
+]
+
+ROOM_MONSTER_TABLE = [
+    ["EvilMage", "EvilHero", "Cronk:d6", "Garogyle", "Chimaera", "Medusa"],
+    ["Orc:d3", "Troll", "Vampire", "Harpy:d3+2", "Ogre", "Minotaur"],
+    ["DireWolf:d6", "Wight", "Warg:d3", "EvilMage", "EvilHero", "Cronk:d6+1"],
+    ["Gargoyle:2", "Chimaera:2", "Medusa", "Orc:d6+1", "Hydra", "Vampire"],
+    ["Harpy:d6+2", "Ogre:2", "Minotaur", "DireWolf:d6", "Wight:2", "Warg:d6"],
+    ["Skeleton:d3", "Wraith:d3", "Skeleton:d6", "Wraith:d3+2", "Troll", "Hydra"],
+]
+
+WANDERING_MONSTER_TABLE = [
+    ["EvilHero", "EvilMage", "Chimaera"],
+    ["Gargoyle", "Medusa", "Orc:d3"],
+    ["Troll", "Vampire", "Harpy:d3+2"],
+    ["Ogre", "Minotaur", "DireWolf:d6"],
+    ["Wight", "Warg:d3", "Wraith:d3"],
+    ["Hydra", "Warg:d3", "Wrath:d3"],
+    ["Hydra", "Skeleton:d3", "Cronk:d6"],
 ]
 
 
@@ -361,7 +370,7 @@ class XTheUnknown(Monster):
         )
 
 
-def spawn_monster(monster_class: Type[Monster], level: int = 1) -> list[Monster]:
+def spawn_monster(monster_class: Type[Monster], level: int = 1, is_wandering: bool = False) -> list[Monster]:
     """
     Spawn a monster of the given class and level.
     :param monster_class:
@@ -381,6 +390,7 @@ def spawn_monster(monster_class: Type[Monster], level: int = 1) -> list[Monster]
 
     for _ in range(range_modifier):
         monster = monster_class()
+        monster.is_wandering = is_wandering
         monster.wound_points += int(modifiers["wound_points"][1:])
         monster.combat_bonus += int(modifiers["combat_bonus"][1:])
         if monster.negotiation_value:
@@ -402,3 +412,42 @@ def spawn_monster(monster_class: Type[Monster], level: int = 1) -> list[Monster]
         monsters.append(monster)
 
     return monsters
+
+def roll_monster(wandering: bool, d1:int, d2: int, level: int = 1) -> list[Monster]:
+    """
+    Roll a random monster.
+    """
+    if wandering:
+        code = WANDERING_MONSTER_TABLE[d1][d2]
+    else:
+        code = ROOM_MONSTER_TABLE[d1][d2]
+    if ":" in code:
+        monster, number = code.split(":")
+    else:
+        monster = code
+        number = "1"
+    if "d" in number:
+        number = roll(number)
+    else:
+        number = int(number)
+    monsters = []
+    for _ in range(number):
+        monster_class = globals()[monster]
+        monsters.append(spawn_monster(monster_class, level, wandering))
+    return monsters
+
+def roll_room_monster(level: int = 1):
+    """
+    Roll a random room monster.
+    """
+    d6_1 = roll("d6") - 1
+    d6_2 = roll("d6") - 1
+    return roll_monster(False, d6_1, d6_2, level)
+
+def roll_wandering_monster(level:int=1):
+    """
+    Roll a random wandering monster.
+    """
+    d3_1 = roll("d3") - 1
+    d6_2 = roll("d6") - 1
+    return roll_monster(True, d3_1, d6_2, level)
