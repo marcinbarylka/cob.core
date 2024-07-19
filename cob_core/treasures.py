@@ -4,37 +4,19 @@ from typing import Any
 
 from cob_core.armors import Armor
 from cob_core.dice import Dice, roll
-from cob_core.magic_items import (
-    AllSuns,
-    BlueSun,
-    CharmMonster,
-    CharmPerson,
-    DexterityMedallion,
-    Evil,
-    Heal,
-    Healing,
-    Mind,
-    NeutralizePoisonMedallion,
-    NeutralizePoisonRing,
-    Oratory,
-    Poison,
-    PotionAppraisal,
-    RedSun,
-    Resistance,
-    Resurrect,
-    Sleep,
-    Strangling,
-    Strength,
-    YellowSun,
-)
+from cob_core.magic_items import (AllSuns, BlueSun, CharmMonster, CharmPerson,
+                                  DexterityMedallion, Evil, Heal, Healing,
+                                  Mind, NeutralizePoisonMedallion,
+                                  NeutralizePoisonRing, Oratory, Poison,
+                                  PotionAppraisal, RedSun, Resistance,
+                                  Resurrect, Sleep, Strangling, Strength,
+                                  YellowSun)
 from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
 
 JEWELERY = [1, 5, 10, 15, 20, 25, 35, 50, 75, 100, 150]
 MAGIC_ITEM_TYPES = ["weapon", "armor", "potion", "talisman", "medallion", "ring"]
 WEAPON_BONUS = [1, 2, 2, 3, 3, 0]
 ARMOR_BONUS = [1, 1, 1, 2, 2, 0]
-
-# TODO: Implement magic items
 MAGIC_ITEMS = {
     "weapon": [Sword(), Hammer(), Ax(), Bow(), Dagger(), ThrowDagger()],
     "armor": [Armor(1), Armor(1), Armor(1), Armor(2), Armor(2), Armor(0)],
@@ -88,6 +70,14 @@ class Treasure(enum.Enum):
     L = TreasureItems("6:3D6*20", "4:1D6", "4:1D3")
 
     def add(self, number: int = 0):
+        """
+        Moves to the next treasure.
+
+        :param number: a number of treasures to move (optional)
+        :type number: int.
+
+        :return: Treasure -- a new treasure.
+        """
         if number == 0:
             return self
         treasure_list = list(Treasure)
@@ -187,3 +177,11 @@ class Treasure(enum.Enum):
         """
         probability, treasure_code = code.split(":")
         return int(probability), treasure_code
+
+    @staticmethod
+    def empty_treasure() -> dict[str, Any]:
+        return {
+            "gold": 0,
+            "jewelery": [],
+            "magic_items": {key: [] for key in MAGIC_ITEM_TYPES},
+        }

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Type
+from typing import Any, Type
 
 from cob_core.dice import roll
 from cob_core.skills import (
@@ -20,7 +20,6 @@ from cob_core.treasures import Treasure
 from cob_core.weapons import Hammer
 from cob_core.weapons import Monster as MonsterWeapon
 from cob_core.weapons import Sword, Weapon
-
 
 LEVEL_CHART = [
     {
@@ -65,6 +64,7 @@ class Monster:
     wound_points: int = 0
     wound_points_code: str = ""
     experience_points: int = 0
+    actual_treasure: dict[str, Any] | None = None
 
     def __post_init__(self):
         if not self.weapon:
@@ -76,6 +76,10 @@ class Monster:
     @property
     def max_wound_points(self):
         return self._wound_points
+
+    @property
+    def hold_treasure(self):
+        return self.treasure[1] if self.is_wandering else self.treasure[0]
 
     def get_treasure(self):
         if self.is_wandering:
@@ -370,7 +374,7 @@ def spawn_monster(monster_class: Type[Monster], level: int = 1) -> list[Monster]
     modifiers = LEVEL_CHART[level - 1]
     monsters = []
 
-    if monster_class.__class__.__name__ == "XTheUnknown":
+    if monster_class.__name__ == "XTheUnknown":
         range_modifier = 1
     else:
         range_modifier = int(modifiers["number_of_monsters"][1:])
@@ -383,11 +387,18 @@ def spawn_monster(monster_class: Type[Monster], level: int = 1) -> list[Monster]
             monster.negotiation_value += int(modifiers["negotiation_value"][1:])
         monster.treasure = (
             monster.treasure[0].add(int(modifiers["treasure_type"][1:])),
-            monster.treasure[1].add(
-                int(modifiers["treasure_type"][1:]) if monster.treasure[1] else None
+            (
+                monster.treasure[1].add(
+                    int(modifiers["treasure_type"][1:] if monster.treasure[1] else 0)
+                )
+                if monster.treasure[1]
+                else None
             ),
         )
         monster.experience_points *= int(modifiers["experience_points"][1:])
+        treasure = monster.hold_treasure
+        if treasure:
+            monster.actual_treasure = treasure.roll_treasure()
         monsters.append(monster)
 
     return monsters
