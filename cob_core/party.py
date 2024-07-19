@@ -25,7 +25,9 @@ class Party:
                 self.add_beings(beings)
         self.remove_empty_ranks()
 
-    def add_being(self, being: Hero | Initiate | Monster, position: tuple[int, int], force = False) -> None:
+    def add_being(
+        self, being: Hero | Initiate | Monster, position: tuple[int, int], force=False
+    ) -> None:
         """
         Add a single being to the party at a specific position.
 

@@ -87,6 +87,14 @@ class Treasure(enum.Enum):
     K = TreasureItems("6:2D6*20", "3:1D6", "3:1D3")
     L = TreasureItems("6:3D6*20", "4:1D6", "4:1D3")
 
+    def add(self, number: int = 0):
+        if number == 0:
+            return self
+        treasure_list = list(Treasure)
+        current_index = treasure_list.index(self)
+        new_index = min(current_index + number, len(treasure_list) - 1)
+        return treasure_list[new_index]
+
     def __str__(self):
         return f"Gold: {self.value.gold}, Jewelery: {self.value.jewelery}, Magic items: {self.value.magic_items}"
 

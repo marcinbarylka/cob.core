@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Type
 
 from cob_core.dice import roll
 from cob_core.skills import (
@@ -21,6 +22,34 @@ from cob_core.weapons import Monster as MonsterWeapon
 from cob_core.weapons import Sword, Weapon
 
 
+LEVEL_CHART = [
+    {
+        "wound_points": "+0",
+        "combat_bonus": "+0",
+        "negotiation_value": "+0",
+        "number_of_monsters": "x1",
+        "treasure_type": "+0",
+        "experience_points": "x1",
+    },
+    {
+        "wound_points": "+2",
+        "combat_bonus": "+1",
+        "negotiation_value": "+1",
+        "number_of_monsters": "x1",
+        "treasure_type": "+1",
+        "experience_points": "x1",
+    },
+    {
+        "wound_points": "+4",
+        "combat_bonus": "+3",
+        "negotiation_value": "+2",
+        "number_of_monsters": "x2",
+        "treasure_type": "+2",
+        "experience_points": "x2",
+    },
+]
+
+
 @dataclass
 class Monster:
     name: str = ""
@@ -33,10 +62,20 @@ class Monster:
     combat_bonus: int = 0
     weapon_skill: WeaponSkill | None = None
     is_wandering: bool = False
+    wound_points: int = 0
+    wound_points_code: str = ""
+    experience_points: int = 0
 
     def __post_init__(self):
         if not self.weapon:
             self.weapon = MonsterWeapon()
+        self.wound_points = roll(self.wound_points_code)
+        self._wound_points = self.wound_points
+        self.experience_points = self._wound_points * 6
+
+    @property
+    def max_wound_points(self):
+        return self._wound_points
 
     def get_treasure(self):
         if self.is_wandering:
@@ -60,7 +99,7 @@ class Monster:
 
         :return: bool.
         """
-        ...
+        return self.wound_points > 0
 
 
 class Chimaera(Monster):
@@ -71,6 +110,8 @@ class Chimaera(Monster):
             negotiation_value=7,
             treasure=(Treasure.I, None),
             special=FireBreath(),
+            combat_bonus=7,
+            wound_points_code="2d6+2",
         )
 
 
@@ -82,6 +123,8 @@ class Cronk(Monster):
             negotiation_value=9,
             treasure=(Treasure.E, Treasure.B),
             special=Stench(),
+            combat_bonus=4,
+            wound_points_code="d6+1",
         )
 
 
@@ -93,6 +136,8 @@ class Demon(Monster):
             negotiation_value=None,
             treasure=(Treasure.D, None),
             special=DemonSkill(),
+            combat_bonus=5,
+            wound_points_code="d6+2",
         )
 
 
@@ -103,6 +148,8 @@ class DireWolf(Monster):
             resistance_value=1,
             negotiation_value=9,
             treasure=(Treasure.A, None),
+            combat_bonus=1,
+            wound_points_code="d3+1",
         )
 
 
@@ -114,6 +161,8 @@ class EvilHero(Monster):
             negotiation_value=5,
             weapon=Sword(),
             treasure=(Treasure.J, Treasure.C),
+            combat_bonus=5,
+            wound_points_code="d6+4",
         )
         self.weapon_skill = SwordSkill(roll("d6"))
 
@@ -126,6 +175,8 @@ class EvilMage(Monster):
             negotiation_value=5,
             spells=[Lightning()],
             treasure=(Treasure.J, Treasure.C),
+            combat_bonus=4,
+            wound_points_code="d6+3",
         )
 
 
@@ -136,6 +187,8 @@ class Gargoyle(Monster):
             resistance_value=3,
             negotiation_value=4,
             treasure=(Treasure.G, None),
+            combat_bonus=9,
+            wound_points_code="3d6+1",
         )
 
 
@@ -146,6 +199,8 @@ class Harpy(Monster):
             resistance_value=1,
             negotiation_value=5,
             treasure=(Treasure.A, None),
+            combat_bonus=0,
+            wound_points_code="d3",
         )
 
 
@@ -157,6 +212,8 @@ class Hydra(Monster):
             negotiation_value=7,
             treasure=(Treasure.J, None),
             special=HailHydra(),
+            combat_bonus=0,
+            wound_points_code="2d6+3",
         )
 
 
@@ -168,6 +225,8 @@ class Medusa(Monster):
             negotiation_value=5,
             treasure=(Treasure.G, None),
             special=FleshToStone(),
+            combat_bonus=2,
+            wound_points_code="2d6",
         )
 
 
@@ -178,6 +237,8 @@ class Minotaur(Monster):
             resistance_value=3,
             negotiation_value=7,
             treasure=(Treasure.J, Treasure.C),
+            combat_bonus=10,
+            wound_points_code="2d6+4",
         )
 
 
@@ -189,6 +250,8 @@ class Ogre(Monster):
             negotiation_value=2,
             weapon=Hammer(),
             treasure=(Treasure.J, Treasure.E),
+            combat_bonus=5,
+            wound_points_code="d6+2",
         )
 
 
@@ -200,6 +263,8 @@ class Orc(Monster):
             negotiation_value=0,
             weapon=Sword(),
             treasure=(Treasure.H, Treasure.B),
+            combat_bonus=3,
+            wound_points_code="d6",
         )
 
 
@@ -210,6 +275,8 @@ class Skeleton(Monster):
             resistance_value=1,
             negotiation_value=9,
             treasure=(Treasure.F, Treasure.A),
+            combat_bonus=2,
+            wound_points_code="d6+1",
         )
 
 
@@ -221,6 +288,8 @@ class Troll(Monster):
             negotiation_value=4,
             treasure=(Treasure.J, None),
             special=Regenerate(),
+            combat_bonus=6,
+            wound_points_code="2d6+3",
         )
 
 
@@ -232,6 +301,8 @@ class Vampire(Monster):
             negotiation_value=6,
             treasure=(Treasure.J, None),
             special=Charm(),
+            combat_bonus=11,
+            wound_points_code="3d6",
         )
 
 
@@ -242,6 +313,8 @@ class Warg(Monster):
             resistance_value=1,
             negotiation_value=6,
             treasure=(Treasure.A, None),
+            combat_bonus=3,
+            wound_points_code="d3+2",
         )
 
 
@@ -252,6 +325,8 @@ class Wight(Monster):
             resistance_value=2,
             negotiation_value=4,
             treasure=(Treasure.H, None),
+            combat_bonus=6,
+            wound_points_code="2d6",
         )
 
 
@@ -262,6 +337,8 @@ class Wraith(Monster):
             resistance_value=1,
             negotiation_value=2,
             treasure=(Treasure.I, Treasure.D),
+            combat_bonus=3,
+            wound_points_code="d6+3",
         )
 
 
@@ -275,4 +352,42 @@ class XTheUnknown(Monster):
             spells=[Lightning()],
             treasure=(Treasure.L, None),
             special=XTheUnknownSkill(),
+            combat_bonus=5,
+            wound_points_code="d6+6",
         )
+
+
+def spawn_monster(monster_class: Type[Monster], level: int = 1) -> list[Monster]:
+    """
+    Spawn a monster of the given class and level.
+    :param monster_class:
+    :param level:
+    :return:
+    """
+    if level < 1 or level > 3:
+        raise ValueError("Level must be between 1 and 3")
+
+    modifiers = LEVEL_CHART[level - 1]
+    monsters = []
+
+    if monster_class.__class__.__name__ == "XTheUnknown":
+        range_modifier = 1
+    else:
+        range_modifier = int(modifiers["number_of_monsters"][1:])
+
+    for _ in range(range_modifier):
+        monster = monster_class()
+        monster.wound_points += int(modifiers["wound_points"][1:])
+        monster.combat_bonus += int(modifiers["combat_bonus"][1:])
+        if monster.negotiation_value:
+            monster.negotiation_value += int(modifiers["negotiation_value"][1:])
+        monster.treasure = (
+            monster.treasure[0].add(int(modifiers["treasure_type"][1:])),
+            monster.treasure[1].add(
+                int(modifiers["treasure_type"][1:]) if monster.treasure[1] else None
+            ),
+        )
+        monster.experience_points *= int(modifiers["experience_points"][1:])
+        monsters.append(monster)
+
+    return monsters

@@ -122,8 +122,6 @@ class Initiate(Hero):
         self.weapons = [weapons[0], weapons[1]]
 
 
-
-
 HEROES = [
     Hero(
         "Almuric",
