@@ -1,3 +1,5 @@
+"""Module for treasures."""
+
 import enum
 from dataclasses import dataclass
 from typing import Any

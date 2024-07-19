@@ -1,3 +1,5 @@
+"""Module for traps classes and functions."""
+
 from abc import ABC, abstractmethod
 
 from cob_core import dice

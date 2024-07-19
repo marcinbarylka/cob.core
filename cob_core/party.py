@@ -1,3 +1,5 @@
+"""Module for the party class."""
+
 from cob_core.heroes import Hero, Initiate
 from cob_core.monsters import Monster
 

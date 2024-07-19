@@ -1,3 +1,5 @@
+"""Module with skills classes. It contains all the skills that can be used by characters and monsters."""
+
 from abc import ABC, abstractmethod
 
 from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, Weapon

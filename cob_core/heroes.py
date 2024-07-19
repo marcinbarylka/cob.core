@@ -1,3 +1,5 @@
+"""Module for heroes and initiates."""
+
 from dataclasses import dataclass, field
 from typing import Any
 

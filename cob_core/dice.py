@@ -1,3 +1,5 @@
+"""Module for dice rolling."""
+
 import re
 from random import randint
 

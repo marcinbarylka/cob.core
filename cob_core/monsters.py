@@ -1,3 +1,5 @@
+"""Module for monsters in the game."""
+
 from dataclasses import dataclass
 from typing import Any, Type
 
