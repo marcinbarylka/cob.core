@@ -4,13 +4,29 @@ from typing import Any
 
 from cob_core.armors import Armor
 from cob_core.dice import Dice, roll
-from cob_core.magic_items import (AllSuns, BlueSun, CharmMonster, CharmPerson,
-                                  DexterityMedallion, Evil, Heal, Healing,
-                                  Mind, NeutralizePoisonMedallion,
-                                  NeutralizePoisonRing, Oratory, Poison,
-                                  PotionAppraisal, RedSun, Resistance,
-                                  Resurrect, Sleep, Strangling, Strength,
-                                  YellowSun)
+from cob_core.magic_items import (
+    AllSuns,
+    BlueSun,
+    CharmMonster,
+    CharmPerson,
+    DexterityMedallion,
+    Evil,
+    Heal,
+    Healing,
+    Mind,
+    NeutralizePoisonMedallion,
+    NeutralizePoisonRing,
+    Oratory,
+    Poison,
+    PotionAppraisal,
+    RedSun,
+    Resistance,
+    Resurrect,
+    Sleep,
+    Strangling,
+    Strength,
+    YellowSun,
+)
 from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
 
 JEWELERY = [1, 5, 10, 15, 20, 25, 35, 50, 75, 100, 150]
@@ -102,11 +118,7 @@ class Treasure(enum.Enum):
         has_jewelery = roll("d6") <= probability if probability else False
         if not has_jewelery:
             return []
-        return (
-            [JEWELERY[roll("2d6") - 2] for _ in range(roll(dice_code))]
-            if dice_code
-            else []
-        )
+        return [JEWELERY[roll("2d6") - 2] for _ in range(roll(dice_code))] if dice_code else []
 
     def roll_magic_items(self) -> dict[str, list[Any]]:
         """Roll for magic items."""

@@ -25,9 +25,7 @@ class Party:
                 self.add_beings(beings)
         self.remove_empty_ranks()
 
-    def add_being(
-        self, being: Hero | Initiate | Monster, position: tuple[int, int], force=False
-    ) -> None:
+    def add_being(self, being: Hero | Initiate | Monster, position: tuple[int, int], force=False) -> None:
         """
         Add a single being to the party at a specific position.
 
@@ -68,9 +66,7 @@ class Party:
                 rank[rank.index(being)] = None
                 break
 
-    def swap_beings(
-        self, being1: Hero | Initiate | Monster, being2: Hero | Initiate | Monster
-    ):
+    def swap_beings(self, being1: Hero | Initiate | Monster, being2: Hero | Initiate | Monster):
         """
         Swap two heroes in the party.
 
@@ -101,9 +97,7 @@ class Party:
         """
         return self.ranks[position[0]][position[1]]
 
-    def get_being_position(
-        self, being: Hero | Initiate | Monster
-    ) -> tuple[int, int] | None:
+    def get_being_position(self, being: Hero | Initiate | Monster) -> tuple[int, int] | None:
         """
         Get a position of the hero in the party.
 

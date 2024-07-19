@@ -38,9 +38,7 @@ class Poison(Potion):
 
 class Strength(Potion):
     def __init__(self):
-        super().__init__(
-            "Strength Potion", "A magical potion that increases the drinker's strength."
-        )
+        super().__init__("Strength Potion", "A magical potion that increases the drinker's strength.")
 
     def effect(self):
         return f"{self.name} has been used."
@@ -48,9 +46,7 @@ class Strength(Potion):
 
 class CharmPerson(Potion):
     def __init__(self):
-        super().__init__(
-            "Charm Person", "A magical potion that can be used to charm people."
-        )
+        super().__init__("Charm Person", "A magical potion that can be used to charm people.")
 
     def effect(self):
         return f"{self.name} has been used."
@@ -58,9 +54,7 @@ class CharmPerson(Potion):
 
 class CharmMonster(Potion):
     def __init__(self):
-        super().__init__(
-            "Charm Monster", "A magical potion that can be used to charm monsters."
-        )
+        super().__init__("Charm Monster", "A magical potion that can be used to charm monsters.")
 
     def effect(self):
         return f"{self.name} has been used."
@@ -142,9 +136,7 @@ class AllSuns(Talisman):
 
 class Evil(Talisman):
     def __init__(self):
-        super().__init__(
-            "Talisman of Evil", "A talisman that can be used to curse the wearer."
-        )
+        super().__init__("Talisman of Evil", "A talisman that can be used to curse the wearer.")
 
     def effect(self):
         return f"{self.name} has been used."
@@ -239,9 +231,7 @@ class Resistance(Ring):
 
 class Sleep(Ring):
     def __init__(self):
-        super().__init__(
-            "Ring of Sleep", "A ring that can be used to put enemies to sleep."
-        )
+        super().__init__("Ring of Sleep", "A ring that can be used to put enemies to sleep.")
 
     def effect(self):
         return f"{self.name} has been used."
@@ -268,9 +258,7 @@ class Heal(Ring):
 
 class Resurrect(Ring):
     def __init__(self):
-        super().__init__(
-            "Ring of Resurrect", "A ring that can be used to resurrect the dead."
-        )
+        super().__init__("Ring of Resurrect", "A ring that can be used to resurrect the dead.")
 
     def effect(self):
         return f"{self.name} has been used."
