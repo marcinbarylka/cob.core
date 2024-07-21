@@ -19,6 +19,11 @@ class FeatureFactory:
 
     @staticmethod
     def random_feature() -> Optional["Feature"]:
+        """
+        Return a random feature.
+
+        :return: a random feature or None if no feature is generated.
+        """
         if random.randint(1, 80) > 50:  # 62.5% chance to have a feature
             return None
 
