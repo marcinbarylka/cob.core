@@ -5,7 +5,6 @@ from typing import Optional
 
 
 class FeatureFactory:
-
     FEATURE_TABLE = {
         "Fountain": ["Poison", "Potion", "Alcohol", "Jewel", "Water", "Blood"],
         "Statue": ["Medusa", "Jewels", "Medallion", "Demon", "Talisman", "X"],
@@ -14,7 +13,7 @@ class FeatureFactory:
         "Altar": ["Alloces", "Vassago", "Avnas", "Melthus", "Leraje", "Asmoday"],
         "Artwork": ["Tapestry", "Painting", "Statue", "CutGlass", "Icon", "Manuscript"],
         "Mirror": ["Mirror"],  # Assuming a single type for simplicity
-        "Staircase": ["Staircase"]  # Assuming a single type for simplicity
+        "Staircase": ["Staircase"],  # Assuming a single type for simplicity
     }
 
     @staticmethod

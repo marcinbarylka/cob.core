@@ -17,7 +17,8 @@ from cob_core.skills import (
     WeaponSkill,
     XTheUnknownSkill,
 )
-from cob_core.spells import LightningSpell as Lightning, Spell
+from cob_core.spells import LightningSpell as Lightning
+from cob_core.spells import Spell
 from cob_core.treasures import Treasure
 from cob_core.weapons import Hammer
 from cob_core.weapons import Monster as MonsterWeapon
