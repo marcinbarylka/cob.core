@@ -28,7 +28,7 @@ class Spell(abc.ABC):
     name: str
     code: str
     cost: int
-    type: str
+    type: SpellType
 
 
 ### combat spells ###
