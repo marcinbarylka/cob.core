@@ -84,7 +84,7 @@ class Room(Segment):
         self.feature = FeatureFactory.random_feature()
 
     def __str__(self) -> str:
-        return f"Room with exits: {self._exits_to_str()} and features: {self.features}"
+        return f"Room with exits: {self._exits_to_str()} and features: {self.feature}"
 
     def __repr__(self) -> str:
-        return f"Room({self.exits}, {self.features})"
+        return f"Room({self.exits}, {self.feature})"

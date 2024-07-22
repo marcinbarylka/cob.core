@@ -13,7 +13,7 @@ class SpellType(enum.Enum):
     SPECIAL = "S"
 
 
-MAGIC_POTENTIAL = [
+MAGIC_POTENTIAL_TABLE = [
     (0, 0, 0),
     (0, 0, 0),
     (2, 1, 0),
@@ -29,6 +29,23 @@ class Spell(abc.ABC):
     code: str
     cost: int
     type: SpellType
+
+    @staticmethod
+    def get_spells_by_type(spell_type):
+        """
+        Returns a list of instances of Spell subclasses that match the given spell_type.
+        :param spell_type: SpellType Enum value indicating the type of spells to retrieve.
+        :return: List of instances of subclasses of Spell that match the spell_type.
+        """
+        spell_classes = []
+        for _, obj in globals().items():
+            try:
+                if issubclass(obj, Spell) and obj is not Spell:
+                    if obj().type == spell_type:  # noqa
+                        spell_classes.append(obj())  # noqa
+            except TypeError:
+                continue
+        return spell_classes
 
 
 ### combat spells ###

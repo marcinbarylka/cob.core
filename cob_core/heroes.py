@@ -17,7 +17,7 @@ from cob_core.skills import (
     SwordSkill,
     WeaponSkill,
 )
-from cob_core.spells import MAGIC_POTENTIAL, Spell
+from cob_core.spells import MAGIC_POTENTIAL_TABLE, Spell
 from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
 
 
@@ -111,7 +111,7 @@ class Initiate(Hero):
 
     def __post_init__(self):
         super().__post_init__()
-        self.magic_potential = MAGIC_POTENTIAL[dice.roll("d6") - 1]
+        self.magic_potential = MAGIC_POTENTIAL_TABLE[dice.roll("d6") - 1]
 
     def add_weapon(self, weapon: Weapon):
         """Add new weapon to the initiate."""
