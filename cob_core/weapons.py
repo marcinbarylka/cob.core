@@ -7,7 +7,7 @@ class Weapon:
     def __init__(
         self,
         name: str = "",
-        additional_damage: int = 0,
+        attack_bonus: int = 0,
         damage_table: list[int] = [],
         is_ranged_weapon: bool = False,
     ) -> None:
@@ -16,7 +16,7 @@ class Weapon:
 
         self.name: str = name
         self.damage_table: list[int] = damage_table
-        self.additional_damage: int = additional_damage
+        self.attack_bonus: int = attack_bonus
         self.is_ranged_weapon: bool = is_ranged_weapon
 
     def get_damage(self, roll: int) -> int:
@@ -27,8 +27,8 @@ class Weapon:
         return self.damage_table[roll]
 
     def __str__(self) -> str:
-        if self.additional_damage:
-            return f"{self.name} (+{self.additional_damage})"
+        if self.attack_bonus:
+            return f"{self.name} (+{self.attack_bonus})"
         return self.name
 
     def __repr__(self) -> str:

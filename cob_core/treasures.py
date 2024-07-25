@@ -152,8 +152,8 @@ class Treasure(enum.Enum):
             magic_item = MAGIC_ITEMS[magic_item_type][roll("d6") - 1]
             if magic_item_type == "armor" and not magic_item.defense:
                 magic_item.defense = self._get_armor_bonus()
-            if magic_item_type == "weapon" and not magic_item.additional_damage:
-                magic_item.additional_damage = self._get_weapon_bonus()
+            if magic_item_type == "weapon" and not magic_item.attack_bonus:
+                magic_item.attack_bonus = self._get_weapon_bonus()
             result[magic_item_type].append(magic_item)
         return result
 

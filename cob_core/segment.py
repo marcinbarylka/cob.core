@@ -90,6 +90,6 @@ class Room(Segment):
         return f"Room({self.exits}, {self.feature})"
 
 
-class Entrance(Segment):
+class GatewayOfEvil(Segment):
     def __init__(self) -> None:
         super().__init__([EXIT_CORRIDOR, EXIT_WALL, EXIT_WALL, EXIT_WALL])

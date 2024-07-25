@@ -1,8 +1,20 @@
 """Game map module."""
 
-from cob_core import EAST, EXIT_CORRIDOR, EXIT_ROOM, EXIT_UNDEFINED, NORTH, SOUTH, WEST, X, Y, Z, dice
+from cob_core import (
+    EAST,
+    EXIT_CORRIDOR,
+    EXIT_ROOM,
+    EXIT_UNDEFINED,
+    NORTH,
+    SOUTH,
+    WEST,
+    X,
+    Y,
+    Z,
+    dice,
+)
 from cob_core.monsters import Monster
-from cob_core.segment import Entrance, Room, Segment
+from cob_core.segment import GatewayOfEvil, Room, Segment
 
 
 class Board:
@@ -12,7 +24,7 @@ class Board:
     """
 
     def __init__(self) -> None:
-        self.map: dict[tuple[int, int, int], Segment] = {(0, 0, 0): Entrance()}
+        self.map: dict[tuple[int, int, int], Segment] = {(0, 0, 0): GatewayOfEvil()}
         self.monsters: dict[tuple[int, int, int], Monster] = {}
         self.party_position: tuple[int, int, int] = (0, 0, 0)
 
