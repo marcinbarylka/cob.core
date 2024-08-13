@@ -5,7 +5,9 @@ from cob_core.monsters import Monster
 
 
 class Party:
-    def __init__(self, beings: list[Hero | Initiate | Monster]):
+    def __init__(self, beings: list[Hero | Initiate | Monster] | None):
+        if not beings:
+            beings = []
         self.ranks: list[list[Hero | Initiate | Monster | None]] = [
             [None, None, None],
         ]

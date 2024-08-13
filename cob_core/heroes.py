@@ -3,7 +3,7 @@
 from dataclasses import dataclass, field
 from typing import Any
 
-from cob_core import dice
+from cob_core import dice, FontMap
 from cob_core.armors import Armor
 from cob_core.skills import (
     AxSkill,
@@ -54,6 +54,7 @@ class Hero:
     weapons: list[Weapon]
     weapon_skill: WeaponSkill | None
     skill: Skill
+    icon: str = ""
     armor: Armor | None = None
     spells: list[Spell] = field(default_factory=list)
     jewels: list[Any] = field(default_factory=list)
@@ -136,7 +137,7 @@ HEROES = [
         [Sword(), Dagger()],
         SwordSkill(1),
         Hellgate(1),
-        # FontMap.ALMURIC.value,
+        FontMap.ALMURIC.value,
     ),
     Hero(
         "Alric",
@@ -149,7 +150,7 @@ HEROES = [
         [Sword(), ThrowDagger()],
         None,
         Hellgate(1),
-        # FontMap.ALRIC.value,
+        FontMap.ALRIC.value,
     ),
     Hero(
         "Curvenol",
@@ -162,7 +163,7 @@ HEROES = [
         [Sword(), ThrowDagger()],
         None,
         Hellgate(2),
-        # FontMap.CURVENOL.value,
+        FontMap.CURVENOL.value,
     ),
     Hero(
         "Dalmilandril",
@@ -175,7 +176,7 @@ HEROES = [
         [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(2),
-        # FontMap.DALMILANDRIL.value,
+        FontMap.DALMILANDRIL.value,
     ),
     Hero(
         "Dierdra",
@@ -188,7 +189,7 @@ HEROES = [
         [Hammer(), Sword()],
         HammerSkill(1),
         Hellgate(1),
-        # FontMap.DIERDRA.value,
+        FontMap.DIERDRA.value,
     ),
     Hero(
         "Eodred",
@@ -201,7 +202,7 @@ HEROES = [
         [Bow(), ThrowDagger()],
         None,
         Hellgate(2),
-        # FontMap.EODRED.value,
+        FontMap.EODRED.value,
     ),
     Hero(
         "Gerudirr",
@@ -214,7 +215,7 @@ HEROES = [
         [Ax(), Dagger()],
         AxSkill(3),
         Detrap(3),
-        # FontMap.GERUDIRR.value,
+        FontMap.GERUDIRR.value,
     ),
     Hero(
         "Gilith",
@@ -227,7 +228,7 @@ HEROES = [
         [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(2),
-        # FontMap.GILITH.value,
+        FontMap.GILITH.value,
     ),
     Hero(
         "Gislan",
@@ -240,7 +241,7 @@ HEROES = [
         [Ax(), Hammer()],
         AxSkill(2),
         Detrap(3),
-        # FontMap.GISLAN.value,
+        FontMap.GISLAN.value,
     ),
     Hero(
         "Gwaigilion",
@@ -253,7 +254,7 @@ HEROES = [
         [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(1),
-        # FontMap.GWAIGILION.value,
+        FontMap.GWAIGILION.value,
     ),
     Hero(
         "Larraka",
@@ -266,7 +267,7 @@ HEROES = [
         [Bow(), Dagger()],
         None,
         Hellgate(1),
-        # FontMap.LARRAKA.value,
+        FontMap.LARRAKA.value,
     ),
     Hero(
         "Linfalas",
@@ -279,7 +280,7 @@ HEROES = [
         [Bow(), Sword()],
         BowSkill(2),
         Negotiation(3),
-        # FontMap.LINFALAS.value,
+        FontMap.LINFALAS.value,
     ),
     Hero(
         "Lord Dil",
@@ -292,7 +293,7 @@ HEROES = [
         [Sword(), Dagger()],
         SwordSkill(2),
         Hellgate(2),
-        # FontMap.LORD_DIL.value,
+        FontMap.LORD_DIL.value,
     ),
     Hero(
         "Maytwist",
@@ -305,7 +306,7 @@ HEROES = [
         [ThrowDagger(), Bow()],
         BowSkill(2),
         Negotiation(2),
-        # FontMap.MAYTWIST.value,
+        FontMap.MAYTWIST.value,
     ),
     Hero(
         "Paladin Glade",
@@ -318,7 +319,7 @@ HEROES = [
         [Sword(), ThrowDagger()],
         SwordSkill(2),
         Hellgate(2),
-        # FontMap.PALADIN_GLADE.value,
+        FontMap.PALADIN_GLADE.value,
     ),
     Hero(
         "Raman",
@@ -331,7 +332,7 @@ HEROES = [
         [Sword(), Dagger()],
         SwordSkill(1),
         Detrap(1),
-        # FontMap.RAMAN.value,
+        FontMap.RAMAN.value,
     ),
     Hero(
         "Sliggoth",
@@ -344,7 +345,7 @@ HEROES = [
         [Ax(), Bow()],
         AxSkill(1),
         Detrap(1),
-        # FontMap.SLIGGOTH.value,
+        FontMap.SLIGGOTH.value,
     ),
     Hero(
         "Stephen Paladin",
@@ -357,7 +358,7 @@ HEROES = [
         [Sword(), Dagger()],
         SwordSkill(2),
         Hellgate(2),
-        # FontMap.STEPHEN_PALADIN.value,
+        FontMap.STEPHEN_PALADIN.value,
     ),
     Hero(
         "Theregond",
@@ -370,7 +371,7 @@ HEROES = [
         [Sword(), ThrowDagger()],
         SwordSkill(3),
         Hellgate(3),
-        # FontMap.THEREGOND.value,
+        FontMap.THEREGOND.value,
     ),
     Hero(
         "Weldron",
@@ -383,7 +384,7 @@ HEROES = [
         [Sword(), Bow()],
         SwordSkill(2),
         Hellgate(3),
-        # FontMap.WELDRON.value,
+        FontMap.WELDRON.value,
     ),
     Hero(
         "Wendolyn",
@@ -396,7 +397,7 @@ HEROES = [
         [Sword(), Dagger()],
         DaggerSkill(2),
         Hellgate(4),
-        # FontMap.WENDOLYN.value,
+        FontMap.WENDOLYN.value,
     ),
     Hero(
         "Zareth",
@@ -409,7 +410,7 @@ HEROES = [
         [Sword(), ThrowDagger()],
         SwordSkill(1),
         Hellgate(3),
-        # FontMap.ZARETH.value,
+        FontMap.ZARETH.value,
     ),
     Hero(
         "Zurik",
@@ -422,7 +423,7 @@ HEROES = [
         [Ax(), Dagger()],
         AxSkill(2),
         Detrap(3),
-        # FontMap.ZURIK.value,
+        FontMap.ZURIK.value,
     ),
 ]
 
@@ -439,7 +440,7 @@ INITIATES = [
         skill=Hellgate(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.HUMAN_A.value,
+        icon=FontMap.HUMAN_A.value,
     ),
     Initiate(
         name="",
@@ -452,7 +453,7 @@ INITIATES = [
         skill=Hellgate(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.HUMAN_B.value,
+        icon=FontMap.HUMAN_B.value,
     ),
     Initiate(
         name="",
@@ -465,7 +466,7 @@ INITIATES = [
         skill=Hellgate(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.HUMAN_C.value,
+        icon=FontMap.HUMAN_C.value,
     ),
     Initiate(
         name="",
@@ -478,7 +479,7 @@ INITIATES = [
         skill=Negotiation(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.ELF_A.value,
+        icon=FontMap.ELF_A.value,
     ),
     Initiate(
         name="",
@@ -491,7 +492,7 @@ INITIATES = [
         skill=Negotiation(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.ELF_B.value,
+        icon=FontMap.ELF_B.value,
     ),
     Initiate(
         name="",
@@ -504,7 +505,7 @@ INITIATES = [
         skill=Negotiation(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.ELF_C.value,
+        icon=FontMap.ELF_C.value,
     ),
     Initiate(
         name="",
@@ -517,7 +518,7 @@ INITIATES = [
         skill=Detrap(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.DWARF_A.value,
+        icon=FontMap.DWARF_A.value,
     ),
     Initiate(
         name="",
@@ -530,7 +531,7 @@ INITIATES = [
         skill=Detrap(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.DWARF_B.value,
+        icon=FontMap.DWARF_B.value,
     ),
     Initiate(
         name="",
@@ -543,6 +544,6 @@ INITIATES = [
         skill=Detrap(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        # icon=FontMap.DWARF_C.value,
+        icon=FontMap.DWARF_C.value,
     ),
 ]

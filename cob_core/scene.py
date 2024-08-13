@@ -7,9 +7,7 @@ from cob_core.weapons import Weapon
 
 
 class Scene:
-    def __init__(
-        self, party: Party, monsters: Party | list[Monster], segment: Segment
-    ) -> None:
+    def __init__(self, party: Party, monsters: Party | list[Monster], segment: Segment) -> None:
         self.party: Party = party
 
         if isinstance(monsters, list):
@@ -34,7 +32,5 @@ class Scene:
         if hasattr(target, "armor"):
             armor = target.armor.defense if target.armor else 0
         target.wound_points -= (
-            d6 + weapon.attack_bonus
-            if weapon
-            else 0 + attacker.combat_bonus + weapon.damage_table[d6] - armor
+            d6 + weapon.attack_bonus if weapon else 0 + attacker.combat_bonus + weapon.damage_table[d6] - armor
         )

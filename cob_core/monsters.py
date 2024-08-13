@@ -455,7 +455,7 @@ def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Mons
     monsters = []
     for _ in range(number):
         monster_class = globals()[monster]
-        monsters.append(spawn_monster(monster_class, level, wandering))
+        monsters += (spawn_monster(monster_class, level, wandering))
     return monsters
 
 
