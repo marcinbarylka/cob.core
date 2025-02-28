@@ -124,30 +124,20 @@ class Hero:
 class Initiate(Hero):
     """
     An Initiate. A character that can be played by a player. It is a weaker version of a hero.
-
-    :param name: name of the initiate
-    :param name_short: short name of the initiate
-    :param race: a race of the initiate (i.e. Human, Dwarf, Elf)
-    :param wound_points: wound points of the initiate
-    :param magic_potential: magic potential of the initiate
-    :param resistance_value: resistance value of the initiate
-    :param combat_bonus: combat bonus of the initiate
-    :param weapons: weapons of the initiate
-    :param weapon_skill: weapon skill of the initiate
-    :param skill: skill of the initiate
-    :param icon: icon of the initiate
-    :param spells: spells of the initiate
-    :param jewels: jewels of the initiate
-    :param gold_marks: gold marks of the initiate
-    :param XP: experience points of the initiate
     """
 
     def __post_init__(self):
         super().__post_init__()
         self.magic_potential = MAGIC_POTENTIAL_TABLE[dice.roll("d6") - 1]
 
-    def add_weapon(self, weapon: Weapon):
-        """Add new weapon to the initiate."""
+    def add_weapon(self, weapon: Weapon) -> None:
+        """
+        Add new weapon to the initiate.
+
+        Args:
+            weapon: weapon to add
+
+        """
         if len(self.weapons) == 2:
             raise ValueError("The initiate already has two weapons.")
         weapons = list(self.weapons)
@@ -176,7 +166,17 @@ class HeroesEnum(enum.Enum):
         FontMap.ALMURIC.value,
     )
     ALRIC = Hero(
-        "Alric", "", "Human", 6, (2, 3, 4), 2, 0, [Sword(), ThrowDagger()], None, Hellgate(1), FontMap.ALRIC.value
+        "Alric",
+        "",
+        "Human",
+        6,
+        (2, 3, 4),
+        2,
+        0,
+        [Sword(), ThrowDagger()],
+        None,
+        Hellgate(1),
+        FontMap.ALRIC.value,
     )
     CURVENOL = Hero(
         "Curvenol",
@@ -218,16 +218,56 @@ class HeroesEnum(enum.Enum):
         FontMap.DIERDRA.value,
     )
     EODRED = Hero(
-        "Eodred", "", "Human", 6, (3, 4, 5), 2, 0, [Bow(), ThrowDagger()], None, Hellgate(2), FontMap.EODRED.value
+        "Eodred",
+        "",
+        "Human",
+        6,
+        (3, 4, 5),
+        2,
+        0,
+        [Bow(), ThrowDagger()],
+        None,
+        Hellgate(2),
+        FontMap.EODRED.value,
     )
     GERUDIRR = Hero(
-        "Gerudirr", "", "Dwarf", 6, (0, 0, 0), 2, 6, [Ax(), Dagger()], AxSkill(3), Detrap(3), FontMap.GERUDIRR.value
+        "Gerudirr",
+        "",
+        "Dwarf",
+        6,
+        (0, 0, 0),
+        2,
+        6,
+        [Ax(), Dagger()],
+        AxSkill(3),
+        Detrap(3),
+        FontMap.GERUDIRR.value,
     )
     GILITH = Hero(
-        "Gilith", "", "Elf", 8, (0, 0, 0), 3, 4, [Bow(), Dagger()], BowSkill(2), Negotiation(2), FontMap.GILITH.value
+        "Gilith",
+        "",
+        "Elf",
+        8,
+        (0, 0, 0),
+        3,
+        4,
+        [Bow(), Dagger()],
+        BowSkill(2),
+        Negotiation(2),
+        FontMap.GILITH.value,
     )
     GISLAN = Hero(
-        "Gislan", "", "Dwarf", 10, (4, 4, 4), 3, 4, [Ax(), Hammer()], AxSkill(2), Detrap(3), FontMap.GISLAN.value
+        "Gislan",
+        "",
+        "Dwarf",
+        10,
+        (4, 4, 4),
+        3,
+        4,
+        [Ax(), Hammer()],
+        AxSkill(2),
+        Detrap(3),
+        FontMap.GISLAN.value,
     )
     GWAIGILION = Hero(
         "Gwaigilion",
@@ -243,10 +283,30 @@ class HeroesEnum(enum.Enum):
         FontMap.GWAIGILION.value,
     )
     LARRAKA = Hero(
-        "Larraka", "", "Human", 5, (6, 5, 4), 3, 0, [Bow(), Dagger()], None, Hellgate(1), FontMap.LARRAKA.value
+        "Larraka",
+        "",
+        "Human",
+        5,
+        (6, 5, 4),
+        3,
+        0,
+        [Bow(), Dagger()],
+        None,
+        Hellgate(1),
+        FontMap.LARRAKA.value,
     )
     LINFALAS = Hero(
-        "Linfalas", "", "Elf", 9, (0, 0, 0), 2, 5, [Bow(), Sword()], BowSkill(2), Negotiation(3), FontMap.LINFALAS.value
+        "Linfalas",
+        "",
+        "Elf",
+        9,
+        (0, 0, 0),
+        2,
+        5,
+        [Bow(), Sword()],
+        BowSkill(2),
+        Negotiation(3),
+        FontMap.LINFALAS.value,
     )
     LORD_DIL = Hero(
         "Lord Dil",
