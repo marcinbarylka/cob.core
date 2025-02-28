@@ -19,10 +19,12 @@ class Dice:
         """
         Dice parser.
 
-        :param dice_code: (optional) a code of the dice: i.e. 2d10+20.
-        :type dice_code: str.
+        Args:
+            dice_code: a code of the dice: i.e. 2d10+20.
 
-        :return: None.
+        Raises:
+            ValueError: if the dice code is not recognized.
+
         """
         if dice_code:
             self.code = dice_code
@@ -55,10 +57,12 @@ class Dice:
         """
         Roll a parsed dice.
 
-        :param dice_code: (optional) a code of the dice: i.e. 2d10+20.
-        :type dice_code: str.
+        Args:
+            dice_code: a code of the dice: i.e. 2d10+20.
 
-        :return: int.
+        Returns:
+            int. The result of the roll.
+
         """
         if dice_code:
             self.parse(dice_code)
@@ -74,7 +78,9 @@ class Dice:
         """
         Max value of the roll.
 
-        :return: int.
+        Returns:
+            int. The max value of the roll.
+
         """
         return self.type * self.number * self.multiplier + self.modifier
 
@@ -83,7 +89,9 @@ class Dice:
         """
         Min value of the roll.
 
-        :return: int.
+        Returns:
+            int. The min value of the roll.
+
         """
         return self.number * self.multiplier + self.modifier
 
@@ -92,9 +100,11 @@ def roll(dice_code):
     """
     A shortcut to roll a dice.
 
-    :param dice_code: a code of the dice: i.e. 2d10+20.
-    :type dice_code: str.
+    Args:
+        dice_code: a code of the dice: i.e. 2d10+20.
 
-    :return: int.
+    Returns:
+        int. The result of the roll.
+
     """
     return Dice().roll(dice_code)
