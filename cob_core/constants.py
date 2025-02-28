@@ -1,6 +1,0 @@
-"""Constants used in the cob_core package."""
-
-X, Y, Z = 0, 1, 2
-NORTH, EAST, SOUTH, WEST = 0, 1, 2, 3
-DIRECTIONS = [NORTH, EAST, SOUTH, WEST]
-EXIT_UNDEFINED, EXIT_WALL, EXIT_CORRIDOR, EXIT_ROOM, EXIT_ROOM_CLOSED = (-1, 0, 1, 2, 3)
