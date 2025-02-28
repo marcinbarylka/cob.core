@@ -1,5 +1,6 @@
 """Module for heroes and initiates."""
 
+import enum
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -64,25 +65,56 @@ class Hero:
     _wound_points: int = 0
 
     def __post_init__(self):
+        """
+        Post initialization method.
+
+        It sets the wound points of the hero.
+
+        """
         self._wound_points = self.wound_points
 
     @property
     def max_wound_points(self):
+        """
+        Maximum wound points of the hero.
+
+        Returns:
+            int: maximum wound points of the hero
+        """
         return self._wound_points
 
     @property
     def is_alive(self) -> bool:
-        """Check if the hero is alive."""
+        """Check if the hero is alive.
+
+        Returns:
+            bool: True if the hero is alive, False otherwise
+
+        """
         return self.wound_points > 0
 
     def fight(self, weapon: Weapon) -> int:
         """
         The hero fights with an opponent.
+
+        A hero rolls a dice and adds a combat bonus to the result. If the hero has a weapon skill,
+        the value of the skill is added to the result. The result is used to calculate the damage
+        that the hero deals to the opponent.
+
+        Args:
+            weapon: weapon of the hero
+
+        Returns:
+            int: damage that the hero deals to the opponent
+
+        Raises:
+            ValueError: if the hero does not have the weapon
+
         """
         if weapon not in self.weapons:
-            raise ValueError("The hero does not have this weapon.")
+            raise ValueError(f"{self.name} does not have this weapon.")
 
-        if self.weapon_skill:
+        if self.weapon_skill and self.weapon_skill.weapon == weapon:
             roll_dice = dice.roll(f"d6+{self.combat_bonus + self.weapon_skill.value}")
         else:
             roll_dice = dice.roll(f"d6+{self.combat_bonus}")
@@ -125,8 +157,12 @@ class Initiate(Hero):
         self.weapons = [weapons[0], weapons[1]]
 
 
-HEROES = [
-    Hero(
+class HeroesEnum(enum.Enum):
+    """
+    Enum of heroes.
+    """
+
+    ALMURIC = Hero(
         "Almuric",
         "",
         "Human",
@@ -138,21 +174,11 @@ HEROES = [
         SwordSkill(1),
         Hellgate(1),
         FontMap.ALMURIC.value,
-    ),
-    Hero(
-        "Alric",
-        "",
-        "Human",
-        6,
-        (2, 3, 4),
-        2,
-        0,
-        [Sword(), ThrowDagger()],
-        None,
-        Hellgate(1),
-        FontMap.ALRIC.value,
-    ),
-    Hero(
+    )
+    ALRIC = Hero(
+        "Alric", "", "Human", 6, (2, 3, 4), 2, 0, [Sword(), ThrowDagger()], None, Hellgate(1), FontMap.ALRIC.value
+    )
+    CURVENOL = Hero(
         "Curvenol",
         "Curvnol",
         "Human",
@@ -164,8 +190,8 @@ HEROES = [
         None,
         Hellgate(2),
         FontMap.CURVENOL.value,
-    ),
-    Hero(
+    )
+    DALMILANDRIL = Hero(
         "Dalmilandril",
         "Dalmilan",
         "Elf",
@@ -177,8 +203,8 @@ HEROES = [
         BowSkill(2),
         Negotiation(2),
         FontMap.DALMILANDRIL.value,
-    ),
-    Hero(
+    )
+    DIERDRA = Hero(
         "Dierdra",
         "",
         "Human",
@@ -190,60 +216,20 @@ HEROES = [
         HammerSkill(1),
         Hellgate(1),
         FontMap.DIERDRA.value,
-    ),
-    Hero(
-        "Eodred",
-        "",
-        "Human",
-        6,
-        (3, 4, 5),
-        2,
-        0,
-        [Bow(), ThrowDagger()],
-        None,
-        Hellgate(2),
-        FontMap.EODRED.value,
-    ),
-    Hero(
-        "Gerudirr",
-        "",
-        "Dwarf",
-        6,
-        (0, 0, 0),
-        2,
-        6,
-        [Ax(), Dagger()],
-        AxSkill(3),
-        Detrap(3),
-        FontMap.GERUDIRR.value,
-    ),
-    Hero(
-        "Gilith",
-        "",
-        "Elf",
-        8,
-        (0, 0, 0),
-        3,
-        4,
-        [Bow(), Dagger()],
-        BowSkill(2),
-        Negotiation(2),
-        FontMap.GILITH.value,
-    ),
-    Hero(
-        "Gislan",
-        "",
-        "Dwarf",
-        10,
-        (4, 4, 4),
-        3,
-        4,
-        [Ax(), Hammer()],
-        AxSkill(2),
-        Detrap(3),
-        FontMap.GISLAN.value,
-    ),
-    Hero(
+    )
+    EODRED = Hero(
+        "Eodred", "", "Human", 6, (3, 4, 5), 2, 0, [Bow(), ThrowDagger()], None, Hellgate(2), FontMap.EODRED.value
+    )
+    GERUDIRR = Hero(
+        "Gerudirr", "", "Dwarf", 6, (0, 0, 0), 2, 6, [Ax(), Dagger()], AxSkill(3), Detrap(3), FontMap.GERUDIRR.value
+    )
+    GILITH = Hero(
+        "Gilith", "", "Elf", 8, (0, 0, 0), 3, 4, [Bow(), Dagger()], BowSkill(2), Negotiation(2), FontMap.GILITH.value
+    )
+    GISLAN = Hero(
+        "Gislan", "", "Dwarf", 10, (4, 4, 4), 3, 4, [Ax(), Hammer()], AxSkill(2), Detrap(3), FontMap.GISLAN.value
+    )
+    GWAIGILION = Hero(
         "Gwaigilion",
         "Gwg Eln",
         "Elf",
@@ -255,34 +241,14 @@ HEROES = [
         BowSkill(2),
         Negotiation(1),
         FontMap.GWAIGILION.value,
-    ),
-    Hero(
-        "Larraka",
-        "",
-        "Human",
-        5,
-        (6, 5, 4),
-        3,
-        0,
-        [Bow(), Dagger()],
-        None,
-        Hellgate(1),
-        FontMap.LARRAKA.value,
-    ),
-    Hero(
-        "Linfalas",
-        "",
-        "Elf",
-        9,
-        (0, 0, 0),
-        2,
-        5,
-        [Bow(), Sword()],
-        BowSkill(2),
-        Negotiation(3),
-        FontMap.LINFALAS.value,
-    ),
-    Hero(
+    )
+    LARRAKA = Hero(
+        "Larraka", "", "Human", 5, (6, 5, 4), 3, 0, [Bow(), Dagger()], None, Hellgate(1), FontMap.LARRAKA.value
+    )
+    LINFALAS = Hero(
+        "Linfalas", "", "Elf", 9, (0, 0, 0), 2, 5, [Bow(), Sword()], BowSkill(2), Negotiation(3), FontMap.LINFALAS.value
+    )
+    LORD_DIL = Hero(
         "Lord Dil",
         "",
         "Human",
@@ -294,8 +260,8 @@ HEROES = [
         SwordSkill(2),
         Hellgate(2),
         FontMap.LORD_DIL.value,
-    ),
-    Hero(
+    )
+    MAYTWIST = Hero(
         "Maytwist",
         "Maytwst",
         "Elf",
@@ -307,8 +273,8 @@ HEROES = [
         BowSkill(2),
         Negotiation(2),
         FontMap.MAYTWIST.value,
-    ),
-    Hero(
+    )
+    PALADIN_GLADE = Hero(
         "Paladin Glade",
         "Pl Glade",
         "Human",
@@ -320,8 +286,8 @@ HEROES = [
         SwordSkill(2),
         Hellgate(2),
         FontMap.PALADIN_GLADE.value,
-    ),
-    Hero(
+    )
+    RAMAN = Hero(
         "Raman",
         "Rm Crnk",
         "Demi-Kronk",
@@ -333,8 +299,8 @@ HEROES = [
         SwordSkill(1),
         Detrap(1),
         FontMap.RAMAN.value,
-    ),
-    Hero(
+    )
+    SLIGGOTH = Hero(
         "Sliggoth",
         "",
         "Swamp Creature",
@@ -346,8 +312,8 @@ HEROES = [
         AxSkill(1),
         Detrap(1),
         FontMap.SLIGGOTH.value,
-    ),
-    Hero(
+    )
+    STEPHEN_PALADIN = Hero(
         "Stephen Paladin",
         "Stphn Pl",
         "Human",
@@ -359,8 +325,8 @@ HEROES = [
         SwordSkill(2),
         Hellgate(2),
         FontMap.STEPHEN_PALADIN.value,
-    ),
-    Hero(
+    )
+    THEREGOND = Hero(
         "Theregond",
         "Thrgond",
         "Human",
@@ -372,8 +338,8 @@ HEROES = [
         SwordSkill(3),
         Hellgate(3),
         FontMap.THEREGOND.value,
-    ),
-    Hero(
+    )
+    WELDRON = Hero(
         "Weldron",
         "Wldron",
         "Human",
@@ -385,8 +351,8 @@ HEROES = [
         SwordSkill(2),
         Hellgate(3),
         FontMap.WELDRON.value,
-    ),
-    Hero(
+    )
+    WENDOLYN = Hero(
         "Wendolyn",
         "Wndlyn",
         "Human",
@@ -398,8 +364,8 @@ HEROES = [
         DaggerSkill(2),
         Hellgate(4),
         FontMap.WENDOLYN.value,
-    ),
-    Hero(
+    )
+    ZARETH = Hero(
         "Zareth",
         "",
         "Human",
@@ -411,8 +377,8 @@ HEROES = [
         SwordSkill(1),
         Hellgate(3),
         FontMap.ZARETH.value,
-    ),
-    Hero(
+    )
+    ZURIK = Hero(
         "Zurik",
         "",
         "Dwarf",
@@ -424,12 +390,15 @@ HEROES = [
         AxSkill(2),
         Detrap(3),
         FontMap.ZURIK.value,
-    ),
-]
+    )
 
 
-INITIATES = [
-    Initiate(
+class InitiatesEnum(enum.Enum):
+    """
+    Enum of initiates.
+    """
+
+    HUMAN_A = Initiate(
         name="",
         name_short="Human A",
         race="Human",
@@ -441,8 +410,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.HUMAN_A.value,
-    ),
-    Initiate(
+    )
+    HUMAN_B = Initiate(
         name="",
         name_short="Human B",
         race="Human",
@@ -454,8 +423,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.HUMAN_B.value,
-    ),
-    Initiate(
+    )
+    HUMAN_C = Initiate(
         name="",
         name_short="Human C",
         race="Human",
@@ -467,8 +436,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.HUMAN_C.value,
-    ),
-    Initiate(
+    )
+    ELF_A = Initiate(
         name="",
         name_short="Elf A",
         race="Elf",
@@ -480,8 +449,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.ELF_A.value,
-    ),
-    Initiate(
+    )
+    ELF_B = Initiate(
         name="",
         name_short="Elf B",
         race="Elf",
@@ -493,8 +462,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.ELF_B.value,
-    ),
-    Initiate(
+    )
+    ELF_C = Initiate(
         name="",
         name_short="Elf C",
         race="Elf",
@@ -506,8 +475,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.ELF_C.value,
-    ),
-    Initiate(
+    )
+    DWARF_A = Initiate(
         name="",
         name_short="Dwarf A",
         race="Dwarf",
@@ -519,8 +488,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.DWARF_A.value,
-    ),
-    Initiate(
+    )
+    DWARF_B = Initiate(
         name="",
         name_short="Dwarf B",
         race="Dwarf",
@@ -532,8 +501,8 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.DWARF_B.value,
-    ),
-    Initiate(
+    )
+    DWARF_C = Initiate(
         name="",
         name_short="Dwarf C",
         race="Dwarf",
@@ -545,5 +514,4 @@ INITIATES = [
         combat_bonus=0,
         magic_potential=(0, 0, 0),
         icon=FontMap.DWARF_C.value,
-    ),
-]
+    )
