@@ -8,12 +8,27 @@ from cob_core.party import Party
 
 
 class Trap(ABC):
-    def __init__(self, name: str):
+    """
+    Trap class. It is an abstract class for traps.
+
+    Attributes:
+        name: name of the trap
+
+    """
+
+    def __init__(self, name: str) -> None:
         self.name: str = name
 
     def detrap(self, detrapper: Hero | Initiate) -> bool:
         """
-        Detrap trap. This method should be implemented in child classes. It should contain all the logic of the detrap.
+        Detrap trap. This method should be implemented in child classes.
+
+        Args:
+            detrapper: hero or initiate trying to detrap the trap
+
+        Returns:
+            bool: True if the trap is detrapped, False otherwise
+
         """
         if detrapper.skill is not None and detrapper.skill.skill_name == "Detrap":
             d6 = dice.roll("d6")
@@ -25,6 +40,11 @@ class Trap(ABC):
     def spring(self, detrapper: Hero | Initiate, party: Party) -> None:
         """
         Run trap. This method should be implemented in child classes. It should contain all the logic of the trap.
+
+        Args:
+            detrapper: hero or initiate that triggered the trap
+            party: party of the heroes
+
         """
         ...
 
@@ -35,7 +55,15 @@ class Arrow(Trap):
     def __init__(self):
         super().__init__("Arrow")
 
-    def spring(self, detrapper: Hero | Initiate, party: Party):  # noqa
+    def spring(self, detrapper: Hero | Initiate, party: Party) -> None:
+        """
+        Run arrow trap.
+
+        Args:
+            detrapper: hero or initiate that triggered the trap
+            party: party of the heroes
+
+        """
         from cob_core.weapons import Bow
 
         d6 = dice.roll("d6")

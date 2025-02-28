@@ -29,6 +29,16 @@ class Board:
         self.party_position: tuple[int, int, int] = (0, 0, 0)
 
     def get_adjacent_segment_exits(self, position: tuple[int, int, int]) -> list[int]:
+        """
+        Get exits of the segments adjacent to the segment at given position.
+
+        Args:
+            position: position of the segment
+
+        Returns:
+            list of exits of the adjacent segments
+
+        """
         directions = [NORTH, EAST, SOUTH, WEST]
         opposite_directions = [SOUTH, WEST, NORTH, EAST]
         offsets = [(0, -1, 0), (1, 0, 0), (0, 1, 0), (-1, 0, 0)]
@@ -48,8 +58,12 @@ class Board:
         """
         Get segment at given position. If there is no segment at given position, then it is created.
 
-        :param position: position of the segment
-        :return: segment at given position
+        Args:
+            position: position of the segment
+
+        Returns:
+            segment at given position
+
         """
         if position not in self.map.keys():
             exits = self.get_adjacent_segment_exits(position)

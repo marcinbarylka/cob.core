@@ -8,10 +8,16 @@ from cob_core.features import Feature, FeatureFactory
 
 class Segment:
     def __init__(self, exits: list[int] | None) -> None:
-        if not exits:
-            exits = [EXIT_UNDEFINED] * 4
-
-        self.exits: list[int] = exits
+        self.exits: list[int] = (
+            exits
+            if exits is not None
+            else [
+                EXIT_UNDEFINED,
+                EXIT_UNDEFINED,
+                EXIT_UNDEFINED,
+                EXIT_UNDEFINED,
+            ]
+        )
 
     def complete_exits(self):
         """
@@ -41,7 +47,9 @@ class Segment:
         """
         A helper function to convert the exits to a string.
 
-        :return: a string representing the exits of the segment (N, E, S, W)
+        Returns:
+            tuple of strings representing the exits
+
         """
         str_exits = ("north", "east", "south", "west")
         result = []

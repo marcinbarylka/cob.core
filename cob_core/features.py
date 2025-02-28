@@ -1,7 +1,9 @@
 """Room feature module."""
 
 import random
-from typing import Optional
+from typing import Optional, TypeVar
+
+F = TypeVar("F", bound="Feature")
 
 
 class FeatureFactory:
@@ -17,13 +19,15 @@ class FeatureFactory:
     }
 
     @staticmethod
-    def random_feature() -> Optional["Feature"]:
+    def random_feature() -> F | None:
         """
         Return a random feature.
 
-        :return: a random feature or None if no feature is generated.
+        Returns:
+            a random feature or None
+
         """
-        if random.randint(1, 80) > 50:  # 62.5% chance to have a feature
+        if random.randint(1, 80) > 50:  # 62.5% chance to have a feature in theory, but we use 50% for simplicity
             return None
 
         total_variants = sum(len(variants) for variants in FeatureFactory.FEATURE_TABLE.values())
@@ -64,8 +68,6 @@ class BloodFountain(Fountain): ...
 
 
 ### Altars ###
-
-
 class Altar(Feature): ...
 
 
@@ -88,8 +90,6 @@ class AsmodayAltar(Altar): ...
 
 
 ### Trapdoors ###
-
-
 class TrapDoor(Feature): ...
 
 
@@ -176,6 +176,4 @@ class XStatue(Statue): ...
 
 
 ### Mirrors ###
-
-
 class Mirror(Feature): ...
