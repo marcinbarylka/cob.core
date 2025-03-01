@@ -1,17 +1,10 @@
 """Game map module."""
 
 from cob_core import (
-    EAST,
-    EXIT_CORRIDOR,
-    EXIT_ROOM,
-    EXIT_UNDEFINED,
-    NORTH,
-    SOUTH,
-    WEST,
-    X,
-    Y,
-    Z,
     dice,
+    Direction,
+    Exit,
+    Axis,
 )
 from cob_core.monsters import Monster
 from cob_core.segment import GatewayOfEvil, Room, Segment
@@ -39,14 +32,14 @@ class Board:
             list of exits of the adjacent segments
 
         """
-        directions = [NORTH, EAST, SOUTH, WEST]
-        opposite_directions = [SOUTH, WEST, NORTH, EAST]
+        directions = [Direction.north, Direction.east, Direction.south, Direction.west]
+        opposite_directions = [Direction.south, Direction.west, Direction.north, Direction.east]
         offsets = [(0, -1, 0), (1, 0, 0), (0, 1, 0), (-1, 0, 0)]
 
-        exits = [EXIT_UNDEFINED for _ in directions]
+        exits = [Exit.undefined for _ in directions]
 
         for i, (dx, dy, dz) in enumerate(offsets):
-            neighbor_position = (position[X] + dx, position[Y] + dy, position[Z] + dz)
+            neighbor_position = (position[Axis.x] + dx, position[Axis.y] + dy, position[Axis.z] + dz)
             neighbor_segment = self.map.get(neighbor_position)
 
             if neighbor_segment:
@@ -72,7 +65,7 @@ class Board:
             # In the original Citadel of Blood core there are 200 segments and 80 of them are rooms.
             # In Polish pirated version the ratio room:corridor is 0.38.
             # Here, we use the extended ratio.
-            if EXIT_ROOM in exits and EXIT_CORRIDOR not in exits:
+            if Exit.room in exits and Exit.corridor not in exits:
                 d100 = dice.roll("d100")
                 if d100 <= 50:
                     s = Room(exits=exits)

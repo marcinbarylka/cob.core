@@ -1,6 +1,5 @@
 """cob_core package."""
 
-
 from .enums import Axis, Direction, Exit, FontMap
 
 __all__ = [
