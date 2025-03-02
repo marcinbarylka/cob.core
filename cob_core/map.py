@@ -32,14 +32,14 @@ class Board:
             list of exits of the adjacent segments
 
         """
-        directions = [Direction.north, Direction.east, Direction.south, Direction.west]
-        opposite_directions = [Direction.south, Direction.west, Direction.north, Direction.east]
+        directions = [Direction.north.value, Direction.east.value, Direction.south.value, Direction.west.value]
+        opposite_directions = [Direction.south.value, Direction.west.value, Direction.north.value, Direction.east.value]
         offsets = [(0, -1, 0), (1, 0, 0), (0, 1, 0), (-1, 0, 0)]
 
         exits = [Exit.undefined for _ in directions]
 
         for i, (dx, dy, dz) in enumerate(offsets):
-            neighbor_position = (position[Axis.x] + dx, position[Axis.y] + dy, position[Axis.z] + dz)
+            neighbor_position = (position[Axis.x.value] + dx, position[Axis.y.value] + dy, position[Axis.z.value] + dz)
             neighbor_segment = self.map.get(neighbor_position)
 
             if neighbor_segment:
