@@ -3,6 +3,8 @@
 from cob_core.heroes import Hero, Initiate
 from cob_core.monsters import Monster
 
+Character = Hero | Initiate | Monster
+
 
 class Party(list):
     """
@@ -18,13 +20,12 @@ class Party(list):
 
     MAX_CHARACTER_IN_RANK = 3
 
-    def __init__(self, characters: list[Hero | Initiate | Monster | None] = None):
+    def __init__(self, characters: list[Character | None] = None):
         super().__init__()
         if characters:
             for character in characters:
-                if character is not None and not isinstance(character, (Hero, Initiate, Monster)):
-                    raise TypeError("Character must be of type Hero, Initiate, Monster or None")
-            self.append(character)
+                self._check_character(character)
+                self.append(character)
 
     def get_size_xy(self) -> tuple[int, int]:
         """
@@ -53,6 +54,17 @@ class Party(list):
         ):
             raise ValueError("Invalid position")
 
+    def _check_character(self, character: Character | None) -> None:
+        """
+        Check if the character is valid.
+
+        Args:
+            character: character to check
+
+        """
+        if character is not None and not isinstance(character, Character):
+            raise TypeError("Character must be of type Hero, Initiate, Monster or None")
+
     def calculate_linear_index(self, x_pos: int, y_pos: int) -> int:
         """
         Calculate the linear index from the x and y positions.
@@ -80,17 +92,23 @@ class Party(list):
         """
         return linear_index % Party.MAX_CHARACTER_IN_RANK, linear_index // Party.MAX_CHARACTER_IN_RANK
 
-    def add_character(self, character: Hero | Initiate | Monster) -> None:
+    def add_character(self, character: Character | None) -> None:
         """
         Add a character to the party.
 
         Args:
             character: character to add to the party
 
+        Raises:
+            ValueError: if the character is already in the party
+
         """
+        self._check_character(character)
+        if character in self:
+            raise ValueError("Character already in party")
         self.append(character)
 
-    def remove_character(self, character: Hero | Initiate | Monster) -> None:
+    def remove_character(self, character: Character) -> None:
         """
         Remove a character from the party.
 
@@ -115,7 +133,7 @@ class Party(list):
         self._check_position(x_pos, y_pos)
         self.add_character_at(None, x_pos, y_pos)
 
-    def find_character(self, character: Hero | Initiate | Monster) -> tuple[int, int]:
+    def find_character(self, character: Character) -> tuple[int, int]:
         """
         Find the position of a character in the party.
 
@@ -125,13 +143,17 @@ class Party(list):
         Returns:
             position of the character in the party
 
+        Raises:
+            ValueError: if the character is not in the party
+
         """
+        self._check_character(character)
         if character not in self:
             raise ValueError("Character not in party")
         linear_index = self.index(character)
         return self.calculate_position(linear_index)
 
-    def add_character_at(self, character: Hero | Initiate | Monster, x_pos: int, y_pos: int) -> None:
+    def add_character_at(self, character: Character | None, x_pos: int, y_pos: int) -> None:
         """
         Set a character at a specific index.
 
@@ -147,7 +169,7 @@ class Party(list):
                 self.append(None)
         self[linear_index] = character
 
-    def get_from(self, x_pos: int, y_pos: int) -> Hero | Initiate | Monster | None:
+    def get_from(self, x_pos: int, y_pos: int) -> Character | None:
         """
         Get a character at a specific index.
 
@@ -161,7 +183,7 @@ class Party(list):
         """
         return self[self.calculate_linear_index(x_pos, y_pos)]
 
-    def get_rank(self, rank_no: int) -> list[Hero | Initiate | Monster]:
+    def get_rank(self, rank_no: int) -> list[Character | None]:
         """
         Get the characters of a specific rank.
 
@@ -178,7 +200,7 @@ class Party(list):
         end_index = min(start_index + Party.MAX_CHARACTER_IN_RANK, len(self))
         return self[start_index:end_index]
 
-    def get_ranks(self) -> list[list[Hero | Initiate | Monster]]:
+    def get_ranks(self) -> list[list[Character | None]]:
         """
         Get the characters of all ranks.
 
