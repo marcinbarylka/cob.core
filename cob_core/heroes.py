@@ -604,5 +604,8 @@ def random_heroes(how_many: int = 3) -> list[Hero]:
         list: list of random heroes
 
     """
-
+    if how_many > 3:
+        raise ValueError(f"Too many heroes requested. Maximum is 3, but {how_many} requested.")
+    if how_many < 1:
+        raise ValueError(f"Too few heroes requested. Minimum is 1, but {how_many} requested.")
     return random.sample(HeroesEnum.to_list(), how_many)
