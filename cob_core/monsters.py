@@ -387,11 +387,17 @@ def spawn_monster(monster_class: Type[Monster], level: int = 1, is_wandering: bo
     """
     Spawn a monster of the given class and level.
 
-    :param monster_class: Type[Monster]: The class of the monster.
-    :param level: int: The level of the maze.
-    :param is_wandering: bool: True if the monster is a wandering monster.
+    Args:
+        monster_class (Type[Monster]): The class of the monster to spawn.
+        level (int): The level of the maze.
+        is_wandering (bool): True if the monster is a wandering monster.
 
-    :return: list[Monster]: A list of monsters.
+    Returns:
+        list[Monster]: A list of monsters.
+
+    Raises:
+        ValueError: If the level is not between 1 and 3.
+
     """
     if level < 1 or level > 3:
         raise ValueError("Level must be between 1 and 3")
@@ -432,12 +438,15 @@ def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Mons
     """
     Roll a random monster.
 
-    :param wandering: bool: True if the monster is a wandering monster.
-    :param d1: int: The first die roll.
-    :param d2: int: The second die roll.
-    :param level: int: The level of the maze.
+    Args:
+        wandering (bool): True if the monster is a wandering monster.
+        d1 (int): The first die roll.
+        d2 (int): The second die roll.
+        level (int): The level of the maze.
 
-    :return: list[Monster]: A list of monsters.
+    Returns:
+        list[Monster]: A list of monsters.
+
     """
     if wandering:
         code = WANDERING_MONSTER_TABLE[d1][d2]
@@ -463,22 +472,28 @@ def roll_room_monster(level: int = 1):
     """
     Roll a random room monster.
 
-    :param level: int: The level of the maze.
+    Args:
+        level (int): The level of the maze.
 
-    :return: list[Monster]: A list of monsters.
+    Returns:
+        list[Monster]: A list of monsters.
+
     """
     d6_1 = roll("d6") - 1
     d6_2 = roll("d6") - 1
     return roll_monster(False, d6_1, d6_2, level)
 
 
-def roll_wandering_monster(level: int = 1):
+def roll_wandering_monster(level: int = 1) -> list[Monster]:
     """
     Roll a random wandering monster.
 
-    :param level: int: The level of the maze.
+    Args:
+        level (int): The level of the maze.
 
-    :return: list[Monster]: A list of monsters.
+    Returns:
+        list[Monster]: A list of monsters.
+
     """
     d3_1 = roll("d3") - 1
     d6_2 = roll("d6") - 1
