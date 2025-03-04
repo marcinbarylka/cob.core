@@ -101,7 +101,7 @@ class Party(list):
         if character not in self:
             raise ValueError("Character not in party")
         linear = self.index(character)
-        self.set_at(None, *self.calculate_position(linear))
+        self.add_character_at(None, *self.calculate_position(linear))
 
     def remove_at(self, x_pos: int, y_pos: int) -> None:
         """
@@ -113,7 +113,7 @@ class Party(list):
 
         """
         self._check_position(x_pos, y_pos)
-        self.set_at(None, x_pos, y_pos)
+        self.add_character_at(None, x_pos, y_pos)
 
     def find_character(self, character: Hero | Initiate | Monster) -> tuple[int, int]:
         """
