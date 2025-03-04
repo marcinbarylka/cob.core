@@ -2,6 +2,7 @@
 
 import enum
 from dataclasses import dataclass, field
+import random
 from typing import Any
 
 from cob_core import dice, FontMap
@@ -575,3 +576,19 @@ class InitiatesEnum(enum.Enum):
         magic_potential=(0, 0, 0),
         icon=FontMap.dwarf_c.value,
     )
+
+
+def random_heroes(how_many: int = 3) -> list[Hero]:
+    """
+    Get random heroes.
+
+    Args:
+        how_many: number of heroes to get
+
+    Returns:
+        list: list of random heroes
+
+    """
+
+    random_heroes = random.sample(list(HeroesEnum), how_many)
+    return [hero.value for hero in random_heroes]
