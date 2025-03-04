@@ -1,131 +1,174 @@
-"""Module for the party class."""
+""""Module for the party class."""
 
 from cob_core.heroes import Hero, Initiate
 from cob_core.monsters import Monster
 
 
-class Party:
-    def __init__(self, beings: list[Hero | Initiate | Monster] | None):
-        if not beings:
-            beings = []
-        self.ranks: list[list[Hero | Initiate | Monster | None]] = [
-            [None, None, None],
-        ]
-        self.add_beings(beings)
+class Party(list):
+    """
+    Party class. It is responsible for storing the heroes and the initiate of the party.
 
-    def add_beings(self, beings: list[Hero | Initiate | Monster]) -> None:
+    The Party is organized in ranks. Every rank can have at most 3 characters. The first rank is the front rank, the
+    second rank is the middle rank, and the third rank (if any) is the back rank.
+
+    The party is a list of characters. The characters are stored in the list in the following order:
+    - front rank characters
+    - middle rank characters
+    - back rank characters
+
+    """
+    MAX_CHARACTER_IN_RANK = 3
+
+    def get_size_xy(self) -> tuple[int, int]:
         """
-        Add a being to the party.
+        Get the size of the party in the x and y dimensions.
 
-        :param beings: a hero, initiate or monster to add
-        """
-        for rank in self.ranks:
-            for position, slot in enumerate(rank):
-                if slot is None and beings:
-                    rank[position] = beings.pop(0)
-        if len(beings) > 0:
-            for _ in beings:
-                self.add_rank()
-                self.add_beings(beings)
-        self.remove_empty_ranks()
-
-    def add_being(self, being: Hero | Initiate | Monster, position: tuple[int, int], force=False) -> None:
-        """
-        Add a single being to the party at a specific position.
-
-        :param being: a being to add
-        :param position: a position where to add the being (row, column)
-        :param force: a flag to force add the being (optional)
-        """
-        if position[0] > 2:
-            raise ValueError("Position X out of range")
-        if position[1] > len(self.ranks[0]):
-            for _ in range(position[1] - len(self.ranks[0])):
-                self.add_rank()
-
-        if self.ranks[position[0]][position[1]] and not force:
-            raise ValueError(f"Position {position} already taken")
-
-        self.ranks[position[0]][position[1]] = being
-
-        if force:
-            self.remove_empty_ranks()
-
-    def remove_being(
-        self, being: Hero | Initiate | Monster, position: tuple[int, int] | None = None
-    ) -> Hero | Initiate | Monster | None:
-        """
-        Remove a hero from the party.
-
-        :param being: a hero to remove
-        :param position: a position where to remove the hero (row, column) (optional)
+        Returns:
+            tuple of the size of the party in the x and y dimensions
 
         """
-        if position:
-            self.ranks[position[0]][position[1]] = None
-            return being
+        return Party.MAX_CHARACTER_IN_RANK, len(self) // Party.MAX_CHARACTER_IN_RANK
 
-        for rank in self.ranks:
-            if being in rank:
-                rank[rank.index(being)] = None
-                break
-
-    def swap_beings(self, being1: Hero | Initiate | Monster, being2: Hero | Initiate | Monster):
+    def _check_position(self, x_pos: int, y_pos: int) -> None:
         """
-        Swap two heroes in the party.
+        Check if the position is valid.
 
-        :param being1: a hero to swap
-        :param being2: a hero to swap
-        """
-        for rank in self.ranks:
-            if being1 in rank and being2 in rank:
-                rank[rank.index(being1)], rank[rank.index(being2)] = being2, being1
-                break
+        Args:
+            x_pos: x position
+            y_pos: y position
 
-    def find_being(self, name: str) -> Hero | Initiate | Monster | None:
         """
-        Find a hero in the party by name.
+        if x_pos < 0 or x_pos >= Party.MAX_CHARACTER_IN_RANK or y_pos < 0 or y_pos >= len(self) // Party.MAX_CHARACTER_IN_RANK:
+            raise ValueError("Invalid position")
 
-        :param name: a name of the hero
+    def calculate_linear_index(self, x_pos: int, y_pos: int) -> int:
         """
-        for rank in self.ranks:
-            for being in rank:
-                if being and being.name == name:
-                    return being
+        Calculate the linear index from the x and y positions.
 
-    def get_being(self, position: tuple[int, int]) -> Hero | Initiate | Monster | None:
-        """
-        Get a hero from the party.
+        Args:
+            x_pos: x position
+            y_pos: y position
 
-        :param position: a position of the hero (row, column)
-        """
-        return self.ranks[position[0]][position[1]]
+        Returns:
+            linear index
 
-    def get_being_position(self, being: Hero | Initiate | Monster) -> tuple[int, int] | None:
         """
-        Get a position of the hero in the party.
+        return x_pos + y_pos * Party.MAX_CHARACTER_IN_RANK
 
-        :param being: a hero to get a position
+    def calculate_position(self, linear_index: int) -> tuple[int, int]:
         """
-        for i, rank in enumerate(self.ranks):
-            if being in rank:
-                return i, rank.index(being)
+        Calculate the x and y positions from the linear index.
 
-    def add_rank(self):
-        """
-        Add a rank to the party.
-        """
-        self.ranks.append([None, None, None])
+        Args:
+            linear_index: linear index
 
-    def remove_empty_ranks(self):
-        """
-        Remove empty ranks from the party.
-        """
-        self.ranks = [rank for rank in self.ranks if any(being for being in rank)]
+        Returns:
+            x and y positions
 
-    @property
-    def beings(self) -> list[Hero | Initiate | Monster]:
-        return [being for rank in self.ranks for being in rank if being]
+        """
+        return linear_index % Party.MAX_CHARACTER_IN_RANK, linear_index // Party.MAX_CHARACTER_IN_RANK
 
-    def __len__(self):
-        return len(self.beings)
+    def add_character(self, character: Hero | Initiate | Monster) -> None:
+        """
+        Add a character to the party.
+
+        Args:
+            character: character to add to the party
+
+        """
+        self.append(character)
+
+    def remove_character(self, character: Hero | Initiate | Monster) -> None:
+        """
+        Remove a character from the party.
+
+        Args:
+            character: character to remove from the party
+
+        """
+        if character not in self:
+            raise ValueError("Character not in party")
+        linear = self.index(character)
+        self.set_at(None, *self.calculate_position(linear))
+
+    def remove_at(self, x_pos: int, y_pos: int) -> None:
+        """
+        Remove a character from the party at a specific index.
+
+        Args:
+            x_pos: x position
+            y_pos: y position
+
+        """
+        self._check_position(x_pos, y_pos)
+        self.set_at(None, x_pos, y_pos)
+
+    def find_character(self, character: Hero | Initiate | Monster) -> tuple[int, int]:
+        """
+        Find the position of a character in the party.
+
+        Args:
+            character: character to find
+
+        Returns:
+            position of the character in the party
+
+        """
+        linear_index = self.index(character)
+        return self.calculate_position(linear_index)
+
+
+    def set_at(self, character: Hero | Initiate | Monster, x_pos: int, y_pos: int) -> None:
+        """
+        Set a character at a specific index.
+
+        Args:
+            character: character to set
+            x_pos: x position
+            y_pos: y position
+
+        """
+        linear_index = self.calculate_linear_index(x_pos, y_pos)
+        if linear_index > len(self):
+            for _ in range(len(self), linear_index + 1):
+                self.append(None)
+        self[linear_index] = character
+
+    def get_from(self, x_pos: int, y_pos: int) -> Hero | Initiate | Monster:
+        """
+        Get a character at a specific index.
+
+        Args:
+            x_pos: x position
+            y_pos: y position
+
+        Returns:
+            character at the given position
+
+        """
+        return self[self.calculate_linear_index(x_pos, y_pos)]
+
+    def get_rank(self, rank_no: int) -> list[Hero | Initiate | Monster]:
+        """
+        Get the characters of a specific rank.
+
+        Args:
+            rank_no: rank number
+
+        Returns:
+            list of characters of the given rank
+
+        """
+        if rank_no < 0 or rank_no >= len(self) // Party.MAX_CHARACTER_IN_RANK:
+            raise ValueError("Invalid rank number")
+        return self[rank_no * Party.MAX_CHARACTER_IN_RANK:(rank_no + 1) * Party.MAX_CHARACTER_IN_RANK]
+
+    def get_ranks(self) -> list[list[Hero | Initiate | Monster]]:
+        """
+        Get the characters of all ranks.
+
+        Returns:
+            list of lists of characters of all ranks
+
+        """
+        return [self.get_rank(rank_no) for rank_no in range(len(self) // Party.MAX_CHARACTER_IN_RANK)]
