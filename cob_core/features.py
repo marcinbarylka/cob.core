@@ -1,7 +1,7 @@
 """Room feature module."""
 
 import random
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 F = TypeVar("F", bound="Feature")
 

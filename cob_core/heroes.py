@@ -592,7 +592,6 @@ class InitiatesEnum(enum.Enum):
         return list(InitiatesEnum.__members__.values())
 
 
-
 def random_heroes(how_many: int = 3) -> list[Hero]:
     """
     Get random heroes.
