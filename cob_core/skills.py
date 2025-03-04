@@ -9,7 +9,9 @@ class Skill(ABC):
     """
     This class represents a skill. It is used to represent a skill of a character.
 
-    :param value: value of the skill
+    Attributes:
+        value: value of the skill
+        skill_name: name of the skill
     """
 
     def __init__(self, value: int):

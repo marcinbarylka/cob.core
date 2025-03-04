@@ -6,6 +6,9 @@ from dataclasses import dataclass
 
 @dataclass
 class MagicItem(abc.ABC):
+    """
+    Magic item class.
+    """
     type: str
     name: str
     description: str

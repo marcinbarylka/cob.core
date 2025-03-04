@@ -20,6 +20,16 @@ class Weapon:
         self.is_ranged_weapon: bool = is_ranged_weapon
 
     def get_damage(self, roll: int) -> int:
+        """
+        Get damage based on the roll.
+
+        Args:
+            roll (int): roll
+
+        Returns:
+            int: damage
+
+        """
         if roll >= len(self.damage_table):
             return self.damage_table[-1]
         if roll < 0:

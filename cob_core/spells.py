@@ -34,8 +34,13 @@ class Spell(abc.ABC):
     def get_spells_by_type(spell_type):
         """
         Returns a list of instances of Spell subclasses that match the given spell_type.
-        :param spell_type: SpellType Enum value indicating the type of spells to retrieve.
-        :return: List of instances of subclasses of Spell that match the spell_type.
+
+        Args:
+            spell_type: SpellType
+
+        Returns:
+            list: list of Spell instances
+
         """
         spell_classes = []
         for _, obj in globals().items():

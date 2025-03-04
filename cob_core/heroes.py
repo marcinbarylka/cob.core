@@ -27,23 +27,6 @@ from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
 class Hero:
     """
     A hero. A character that can be played by a player.
-
-    :param name: name of the hero
-    :param name_short: short name of the hero
-    :param race: a race of the hero (i.e. Human, Dwarf, Elf, Demi-Kronk, Swamp Creature)
-    :param wound_points: wound points of the hero
-    :param magic_potential: magic potential of the hero
-    :param resistance_value: resistance value of the hero
-    :param combat_bonus: combat bonus of the hero
-    :param weapons: weapons of the hero
-    :param weapon_skill: weapon skill of the hero
-    :param skill: skill of the hero
-    :param icon: icon of the hero
-    :param armor: armor of the hero
-    :param spells: spells of the hero
-    :param jewels: jewels of the hero
-    :param gold_marks: gold marks of the hero
-    :param XP: experience points of the hero
     """
 
     name: str
