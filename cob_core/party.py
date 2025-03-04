@@ -139,7 +139,7 @@ class Party(list):
                 self.append(None)
         self[linear_index] = character
 
-    def get_from(self, x_pos: int, y_pos: int) -> Hero | Initiate | Monster:
+    def get_from(self, x_pos: int, y_pos: int) -> Hero | Initiate | Monster | None:
         """
         Get a character at a specific index.
 
