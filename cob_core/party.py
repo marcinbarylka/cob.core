@@ -11,10 +11,8 @@ class Party(list):
     The Party is organized in ranks. Every rank can have at most 3 characters. The first rank is the front rank, the
     second rank is the middle rank, and the third rank (if any) is the back rank.
 
-    The party is a list of characters. The characters are stored in the list in the following order:
-    - front rank characters
-    - middle rank characters
-    - back rank characters
+    Parameters:
+        characters (list[Hero | Initiate | Monster | None]): list of characters to initialize the party with
 
     """
 
