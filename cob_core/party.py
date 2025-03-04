@@ -1,4 +1,4 @@
-""""Module for the party class."""
+""" "Module for the party class."""
 
 from cob_core.heroes import Hero, Initiate
 from cob_core.monsters import Monster
@@ -17,6 +17,7 @@ class Party(list):
     - back rank characters
 
     """
+
     MAX_CHARACTER_IN_RANK = 3
 
     def get_size_xy(self) -> tuple[int, int]:
@@ -38,7 +39,12 @@ class Party(list):
             y_pos: y position
 
         """
-        if x_pos < 0 or x_pos >= Party.MAX_CHARACTER_IN_RANK or y_pos < 0 or y_pos >= len(self) // Party.MAX_CHARACTER_IN_RANK:
+        if (
+            x_pos < 0
+            or x_pos >= Party.MAX_CHARACTER_IN_RANK
+            or y_pos < 0
+            or y_pos >= len(self) // Party.MAX_CHARACTER_IN_RANK
+        ):
             raise ValueError("Invalid position")
 
     def calculate_linear_index(self, x_pos: int, y_pos: int) -> int:
@@ -117,7 +123,6 @@ class Party(list):
         linear_index = self.index(character)
         return self.calculate_position(linear_index)
 
-
     def set_at(self, character: Hero | Initiate | Monster, x_pos: int, y_pos: int) -> None:
         """
         Set a character at a specific index.
@@ -161,7 +166,7 @@ class Party(list):
         """
         if rank_no < 0 or rank_no >= len(self) // Party.MAX_CHARACTER_IN_RANK:
             raise ValueError("Invalid rank number")
-        return self[rank_no * Party.MAX_CHARACTER_IN_RANK:(rank_no + 1) * Party.MAX_CHARACTER_IN_RANK]
+        return self[rank_no * Party.MAX_CHARACTER_IN_RANK : (rank_no + 1) * Party.MAX_CHARACTER_IN_RANK]
 
     def get_ranks(self) -> list[list[Hero | Initiate | Monster]]:
         """
