@@ -164,9 +164,11 @@ class Party(list):
             list of characters of the given rank
 
         """
-        if rank_no < 0 or rank_no >= len(self) // Party.MAX_CHARACTER_IN_RANK:
+        if rank_no < 0 or rank_no * Party.MAX_CHARACTER_IN_RANK >= len(self):
             raise ValueError("Invalid rank number")
-        return self[rank_no * Party.MAX_CHARACTER_IN_RANK : (rank_no + 1) * Party.MAX_CHARACTER_IN_RANK]
+        start_index = rank_no * Party.MAX_CHARACTER_IN_RANK
+        end_index = min(start_index + Party.MAX_CHARACTER_IN_RANK, len(self))
+        return self[start_index:end_index]
 
     def get_ranks(self) -> list[list[Hero | Initiate | Monster]]:
         """
@@ -176,4 +178,11 @@ class Party(list):
             list of lists of characters of all ranks
 
         """
-        return [self.get_rank(rank_no) for rank_no in range(len(self) // Party.MAX_CHARACTER_IN_RANK)]
+        num_full_ranks = len(self) // Party.MAX_CHARACTER_IN_RANK
+        ranks = [self.get_rank(rank_no) for rank_no in range(num_full_ranks)]
+
+        # Check for remaining characters in a partial rank
+        if len(self) % Party.MAX_CHARACTER_IN_RANK != 0:
+            ranks.append(self.get_rank(num_full_ranks))
+
+        return ranks
