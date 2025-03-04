@@ -453,6 +453,13 @@ class HeroesEnum(enum.Enum):
         FontMap.zurik.value,
     )
 
+    @staticmethod
+    def to_list() -> list[Hero]:
+        """
+        Get a list of heroes.
+        """
+        return list(HeroesEnum.__members__.values())
+
 
 class InitiatesEnum(enum.Enum):
     """
@@ -577,6 +584,14 @@ class InitiatesEnum(enum.Enum):
         icon=FontMap.dwarf_c.value,
     )
 
+    @staticmethod
+    def to_list() -> list[Initiate]:
+        """
+        Get a list of heroes.
+        """
+        return list(InitiatesEnum.__members__.values())
+
+
 
 def random_heroes(how_many: int = 3) -> list[Hero]:
     """
@@ -590,5 +605,4 @@ def random_heroes(how_many: int = 3) -> list[Hero]:
 
     """
 
-    random_heroes = random.sample(list(HeroesEnum), how_many)
-    return [hero.value for hero in random_heroes]
+    return random.sample(HeroesEnum.to_list(), how_many)
