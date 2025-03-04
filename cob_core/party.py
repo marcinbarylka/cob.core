@@ -35,7 +35,7 @@ class Party(list):
             tuple of the size of the party in the x and y dimensions
 
         """
-        return Party.MAX_CHARACTER_IN_RANK, len(self) // Party.MAX_CHARACTER_IN_RANK
+        return Party.MAX_CHARACTER_IN_RANK, max(1, len(self) // Party.MAX_CHARACTER_IN_RANK)
 
     def _check_position(self, x_pos: int, y_pos: int) -> None:
         """
@@ -181,6 +181,9 @@ class Party(list):
             character at the given position
 
         """
+        linear_index = self.calculate_linear_index(x_pos, y_pos)
+        if linear_index >= len(self):
+            return None
         return self[self.calculate_linear_index(x_pos, y_pos)]
 
     def get_rank(self, rank_no: int) -> list[Character | None]:
