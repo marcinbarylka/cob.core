@@ -120,10 +120,12 @@ class Party(list):
             position of the character in the party
 
         """
+        if character not in self:
+            raise ValueError("Character not in party")
         linear_index = self.index(character)
         return self.calculate_position(linear_index)
 
-    def set_at(self, character: Hero | Initiate | Monster, x_pos: int, y_pos: int) -> None:
+    def add_character_at(self, character: Hero | Initiate | Monster, x_pos: int, y_pos: int) -> None:
         """
         Set a character at a specific index.
 
@@ -134,7 +136,7 @@ class Party(list):
 
         """
         linear_index = self.calculate_linear_index(x_pos, y_pos)
-        if linear_index > len(self):
+        if linear_index >= len(self):
             for _ in range(len(self), linear_index + 1):
                 self.append(None)
         self[linear_index] = character
