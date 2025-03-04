@@ -20,6 +20,15 @@ class Party(list):
 
     MAX_CHARACTER_IN_RANK = 3
 
+    def __init__(self, characters: list[Hero | Initiate | Monster | None] = None):
+        super().__init__()
+        if characters:
+        for character in characters:
+            if character is not None and not isinstance(character, (Hero, Initiate, Monster)):
+                raise TypeError("Character must be of type Hero, Initiate, Monster or None")
+            self.append(character)
+
+
     def get_size_xy(self) -> tuple[int, int]:
         """
         Get the size of the party in the x and y dimensions.
