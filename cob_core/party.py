@@ -20,7 +20,7 @@ class Party(list):
 
     MAX_CHARACTER_IN_RANK = 3
 
-    def __init__(self, characters: list[Character | None] = None):
+    def __init__(self, characters: list[Character | None] | None = None):
         super().__init__()
         if characters:
             for character in characters:
