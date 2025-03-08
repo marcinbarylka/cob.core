@@ -1,3 +1,5 @@
+"""Scene module for the mechanics package."""
+
 from cob_core.mechanics import dice
 from cob_core.mechanics.heroes import Hero, Initiate
 from cob_core.mechanics.monsters import Monster
@@ -7,13 +9,13 @@ from cob_core.mechanics.weapons import Weapon
 
 
 class Scene:
+    """Scene class for the mechanics package."""
+
     def __init__(self, party: Party, monsters: Party | list[Monster], segment: Segment) -> None:
+        """Initialize the Scene class."""
         self.party: Party = party
 
-        if isinstance(monsters, list):
-            _monsters_party = Party(monsters)
-        else:
-            _monsters_party = monsters
+        _monsters_party = Party(monsters) if isinstance(monsters, list) else monsters
 
         self.monsters: Party = _monsters_party
         self.segment: Segment = segment
@@ -24,8 +26,14 @@ class Scene:
         target: Hero | Initiate | Monster,
         weapon: Weapon,
     ) -> None:
-        """
-        Attack the target monster with the attacker monster.
+        """Attack the target monster with the attacker monster.
+
+        Args:
+        ----
+            attacker (Hero | Initiate | Monster): The monster attacking.
+            target (Hero | Initiate | Monster): The monster being attacked.
+            weapon (Weapon): The weapon being used to attack.
+
         """
         d6 = dice.roll("d6") - 1
         armor = 0

@@ -1,9 +1,9 @@
 """Game map module."""
 
 from cob_core import (
+    Axis,
     Direction,
     Exit,
-    Axis,
 )
 from cob_core.mechanics import dice
 from cob_core.mechanics.monsters import Monster
@@ -11,24 +11,25 @@ from cob_core.mechanics.segment import GatewayOfEvil, Room, Segment
 
 
 class Board:
-    """
-    Board class. It is responsible for rendering the board and moving the party counter. It also stores the map and
+    """Board class. It is responsible for rendering the board and moving the party counter. It also stores the map and
     monsters.
     """
 
     def __init__(self) -> None:
+        """Initialize the Board class."""
         self.map: dict[tuple[int, int, int], Segment] = {(0, 0, 0): GatewayOfEvil()}
         self.monsters: dict[tuple[int, int, int], Monster] = {}
         self.party_position: tuple[int, int, int] = (0, 0, 0)
 
     def get_adjacent_segment_exits(self, position: tuple[int, int, int]) -> list[int]:
-        """
-        Get exits of the segments adjacent to the segment at given position.
+        """Get exits of the segments adjacent to the segment at given position.
 
         Args:
+        ----
             position: position of the segment
 
         Returns:
+        -------
             list of exits of the adjacent segments
 
         """
@@ -48,17 +49,18 @@ class Board:
         return exits
 
     def get_segment(self, position: tuple[int, int, int]) -> Segment:
-        """
-        Get segment at given position. If there is no segment at given position, then it is created.
+        """Get segment at given position. If there is no segment at given position, then it is created.
 
         Args:
+        ----
             position: position of the segment
 
         Returns:
+        -------
             segment at given position
 
         """
-        if position not in self.map.keys():
+        if position not in self.map:
             exits = self.get_adjacent_segment_exits(position)
             s = Segment(exits=exits)
 

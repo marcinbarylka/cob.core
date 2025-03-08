@@ -1,8 +1,8 @@
 """Module for heroes and initiates."""
 
 import enum
-from dataclasses import dataclass, field
 import random
+from dataclasses import dataclass, field
 from typing import Any
 
 from cob_core import FontMap
@@ -26,9 +26,7 @@ from cob_core.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagg
 
 @dataclass
 class Hero:
-    """
-    A hero. A character that can be played by a player.
-    """
+    """A hero. A character that can be played by a player."""
 
     name: str
     name_short: str
@@ -50,8 +48,7 @@ class Hero:
     _wound_points: int = 0
 
     def __post_init__(self):
-        """
-        Post initialization method.
+        """Post initialization method.
 
         It sets the wound points of the hero.
 
@@ -60,11 +57,12 @@ class Hero:
 
     @property
     def max_wound_points(self):
-        """
-        Maximum wound points of the hero.
+        """Return the maximum wound points of the hero.
 
-        Returns:
+        Returns
+        -------
             int: maximum wound points of the hero
+
         """
         return self._wound_points
 
@@ -72,32 +70,36 @@ class Hero:
     def is_alive(self) -> bool:
         """Check if the hero is alive.
 
-        Returns:
+        Returns
+        -------
             bool: True if the hero is alive, False otherwise
 
         """
         return self.wound_points > 0
 
     def fight(self, weapon: Weapon) -> int:
-        """
-        The hero fights with an opponent.
+        """Fight with the weapon.
 
         A hero rolls a dice and adds a combat bonus to the result. If the hero has a weapon skill,
         the value of the skill is added to the result. The result is used to calculate the damage
         that the hero deals to the opponent.
 
         Args:
+        ----
             weapon: weapon of the hero
 
         Returns:
+        -------
             int: damage that the hero deals to the opponent
 
         Raises:
+        ------
             ValueError: if the hero does not have the weapon
 
         """
         if weapon not in self.weapons:
-            raise ValueError(f"{self.name} does not have this weapon.")
+            msg = f"{self.name} does not have this weapon."
+            raise ValueError(msg)
 
         if self.weapon_skill and self.weapon_skill.weapon == weapon:
             roll_dice = dice.roll(f"d6+{self.combat_bonus + self.weapon_skill.value}")
@@ -107,24 +109,24 @@ class Hero:
 
 
 class Initiate(Hero):
-    """
-    An Initiate. A character that can be played by a player. It is a weaker version of a hero.
-    """
+    """An Initiate. A character that can be played by a player. It is a weaker version of a hero."""
 
     def __post_init__(self):
+        """Post initialization method."""
         super().__post_init__()
         self.magic_potential = MAGIC_POTENTIAL_TABLE[dice.roll("d6") - 1]
 
     def add_weapon(self, weapon: Weapon) -> None:
-        """
-        Add new weapon to the initiate.
+        """Add new weapon to the initiate.
 
         Args:
+        ----
             weapon: weapon to add
 
         """
         if len(self.weapons) == 2:
-            raise ValueError("The initiate already has two weapons.")
+            msg = "The Initiate already has two weapons."
+            raise ValueError(msg)
         weapons = list(self.weapons)
         while len(weapons) < 2:
             weapons.append(weapon)
@@ -133,9 +135,7 @@ class Initiate(Hero):
 
 
 class HeroesEnum(enum.Enum):
-    """
-    Enum of heroes.
-    """
+    """Enum of heroes."""
 
     almuric = Hero(
         "Almuric",
@@ -439,16 +439,12 @@ class HeroesEnum(enum.Enum):
 
     @staticmethod
     def to_list() -> list[Hero]:
-        """
-        Get a list of heroes.
-        """
+        """Get a list of heroes."""
         return list(HeroesEnum.__members__.values())
 
 
 class InitiatesEnum(enum.Enum):
-    """
-    Enum of initiates.
-    """
+    """Enum of initiates."""
 
     human_a = Initiate(
         name="",
@@ -570,25 +566,26 @@ class InitiatesEnum(enum.Enum):
 
     @staticmethod
     def to_list() -> list[Initiate]:
-        """
-        Get a list of heroes.
-        """
+        """Get a list of heroes."""
         return list(InitiatesEnum.__members__.values())
 
 
 def random_heroes(how_many: int = 3) -> list[Hero]:
-    """
-    Get random heroes.
+    """Get random heroes.
 
     Args:
+    ----
         how_many: number of heroes to get
 
     Returns:
+    -------
         list: list of random heroes
 
     """
     if how_many > 3:
-        raise ValueError(f"Too many heroes requested. Maximum is 3, but {how_many} requested.")
+        msg = f"Too many heroes requested. Maximum is 3, but {how_many} requested."
+        raise ValueError(msg)
     if how_many < 1:
-        raise ValueError(f"Too few heroes requested. Minimum is 1, but {how_many} requested.")
+        msg = f"Too few heroes requested. Minimum is 1, but {how_many} requested."
+        raise ValueError(msg)
     return random.sample(HeroesEnum.to_list(), how_many)
