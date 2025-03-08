@@ -1,12 +1,15 @@
-[tool.poetry]
-name = "cob-core"
+[project]
+name = "citadel-of-blood"
 version = "0.1.0"
 description = ""
-authors = ["Marcin Baryłka <marcin.barylka@gmail.com>"]
+authors = [
+    {name = "Marcin Baryłka", email = "marcin.barylka@gmail.com"}
+]
 readme = "README.md"
+requires-python = ">=3.12"
 
-[tool.poetry.dependencies]
-python = "^3.12"
+[tool.poetry]
+packages = [{include = "citadel_of_blood"}]
 
 
 [tool.poetry.group.dev.dependencies]
@@ -18,6 +21,71 @@ pre-commit = "^4.1.0"
 
 [tool.ruff]
 line-length = 120
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    "migrations",
+    "static",
+    "templates",
+    "media",
+    "logs",
+    "tmp",
+    "var",
+    "manage.py",
+    "tests",
+    "tests.py",
+]
+
+[tool.ruff.format]
+docstring-code-format = false
+quote-style="double"
+
+[tool.ruff.lint]
+select = [
+    "C4", # flake8-comprehensions
+    "D",  # pydocstyle
+    "E",  # Error
+    "F",  # pyflakes
+    "I",  # isort
+    "N",  # pep8-naming
+    "PGH",  # pygrep-hooks
+    "PTH", # flake8-use-pathlib
+    "Q",  # flake8-quotes
+    "S",  # bandit
+    "SIM",  # flake8-simplify
+    "TRY",  # tryceratops
+    "UP",  # pyupgrade
+    "W",  # Warning
+    "YTT", # flake8-2020
+]
+ignore = ["D203", "D213"]
 
 [build-system]
 requires = ["poetry-core"]
