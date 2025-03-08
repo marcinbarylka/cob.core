@@ -28,14 +28,10 @@ class FeatureFactory:
 
         """
         # todo: refactor me
-        if (
-            random.randint(1, 80) > 50
-        ):  # 62.5% chance to have a feature in theory, but we use 50% for simplicity
+        if random.randint(1, 80) > 50:  # 62.5% chance to have a feature in theory, but we use 50% for simplicity
             return None
 
-        total_variants = sum(
-            len(variants) for variants in FeatureFactory.FEATURE_TABLE.values()
-        )
+        total_variants = sum(len(variants) for variants in FeatureFactory.FEATURE_TABLE.values())
         random_variant_number = random.randint(1, total_variants)
 
         for feature_type, variants in FeatureFactory.FEATURE_TABLE.items():
