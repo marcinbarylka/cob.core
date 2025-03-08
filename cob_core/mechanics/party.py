@@ -1,7 +1,7 @@
 """ "Module for the party class."""
 
-from cob_core.heroes import Hero, Initiate
-from cob_core.monsters import Monster
+from cob_core.mechanics.heroes import Hero, Initiate
+from cob_core.mechanics.monsters import Monster
 
 Character = Hero | Initiate | Monster
 

@@ -1,6 +1,6 @@
 """cob_core package."""
 
-from .enums import Axis, Direction, Exit, FontMap
+from cob_core.mechanics.enums import Axis, Direction, Exit, FontMap
 
 __all__ = [
     "Axis",

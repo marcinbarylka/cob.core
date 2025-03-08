@@ -2,9 +2,9 @@
 
 import random
 
-from cob_core import dice
-from cob_core.enums import Exit
-from cob_core.features import Feature, FeatureFactory
+from cob_core.mechanics import dice
+from cob_core.mechanics.enums import Exit
+from cob_core.mechanics.features import Feature, FeatureFactory
 
 
 class Segment:

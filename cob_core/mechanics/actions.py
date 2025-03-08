@@ -1,7 +1,7 @@
 import abc
 
-from cob_core.scene import Scene
-from cob_core.spells import Spell
+from cob_core.mechanics.scene import Scene
+from cob_core.mechanics.spells import Spell
 
 
 class Action(abc.ABC):
