@@ -4,9 +4,9 @@ import enum
 from dataclasses import dataclass
 from typing import Any
 
-from cob_core.armors import Armor
-from cob_core.dice import Dice, roll
-from cob_core.magic_items import (
+from cob_core.mechanics.armors import Armor
+from cob_core.mechanics.dice import Dice, roll
+from cob_core.mechanics.magic_items import (
     AllSuns,
     BlueSun,
     CharmMonster,
@@ -29,7 +29,7 @@ from cob_core.magic_items import (
     Strength,
     YellowSun,
 )
-from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
+from cob_core.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
 
 JEWELERY = [1, 5, 10, 15, 20, 25, 35, 50, 75, 100, 150]
 MAGIC_ITEM_TYPES = ["weapon", "armor", "potion", "talisman", "medallion", "ring"]

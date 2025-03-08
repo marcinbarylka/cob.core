@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 
-from cob_core.weapons import Ax, Bow, Dagger, Hammer, Sword, Weapon
+from cob_core.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, Weapon
 
 
 class Skill(ABC):

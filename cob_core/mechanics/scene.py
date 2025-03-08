@@ -1,9 +1,9 @@
-from cob_core import dice
-from cob_core.heroes import Hero, Initiate
-from cob_core.monsters import Monster
-from cob_core.party import Party
-from cob_core.segment import Segment
-from cob_core.weapons import Weapon
+from cob_core.mechanics import dice
+from cob_core.mechanics.heroes import Hero, Initiate
+from cob_core.mechanics.monsters import Monster
+from cob_core.mechanics.party import Party
+from cob_core.mechanics.segment import Segment
+from cob_core.mechanics.weapons import Weapon
 
 
 class Scene:

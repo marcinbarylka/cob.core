@@ -1,13 +1,13 @@
 """Game map module."""
 
 from cob_core import (
-    dice,
     Direction,
     Exit,
     Axis,
 )
-from cob_core.monsters import Monster
-from cob_core.segment import GatewayOfEvil, Room, Segment
+from cob_core.mechanics import dice
+from cob_core.mechanics.monsters import Monster
+from cob_core.mechanics.segment import GatewayOfEvil, Room, Segment
 
 
 class Board:

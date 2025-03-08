@@ -2,9 +2,9 @@
 
 from abc import ABC, abstractmethod
 
-from cob_core import dice
-from cob_core.heroes import Hero, Initiate
-from cob_core.party import Party
+from cob_core.mechanics import dice
+from cob_core.mechanics.heroes import Hero, Initiate
+from cob_core.mechanics.party import Party
 
 
 class Trap(ABC):
@@ -64,7 +64,7 @@ class Arrow(Trap):
             party: party of the heroes
 
         """
-        from cob_core.weapons import Bow
+        from cob_core.mechanics.weapons import Bow
 
         d6 = dice.roll("d6")
         wounds = Bow().get_damage(d6)
@@ -78,7 +78,7 @@ class PoisonedArrow(Trap):
         super().__init__("Poisoned Arrow")
 
     def spring(self, detrapper: Hero | Initiate, party: Party):
-        from cob_core.weapons import Bow
+        from cob_core.mechanics.weapons import Bow
 
         d6 = dice.roll("d6")
         wounds = Bow().get_damage(d6)
