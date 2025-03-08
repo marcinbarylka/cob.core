@@ -315,7 +315,7 @@ class Resistance(Ring):
 
     def effect(self):
         """Effect of the resistance ring."""
-        return f"{self.name} (+{self.resistance} has been used."
+        return f"{self.name} (+{self.resistance}) has been used."
 
 
 class Sleep(Ring):
