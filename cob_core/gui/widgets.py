@@ -1,3 +1,1 @@
 """Widgets for the GUI."""
-
-...

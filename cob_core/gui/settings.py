@@ -1,6 +1,7 @@
 """Settings for the GUI."""
 
 import tomllib
+from contextlib import suppress
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -59,5 +60,5 @@ class Settings(BaseModel):
             Settings: The settings.
 
         """
-        with Path.open(toml_file, "rb") as f:
+        with suppress(FileNotFoundError), Path.open(toml_file, "rb") as f:
             return Settings(**tomllib.load(f))
