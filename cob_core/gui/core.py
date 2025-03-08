@@ -63,6 +63,7 @@ class Game:
 
         """
         self.load_settings(toml_file)
+
         pygame.init()
         pygame.mixer.init()
         pygame.mixer.set_num_channels(8)

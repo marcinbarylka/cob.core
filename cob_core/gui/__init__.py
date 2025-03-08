@@ -1,5 +1,5 @@
 """GUI module."""
 
-from core import Game
+from cob_core.gui.core import Game
 
 __all__ = ["Game"]

@@ -152,7 +152,7 @@ class Monster:
 
     def fight(self):
         """Fight the another Character."""
-        ...
+        # TODO: Implement the fight method.
 
     def cast_spell(self):
         """Cast a spell."""
