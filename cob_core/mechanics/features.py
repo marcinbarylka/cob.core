@@ -49,264 +49,178 @@ class FeatureFactory:
 class Feature:
     """Feature class."""
 
-    pass
-
 
 ### Fountains ###
 class Fountain(Feature):
     """Fountain class."""
 
-    pass
-
 
 class PoisonFountain(Fountain):
     """PoisonFountain class."""
-
-    pass
 
 
 class PotionFountain(Fountain):
     """PotionFountain class."""
 
-    pass
-
 
 class AlcoholFountain(Fountain):
     """AlcoholFountain class."""
-
-    pass
 
 
 class JewelFouintain(Fountain):
     """JewelFountain class."""
 
-    pass
-
 
 class WaterFountain(Fountain):
     """WaterFountain class."""
 
-    pass
-
 
 class BloodFountain(Fountain):
     """BloodFountain class."""
-
-    pass
 
 
 ### Altars ###
 class Altar(Feature):
     """Altar class."""
 
-    pass
-
 
 class AllocesAltar(Altar):
     """AllocesAltar class."""
-
-    pass
 
 
 class VassagoAltar(Altar):
     """VassagoAltar class."""
 
-    pass
-
 
 class AvnasAltar(Altar):
     """AvnasAltar class."""
-
-    pass
 
 
 class MelthusAltar(Altar):
     """MelthusAltar class."""
 
-    pass
-
 
 class LerajeAltar(Altar):
     """LerajeAltar class."""
 
-    pass
-
 
 class AsmodayAltar(Altar):
     """AsmodayAltar class."""
-
-    pass
 
 
 ### Trapdoors ###
 class TrapDoor(Feature):
     """TrapDoor class."""
 
-    pass
-
 
 class TrapTrapDoor(TrapDoor):
     """TrapTrapDoor class."""
-
-    pass
 
 
 class RoomTrapDoor(TrapDoor):
     """RoomTrapDoor class."""
 
-    pass
-
 
 class PitTrapDoor(TrapDoor):
     """PitTrapDoor class."""
 
-    pass
-
 
 class HellgateTrapDoor(TrapDoor):
     """HellgateTrapDoor class."""
-
-    pass
 
 
 ### Stairs ###
 class Staircase(Feature):
     """Staircase class."""
 
-    pass
-
 
 ### Furnitures ###
 class Furniture(Feature):
     """Furniture class."""
 
-    pass
-
 
 class CoffinFurniture(Furniture):
     """CoffinFurniture class."""
-
-    pass
 
 
 class BookcaseFurniture(Furniture):
     """BookcaseFurniture class."""
 
-    pass
-
 
 class DeskFurnitire(Furniture):
     """DeskFurniture class."""
-
-    pass
 
 
 class BedFurniture(Furniture):
     """BedFurniture class."""
 
-    pass
-
 
 class ClavicordFurniture(Furniture):
     """ClavicordFurniture class."""
 
-    pass
-
 
 class MirrorFurniture(Furniture):
     """MirrorFurniture class."""
-
-    pass
 
 
 ### Artworks ###
 class Artwork(Feature):
     """Artwork class."""
 
-    pass
-
 
 class TapestryArtwork(Artwork):
     """TapestryArtwork class."""
-
-    pass
 
 
 class PaintingArtwork(Artwork):
     """PaintingArtwork class."""
 
-    pass
-
 
 class StatueArtwork(Artwork):
     """StatueArtwork class."""
-
-    pass
 
 
 class CutGlassArtwork(Artwork):
     """CutGlassArtwork class."""
 
-    pass
-
 
 class IconArtwork(Artwork):
     """IconArtwork class."""
 
-    pass
-
 
 class ManuscriptArtwork(Artwork):
     """ManuscriptArtwork class."""
-
-    pass
 
 
 ### Statues ###
 class Statue(Feature):
     """Statue class."""
 
-    pass
-
 
 class MedusaStatue(Statue):
     """MedusaStatue class."""
-
-    pass
 
 
 class JewelsStatue(Statue):
     """JewelsStatue class."""
 
-    pass
-
 
 class MedallionStatue(Statue):
     """MedallionStatue class."""
-
-    pass
 
 
 class DemonStatue(Statue):
     """DemonStatue class."""
 
-    pass
-
 
 class TalismanStatue(Statue):
     """TalismanStatue class."""
-
-    pass
 
 
 class XStatue(Statue):
     """XStatue class."""
 
-    pass
-
 
 ### Mirrors ###
 class Mirror(Feature):
     """Mirror class."""
-
-    pass

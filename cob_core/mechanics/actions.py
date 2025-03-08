@@ -26,17 +26,14 @@ class Action(abc.ABC):
     @abc.abstractmethod
     def before_action(self) -> None:
         """Execute the method before the action is executed."""
-        pass
 
     @abc.abstractmethod
     def after_action(self) -> None:
         """Execute the method after the action is executed."""
-        pass
 
     @abc.abstractmethod
     def execute(self) -> None:
         """Execute the action."""
-        pass
 
     def __str__(self) -> str:
         """Return the string representation of the action.
@@ -65,11 +62,9 @@ class CastSpell(Action):
 
     def before_action(self) -> None:
         """Execute the method before the action is executed."""
-        pass
 
     def after_action(self) -> None:
         """Execute the method after the action is executed."""
-        pass
 
     def execute(self) -> None:
         """Execute the action."""
@@ -91,11 +86,9 @@ class Attack(Action):
 
     def before_action(self) -> None:
         """Execute the method before the action is executed."""
-        pass
 
     def after_action(self) -> None:
         """Execute the method after the action is executed."""
-        pass
 
     def execute(self) -> None:
         """Execute the action."""
