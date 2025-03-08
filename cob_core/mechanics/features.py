@@ -147,7 +147,7 @@ class BookcaseFurniture(Furniture):
     """BookcaseFurniture class."""
 
 
-class DeskFurnitire(Furniture):
+class DeskFurniture(Furniture):
     """DeskFurniture class."""
 
 
