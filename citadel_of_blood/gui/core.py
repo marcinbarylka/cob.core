@@ -79,7 +79,6 @@ class Game:
 
         """
         self.load_settings(toml_file)
-
         pygame.init()
 
         # check if sound card is available
@@ -87,14 +86,17 @@ class Game:
             pygame.mixer.init()
         except pygame.error:
             self.is_soundcard = False
+        if self.is_soundcard:
+            pygame.mixer.set_num_channels(8)
 
-        pygame.mixer.set_num_channels(8)
+        print(f"Initializing screen with width: {self.width}, height: {self.height}, fullscreen: {self.fullscreen}")
         self.screen = (
             pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
             if self.fullscreen
             else pygame.display.set_mode((self.width, self.height))
         )
         pygame.display.set_caption(self.settings.gui.caption)
+        print("Screen initialized.")
 
     def update(self) -> None:
         """Check the state."""

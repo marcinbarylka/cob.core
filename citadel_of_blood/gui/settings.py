@@ -1,7 +1,6 @@
 """Settings for the GUI."""
 
 import tomllib
-from contextlib import suppress
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -29,8 +28,8 @@ class GUISettings(BaseModel):
     """
 
     fullscreen: bool = False
-    width: int = 0
-    height: int = 0
+    width: int = 1920
+    height: int = 1080
     caption: str = "GUI"
     fps: int = 60
     colors: GUIColors
@@ -60,5 +59,9 @@ class Settings(BaseModel):
             Settings: The settings.
 
         """
-        with suppress(FileNotFoundError), Path.open(toml_file, "rb") as f:
-            return Settings(**tomllib.load(f))
+        try:
+            with Path(toml_file).open("rb") as f:
+                settings = Settings(**tomllib.load(f))
+        except FileNotFoundError:
+            settings = Settings(gui=GUISettings(colors=GUIColors()))
+        return settings
