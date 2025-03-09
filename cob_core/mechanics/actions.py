@@ -69,7 +69,7 @@ class CastSpell(Action):
         """Execute the method after the action is executed."""
 
     def execute(self) -> None:
-        """Execute the action."""
+        """Execute the spell casting action by calling the cast method of the spell object."""
         self.spell.cast(self.scene)
 
 
