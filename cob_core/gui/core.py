@@ -11,7 +11,7 @@ from cob_core.gui.settings import Settings
 class Game:
     """Game class.
 
-    Parameters
+    Attributes
     ----------
         screen (pygame.Surface): The screen.
         fullscreen (bool): Fullscreen mode.
@@ -22,11 +22,25 @@ class Game:
         running (bool): Running state.
 
         events_handler (EventsHandler): The events handler.
+        is_soundcard (bool): Sound card availability.
+        frame (int): Frame counter.
 
     """
 
     def __init__(self) -> None:
-        """Initialize the Game class."""
+        """Initialize the Game class.
+
+        This method initializes all the necessary attributes:
+        - screen: The Pygame surface for display
+        - fullscreen: Boolean indicating fullscreen mode
+        - width, height: Dimensions of the game window
+        - settings: Game configuration
+        - clock: Pygame clock for frame timing
+        - running: Game state indicator
+        - events_handler: Handler for game events
+        - is_soundcard: Boolean indicating sound card availability
+        - frame: Frame counter
+        """
         self.screen: pygame.Surface | None = None
         self.fullscreen: bool = True
         self.width: int = 0
@@ -34,8 +48,10 @@ class Game:
         self.settings = None
         self.clock = pygame.time.Clock()
         self.running = True
+        self.is_soundcard = True
 
         self.events_handler: EventsHandler = EventsHandler()
+        self.frame: int = 0  # frame counter
 
     def load_settings(self, toml_file: str) -> Any:
         """Load the settings.
@@ -65,7 +81,13 @@ class Game:
         self.load_settings(toml_file)
 
         pygame.init()
-        pygame.mixer.init()
+
+        # check if sound card is available
+        try:
+            pygame.mixer.init()
+        except pygame.error:
+            self.is_soundcard = False
+
         pygame.mixer.set_num_channels(8)
         self.screen = (
             pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
@@ -84,10 +106,14 @@ class Game:
         if self.screen is None:
             msg = "Screen is not initialized. Call init_gui() before run()."
             raise ValueError(msg)
+        if self.settings is None:
+            msg = "Settings are not initialized. Call init_gui() before run()."
+            raise ValueError(msg)
         while self.running:
             self.events_handler.handle_events()
             self.update()
             self.screen.fill(pygame.Color(self.settings.gui.colors.background))
             pygame.display.flip()
             self.clock.tick(self.settings.gui.fps)
+            self.frame += 1
         pygame.quit()
