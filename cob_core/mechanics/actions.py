@@ -58,7 +58,13 @@ class CastSpell(Action):
     """
 
     def __init__(self, scene: Scene, spell: Spell) -> None:
-        """Initialize the CastSpell class."""
+        """Initialize the CastSpell class.
+
+        Parameters
+        ----------
+        scene: scene in which the spell is cast
+        spell: spell to be cast
+        """
         super().__init__(name="cast spell", code="CS", scene=scene)
         self.spell: Spell = spell
 
