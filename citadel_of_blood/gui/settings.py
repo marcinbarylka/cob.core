@@ -2,8 +2,12 @@
 
 import tomllib
 from pathlib import Path
+from typing import TypeVar
 
+import toml
 from pydantic import BaseModel
+
+S = TypeVar("S", bound="Settings")
 
 
 class GUIColors(BaseModel):
@@ -47,7 +51,7 @@ class Settings(BaseModel):
     gui: GUISettings
 
     @staticmethod
-    def load(toml_file: str) -> "Settings":
+    def load(toml_file: str) -> S:
         """Load the settings.
 
         Args:
@@ -61,7 +65,17 @@ class Settings(BaseModel):
         """
         try:
             with Path(toml_file).open("rb") as f:
-                settings = Settings(**tomllib.load(f))
+                toml_data = tomllib.load(f)
+                settings = Settings(**toml_data)
         except FileNotFoundError:
-            settings = Settings(gui=GUISettings(colors=GUIColors()))
+            settings = Settings.create_default_settings_conf(toml_file)
+        return settings
+
+    @staticmethod
+    def create_default_settings_conf(toml_file: str) -> S:
+        """Create a default settings file."""
+        settings = Settings(gui=GUISettings(colors=GUIColors()))
+
+        with Path(toml_file).open("w") as f:
+            toml.dump(settings.model_dump(), f=f)
         return settings

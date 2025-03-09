@@ -23,6 +23,7 @@ pre-commit = "^4.1.0"
 [tool.poetry.dependencies]
 pygame = "^2.6.1"
 pydantic = "^2.10.6"
+toml = "^0.10.2"
 [tool.ruff]
 line-length = 120
 exclude = [
