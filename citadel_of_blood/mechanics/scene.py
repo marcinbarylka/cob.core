@@ -1,11 +1,11 @@
 """Scene module for the mechanics package."""
 
-from cob_core.mechanics import dice
-from cob_core.mechanics.heroes import Hero, Initiate
-from cob_core.mechanics.monsters import Monster
-from cob_core.mechanics.party import Party
-from cob_core.mechanics.segment import Segment
-from cob_core.mechanics.weapons import Weapon
+from citadel_of_blood.mechanics import dice
+from citadel_of_blood.mechanics.heroes import Hero, Initiate
+from citadel_of_blood.mechanics.monsters import Monster
+from citadel_of_blood.mechanics.party import Party
+from citadel_of_blood.mechanics.segment import Segment
+from citadel_of_blood.mechanics.weapons import Weapon
 
 
 class Scene:

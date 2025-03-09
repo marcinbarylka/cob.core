@@ -1,4 +1,4 @@
-"""Enumerations for the cob_core package."""
+"""Enumerations for the citadel_of_blood package."""
 
 import enum
 

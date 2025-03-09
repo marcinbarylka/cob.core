@@ -2,8 +2,8 @@
 
 import abc
 
-from cob_core.mechanics.scene import Scene
-from cob_core.mechanics.spells import Spell
+from citadel_of_blood.mechanics.scene import Scene
+from citadel_of_blood.mechanics.spells import Spell
 
 
 class Action(abc.ABC):

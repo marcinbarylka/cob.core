@@ -4,8 +4,8 @@ from typing import Any
 
 import pygame
 
-from cob_core.gui.events import EventsHandler
-from cob_core.gui.settings import Settings
+from citadel_of_blood.gui.events import EventsHandler
+from citadel_of_blood.gui.settings import Settings
 
 
 class Game:

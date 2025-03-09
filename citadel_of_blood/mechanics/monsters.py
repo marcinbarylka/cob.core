@@ -3,8 +3,8 @@
 from dataclasses import dataclass
 from typing import Any
 
-from cob_core.mechanics.dice import roll
-from cob_core.mechanics.skills import (
+from citadel_of_blood.mechanics.dice import roll
+from citadel_of_blood.mechanics.skills import (
     Charm,
     DemonSkill,
     FireBreath,
@@ -17,11 +17,11 @@ from cob_core.mechanics.skills import (
     WeaponSkill,
     XTheUnknownSkill,
 )
-from cob_core.mechanics.spells import LightningSpell as Lightning
-from cob_core.mechanics.spells import Spell
-from cob_core.mechanics.treasures import Treasure
-from cob_core.mechanics.weapons import Hammer, Sword, Weapon
-from cob_core.mechanics.weapons import Monster as MonsterWeapon
+from citadel_of_blood.mechanics.spells import LightningSpell as Lightning
+from citadel_of_blood.mechanics.spells import Spell
+from citadel_of_blood.mechanics.treasures import Treasure
+from citadel_of_blood.mechanics.weapons import Hammer, Sword, Weapon
+from citadel_of_blood.mechanics.weapons import Monster as MonsterWeapon
 
 LEVEL_CHART = [
     {

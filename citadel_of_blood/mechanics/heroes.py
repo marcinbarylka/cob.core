@@ -5,10 +5,10 @@ import random
 from dataclasses import dataclass, field
 from typing import Any
 
-from cob_core import FontMap
-from cob_core.mechanics import dice
-from cob_core.mechanics.armors import Armor
-from cob_core.mechanics.skills import (
+from citadel_of_blood import FontMap
+from citadel_of_blood.mechanics import dice
+from citadel_of_blood.mechanics.armors import Armor
+from citadel_of_blood.mechanics.skills import (
     AxSkill,
     BowSkill,
     DaggerSkill,
@@ -20,8 +20,8 @@ from cob_core.mechanics.skills import (
     SwordSkill,
     WeaponSkill,
 )
-from cob_core.mechanics.spells import MAGIC_POTENTIAL_TABLE, Spell
-from cob_core.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
+from citadel_of_blood.mechanics.spells import MAGIC_POTENTIAL_TABLE, Spell
+from citadel_of_blood.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger, Weapon
 
 
 @dataclass

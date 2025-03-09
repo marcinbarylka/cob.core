@@ -2,9 +2,9 @@
 
 import random
 
-from cob_core.mechanics import dice
-from cob_core.mechanics.enums import Exit
-from cob_core.mechanics.features import Feature, FeatureFactory
+from citadel_of_blood.mechanics import dice
+from citadel_of_blood.mechanics.enums import Exit
+from citadel_of_blood.mechanics.features import Feature, FeatureFactory
 
 
 class Segment:
