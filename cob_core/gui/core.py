@@ -82,8 +82,8 @@ class Game:
     def run(self):
         """Run the GUI."""
         if self.screen is None:
-            raise RuntimeError("GUI nie zostało zainicjalizowane. Wywołaj init_gui() przed run()")
-            
+            msg = "Screen is not initialized. Call init_gui() before run()."
+            raise ValueError(msg)
         while self.running:
             self.events_handler.handle_events()
             self.update()
