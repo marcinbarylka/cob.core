@@ -35,7 +35,7 @@ class Action(abc.ABC):
 
     @abc.abstractmethod
     def execute(self) -> None:
-        """Execute the action."""
+        """Execute the action. This is the main method that implements the specific behavior of the action."""
 
     def __str__(self) -> str:
         """Return the string representation of the action.
