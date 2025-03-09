@@ -38,7 +38,9 @@ class Action(abc.ABC):
 
     @abc.abstractmethod
     def after_action(self) -> None:
-        """Execute the method after the action is executed."""
+        """Execute the method after the action is executed. For example, to update character state,
+        apply post-action effects, or clean up resources.
+        """
 
     @abc.abstractmethod
     def execute(self) -> None:
