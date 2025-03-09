@@ -1,6 +1,10 @@
 """Module for the party class."""
 
-from citadel_of_blood.mechanics.errors import CharacterAlreadyInPartyError, CharacterNotInPartyError, PartyCharacterError
+from citadel_of_blood.mechanics.errors import (
+    CharacterAlreadyInPartyError,
+    CharacterNotInPartyError,
+    PartyCharacterError,
+)
 from citadel_of_blood.mechanics.heroes import Hero, Initiate
 from citadel_of_blood.mechanics.monsters import Monster
 
