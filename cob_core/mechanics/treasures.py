@@ -68,12 +68,16 @@ MAGIC_ITEMS = {
 
 @dataclass
 class TreasureItems:
+    """Treasure items."""
+
     gold: str
     jewelery: str
     magic_items: str
 
 
 class Treasure(enum.Enum):
+    """Treasure enum."""
+
     A = TreasureItems("0:0", "0:0", "0:0")
     B = TreasureItems("6:1D6", "0:0", "0:0")
     C = TreasureItems("6:1D6", "0:0", "1:1")
@@ -82,19 +86,20 @@ class Treasure(enum.Enum):
     F = TreasureItems("3:1D6*5", "3:1D3", "1:1")
     G = TreasureItems("6:1D6*5", "3:1D6", "2:1")
     H = TreasureItems("6:2D6", "3:1D3", "1:1")
-    I = TreasureItems("6:1D6*5", "2:1D6", "2:1")  # noqa
+    I = TreasureItems("6:1D6*5", "2:1D6", "2:1")  # noqa: E741
     J = TreasureItems("6:1D6*20", "2:1D6", "3:1D3")
     K = TreasureItems("6:2D6*20", "3:1D6", "3:1D3")
     L = TreasureItems("6:3D6*20", "4:1D6", "4:1D3")
 
     def add(self, number: int = 0):
-        """
-        Moves to the next treasure.
+        """Move to the next treasure.
 
         Args:
+        ----
             number (int, optional): number of treasures to move. Defaults to 0.
 
         Returns:
+        -------
             Treasure: new treasure
 
         """
@@ -106,13 +111,14 @@ class Treasure(enum.Enum):
         return treasure_list[new_index]
 
     def __str__(self):
+        """Return the string representation of the treasure."""
         return f"Gold: {self.value.gold}, Jewelery: {self.value.jewelery}, Magic items: {self.value.magic_items}"
 
     def roll_gold(self) -> int:
-        """
-        Roll for gold.
+        """Roll for gold.
 
-        Returns:
+        Returns
+        -------
             int: gold amount
 
         """
@@ -123,10 +129,10 @@ class Treasure(enum.Enum):
         return roll(dice_code)
 
     def roll_jewelery(self) -> list[int]:
-        """
-        Roll for jewelery.
+        """Roll for jewelery.
 
-        Returns:
+        Returns
+        -------
             list: list of jewelery
 
         """
@@ -137,14 +143,13 @@ class Treasure(enum.Enum):
         return [JEWELERY[roll("2d6") - 2] for _ in range(roll(dice_code))] if dice_code else []
 
     def roll_magic_items(self) -> dict[str, list[Any]]:
-        """
-        Roll for magic items.
+        """Roll for magic items.
 
-        Returns:
+        Returns
+        -------
             dict: dictionary of magic items
 
         """
-
         result = {key: [] for key in MAGIC_ITEM_TYPES}
         probability, code = Treasure.parse_treasure_code(self.value.magic_items)
 
@@ -178,10 +183,10 @@ class Treasure(enum.Enum):
         return result
 
     def roll_treasure(self) -> dict[str, Any]:
-        """
-        Get treasure.
+        """Get treasure.
 
-        Returns:
+        Returns
+        -------
             dict: treasure
 
         """
@@ -192,10 +197,10 @@ class Treasure(enum.Enum):
         }
 
     def _get_weapon_bonus(self) -> int:
-        """
-        Get weapon bonus.
+        """Get weapon bonus.
 
-        Returns:
+        Returns
+        -------
             int: weapon bonus
 
         """
@@ -205,10 +210,10 @@ class Treasure(enum.Enum):
         return bonus
 
     def _get_armor_bonus(self) -> int:
-        """
-        Get armor bonus.
+        """Get armor bonus.
 
-        Returns:
+        Returns
+        -------
             int: armor bonus
 
         """
@@ -219,13 +224,14 @@ class Treasure(enum.Enum):
 
     @staticmethod
     def parse_treasure_code(code: str) -> tuple[int, str] | tuple[int, None]:
-        """
-        Parse a treasure code.
+        """Parse a treasure code.
 
         Args:
+        ----
             code (str): treasure code
 
         Returns:
+        -------
             tuple: probability and dice code
 
         """
@@ -236,11 +242,11 @@ class Treasure(enum.Enum):
     def empty_treasure() -> dict[str, Any]:
         """Empty treasure.
 
-        Returns:
+        Returns
+        -------
             dict: empty treasure
 
         """
-
         return {
             "gold": 0,
             "jewelery": [],

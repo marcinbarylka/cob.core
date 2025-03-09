@@ -19,9 +19,10 @@ pytest = "^8.3.2"
 ipython = "^9.0.1"
 pre-commit = "^4.1.0"
 
-[tool.ruff]
-line-length = 120
 
+[tool.poetry.dependencies]
+pygame = "^2.6.1"
+pydantic = "^2.10.6"
 [tool.ruff]
 line-length = 120
 exclude = [
@@ -85,7 +86,7 @@ select = [
     "W",  # Warning
     "YTT", # flake8-2020
 ]
-ignore = ["D203", "D213"]
+ignore = ["D203", "D213", "D205", "S311"]
 
 [build-system]
 requires = ["poetry-core"]

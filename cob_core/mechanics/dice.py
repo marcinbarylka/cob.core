@@ -5,9 +5,20 @@ from random import randint
 
 
 class Dice:
-    """A dice representation. It can parse and roll a dice."""
+    """A dice representation. It can parse and roll a dice.
+
+    Attributes
+    ----------
+        code: str. A code of the dice: i.e. 2d10+20.
+        number: int. The number of dice.
+        type: int. The type of dice.
+        modifier: int. The modifier of the dice.
+        multiplier: int. The multiplier of the dice.
+
+    """
 
     def __init__(self, dice_code="D6"):
+        """Initialize the Dice class."""
         self.code = dice_code
         self.number = 0
         self.type = 0
@@ -16,13 +27,14 @@ class Dice:
         self.parse()
 
     def parse(self, dice_code: str | None = None) -> None:
-        """
-        Dice parser.
+        """Dice parser.
 
         Args:
+        ----
             dice_code: a code of the dice: i.e. 2d10+20.
 
         Raises:
+        ------
             ValueError: if the dice code is not recognized.
 
         """
@@ -51,16 +63,18 @@ class Dice:
                 self.multiplier = int(match_data.group(4))
                 self.modifier = 0
         else:
-            raise ValueError(f"Unrecognized dice type: {dice_code}")
+            msg = f"Unrecognized dice code: {dice_code}"
+            raise ValueError(msg)
 
     def roll(self, dice_code: str | None = None) -> int:
-        """
-        Roll a parsed dice.
+        """Roll a parsed dice.
 
         Args:
+        ----
             dice_code: a code of the dice: i.e. 2d10+20.
 
         Returns:
+        -------
             int. The result of the roll.
 
         """
@@ -74,22 +88,22 @@ class Dice:
         return result
 
     @property
-    def max(self):  # noqa D102
-        """
-        Max value of the roll.
+    def max(self):  # noqa: D102
+        """Max value of the roll.
 
-        Returns:
+        Returns
+        -------
             int. The max value of the roll.
 
         """
         return self.type * self.number * self.multiplier + self.modifier
 
     @property
-    def min(self):  # noqa D102
-        """
-        Min value of the roll.
+    def min(self):  # noqa: D102
+        """Min value of the roll.
 
-        Returns:
+        Returns
+        -------
             int. The min value of the roll.
 
         """
@@ -97,13 +111,16 @@ class Dice:
 
 
 def roll(dice_code):
-    """
-    A shortcut to roll a dice.
+    """Roll a dice.
+
+    This is a wrapper function for the Dice class.
 
     Args:
+    ----
         dice_code: a code of the dice: i.e. 2d10+20.
 
     Returns:
+    -------
         int. The result of the roll.
 
     """

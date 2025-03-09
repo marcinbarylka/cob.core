@@ -1,7 +1,7 @@
 """Module for monsters in the game."""
 
 from dataclasses import dataclass
-from typing import Any, Type
+from typing import Any
 
 from cob_core.mechanics.dice import roll
 from cob_core.mechanics.skills import (
@@ -20,9 +20,8 @@ from cob_core.mechanics.skills import (
 from cob_core.mechanics.spells import LightningSpell as Lightning
 from cob_core.mechanics.spells import Spell
 from cob_core.mechanics.treasures import Treasure
-from cob_core.mechanics.weapons import Hammer
+from cob_core.mechanics.weapons import Hammer, Sword, Weapon
 from cob_core.mechanics.weapons import Monster as MonsterWeapon
-from cob_core.mechanics.weapons import Sword, Weapon
 
 LEVEL_CHART = [
     {
@@ -73,6 +72,27 @@ WANDERING_MONSTER_TABLE = [
 
 @dataclass
 class Monster:
+    """Monster class.
+
+    Attributes
+    ----------
+        name (str): The name of the monster.
+        resistance_value (int): The resistance value of the monster.
+        negotiation_value (int): The negotiation value of the monster.
+        weapon (Weapon): The weapon of the monster.
+        spells (list[Spell]): The spells of the monster.
+        treasure (tuple[Treasure, Treasure]): The treasure of the monster.
+        special (Skill): The special skill of the monster.
+        combat_bonus (int): The combat bonus of the monster.
+        weapon_skill (WeaponSkill): The weapon skill of the monster.
+        is_wandering (bool): True if the monster is a wandering monster.
+        wound_points (int): The wound points of the monster.
+        wound_points_code (str): The wound points code of the monster.
+        experience_points (int): The experience points of the monster.
+        actual_treasure (dict[str, Any]): The actual treasure of the monster.
+
+    """
+
     name: str = ""
     resistance_value: int = 0
     negotiation_value: int | None = None
@@ -89,6 +109,7 @@ class Monster:
     actual_treasure: dict[str, Any] | None = None
 
     def __post_init__(self):
+        """Post initialization."""
         if not self.weapon:
             self.weapon = MonsterWeapon()
         self.wound_points = roll(self.wound_points_code)
@@ -96,40 +117,65 @@ class Monster:
         self.experience_points = self._wound_points * 6
 
     @property
-    def max_wound_points(self):
+    def max_wound_points(self) -> int:
+        """Get the maximum wound points of the monster.
+
+        Returns
+        -------
+            int: The maximum wound points of the monster.
+
+        """
         return self._wound_points
 
     @property
-    def hold_treasure(self):
+    def hold_treasure(self) -> Treasure:
+        """Get the appropriate treasure type based on monster status (wandering or not).
+
+        Returns
+        -------
+            Treasure: The treasure of the monster.
+
+        """
         return self.treasure[1] if self.is_wandering else self.treasure[0]
 
-    def get_treasure(self):
+    def get_treasure(self) -> Treasure:
+        """Get the treasure of the monster.
+
+        Returns
+        -------
+            Treasure: The treasure of the monster.
+
+        """
         if self.is_wandering:
             return self.treasure[1]
         return self.treasure[0]
 
     def fight(self):
-        """
-        The monster fights with the hero.
-        """
-        ...
+        """Fight the another Character."""
+        # TODO: Implement the fight method.
 
     def cast_spell(self):
+        """Cast a spell."""
         if not self.spells:
             return None
 
     @property
     def is_alive(self) -> bool:
-        """
-        Check if the monster is alive.
+        """Check if the monster is alive.
 
-        :return: bool.
+        Returns
+        -------
+            bool: True if the monster is alive.
+
         """
         return self.wound_points > 0
 
 
 class Chimaera(Monster):
+    """Chimaera - a powerful monster, breathing fire and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Chimaera class."""
         super().__init__(
             name="Chimaera",
             resistance_value=2,
@@ -142,7 +188,10 @@ class Chimaera(Monster):
 
 
 class Cronk(Monster):
+    """Cronk - a monster with a high negotiation value and a stench."""
+
     def __init__(self):
+        """Initialize the Cronk class."""
         super().__init__(
             name="Cronk",
             resistance_value=1,
@@ -155,7 +204,10 @@ class Cronk(Monster):
 
 
 class Demon(Monster):
+    """Demon - a powerful monster with a high resistance value and a demon skill. A companion of the X The Unknown."""
+
     def __init__(self):
+        """Initialize the Demon class."""
         super().__init__(
             name="Demon",
             resistance_value=4,
@@ -168,7 +220,10 @@ class Demon(Monster):
 
 
 class DireWolf(Monster):
+    """DireWolf - a wolf-like monster with a high negotiation value."""
+
     def __init__(self):
+        """Initialize the DireWolf class."""
         super().__init__(
             name="Dire Wolf",
             resistance_value=1,
@@ -180,7 +235,10 @@ class DireWolf(Monster):
 
 
 class EvilHero(Monster):
+    """EvilHero - a powerful hero (but he's evil) with a high negotiation value and a sword skill."""
+
     def __init__(self):
+        """Initialize the EvilHero class."""
         super().__init__(
             name="Evil Hero",
             resistance_value=2,
@@ -194,7 +252,10 @@ class EvilHero(Monster):
 
 
 class EvilMage(Monster):
+    """EvilMage - a powerful mage (but he's evil) with a high negotiation value and a lightning spell."""
+
     def __init__(self):
+        """Initialize the EvilMage class."""
         super().__init__(
             name="Evil Mage",
             resistance_value=2,
@@ -207,7 +268,10 @@ class EvilMage(Monster):
 
 
 class Gargoyle(Monster):
+    """Gargoyle - a monster with a high resistance value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Gargoyle class."""
         super().__init__(
             name="Gargoyle",
             resistance_value=3,
@@ -219,7 +283,10 @@ class Gargoyle(Monster):
 
 
 class Harpy(Monster):
+    """Harpy - a monster with a high negotiation value and a low resistance value."""
+
     def __init__(self):
+        """Initialize the Harpy class."""
         super().__init__(
             name="Harpy",
             resistance_value=1,
@@ -231,7 +298,10 @@ class Harpy(Monster):
 
 
 class Hydra(Monster):
+    """Hydra - a powerful monster with a high negotiation value and the Hail Hydra special skill."""
+
     def __init__(self):
+        """Initialize the Hydra class."""
         super().__init__(
             name="Hydra",
             resistance_value=3,
@@ -244,7 +314,10 @@ class Hydra(Monster):
 
 
 class Medusa(Monster):
+    """Medusa - a monster with a high negotiation value and the Flesh to Stone special skill."""
+
     def __init__(self):
+        """Initialize the Medusa class."""
         super().__init__(
             name="Medusa",
             resistance_value=2,
@@ -257,7 +330,10 @@ class Medusa(Monster):
 
 
 class Minotaur(Monster):
+    """Minotaur - a powerful half human, half bull monster with a high negotiation value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Minotaur class."""
         super().__init__(
             name="Minotaur",
             resistance_value=3,
@@ -269,7 +345,10 @@ class Minotaur(Monster):
 
 
 class Ogre(Monster):
+    """Ogre - a powerful monster with a high resistance value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Ogre class."""
         super().__init__(
             name="Ogre",
             resistance_value=2,
@@ -282,7 +361,10 @@ class Ogre(Monster):
 
 
 class Orc(Monster):
+    """Orc - a monster with a high resistance value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Orc class."""
         super().__init__(
             name="Orc",
             resistance_value=1,
@@ -295,7 +377,10 @@ class Orc(Monster):
 
 
 class Skeleton(Monster):
+    """Skeleton - an undead monster with a high negotiation value and a low resistance value."""
+
     def __init__(self):
+        """Initialize the Skeleton class."""
         super().__init__(
             name="Skeleton",
             resistance_value=1,
@@ -307,7 +392,10 @@ class Skeleton(Monster):
 
 
 class Troll(Monster):
+    """Troll - a monster with a high resistance value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Troll class."""
         super().__init__(
             name="Troll",
             resistance_value=3,
@@ -320,7 +408,12 @@ class Troll(Monster):
 
 
 class Vampire(Monster):
+    """Vampire - a powerful undead monster with a high resistance value and a high combat bonus.
+    Very rich. Has a charm special skill.
+    """
+
     def __init__(self):
+        """Initialize the Vampire class."""
         super().__init__(
             name="Vampire",
             resistance_value=4,
@@ -333,7 +426,10 @@ class Vampire(Monster):
 
 
 class Warg(Monster):
+    """Warg - a wolf-like monster with a high negotiation value."""
+
     def __init__(self):
+        """Initialize the Warg class."""
         super().__init__(
             name="Warg",
             resistance_value=1,
@@ -345,7 +441,10 @@ class Warg(Monster):
 
 
 class Wight(Monster):
+    """Wight - an undead monster with a high resistance value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Wight class."""
         super().__init__(
             name="Wight",
             resistance_value=2,
@@ -357,7 +456,10 @@ class Wight(Monster):
 
 
 class Wraith(Monster):
+    """Wraith - an undead monster with a high negotiation value and a high combat bonus."""
+
     def __init__(self):
+        """Initialize the Wraith class."""
         super().__init__(
             name="Wraith",
             resistance_value=1,
@@ -369,7 +471,12 @@ class Wraith(Monster):
 
 
 class XTheUnknown(Monster):
+    """X The Unknown - a final boss monster with a high resistance value and a high combat bonus. A companion
+    of the bunch of demons.
+    """
+
     def __init__(self):
+        """Initialize the XTheUnknown class."""
         super().__init__(
             name="X The Unknown",
             resistance_value=4,
@@ -383,32 +490,32 @@ class XTheUnknown(Monster):
         )
 
 
-def spawn_monster(monster_class: Type[Monster], level: int = 1, is_wandering: bool = False) -> list[Monster]:
-    """
-    Spawn a monster of the given class and level.
+def spawn_monster(monster_class: type[Monster], level: int = 1, is_wandering: bool = False) -> list[Monster]:
+    """Spawn a monster of the given class and level.
 
     Args:
+    ----
         monster_class (Type[Monster]): The class of the monster to spawn.
         level (int): The level of the maze.
         is_wandering (bool): True if the monster is a wandering monster.
 
     Returns:
+    -------
         list[Monster]: A list of monsters.
 
     Raises:
+    ------
         ValueError: If the level is not between 1 and 3.
 
     """
     if level < 1 or level > 3:
-        raise ValueError("Level must be between 1 and 3")
+        msg = f"Level must be between 1 and 3. Got {level}."
+        raise ValueError(msg)
 
     modifiers = LEVEL_CHART[level - 1]
     monsters = []
 
-    if monster_class.__name__ == "XTheUnknown":
-        range_modifier = 1
-    else:
-        range_modifier = int(modifiers["number_of_monsters"][1:])
+    range_modifier = 1 if monster_class.__name__ == "XTheUnknown" else int(modifiers["number_of_monsters"][1:])
 
     for _ in range(range_modifier):
         monster = monster_class()
@@ -435,32 +542,27 @@ def spawn_monster(monster_class: Type[Monster], level: int = 1, is_wandering: bo
 
 
 def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Monster]:
-    """
-    Roll a random monster.
+    """Roll a random monster.
 
     Args:
+    ----
         wandering (bool): True if the monster is a wandering monster.
         d1 (int): The first die roll.
         d2 (int): The second die roll.
         level (int): The level of the maze.
 
     Returns:
+    -------
         list[Monster]: A list of monsters.
 
     """
-    if wandering:
-        code = WANDERING_MONSTER_TABLE[d1][d2]
-    else:
-        code = ROOM_MONSTER_TABLE[d1][d2]
+    code = WANDERING_MONSTER_TABLE[d1][d2] if wandering else ROOM_MONSTER_TABLE[d1][d2]
     if ":" in code:
         monster, number = code.split(":")
     else:
         monster = code
         number = "1"
-    if "d" in number:
-        number = roll(number)
-    else:
-        number = int(number)
+    number = roll(number) if "d" in number else int(number)
     monsters = []
     for _ in range(number):
         monster_class = globals()[monster]
@@ -469,13 +571,14 @@ def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Mons
 
 
 def roll_room_monster(level: int = 1):
-    """
-    Roll a random room monster.
+    """Roll a random room monster.
 
     Args:
+    ----
         level (int): The level of the maze.
 
     Returns:
+    -------
         list[Monster]: A list of monsters.
 
     """
@@ -485,13 +588,14 @@ def roll_room_monster(level: int = 1):
 
 
 def roll_wandering_monster(level: int = 1) -> list[Monster]:
-    """
-    Roll a random wandering monster.
+    """Roll a random wandering monster.
 
     Args:
+    ----
         level (int): The level of the maze.
 
     Returns:
+    -------
         list[Monster]: A list of monsters.
 
     """

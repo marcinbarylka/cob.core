@@ -2,7 +2,16 @@
 
 
 class Weapon:
-    """Base class for all weapons."""
+    """Base class for all weapons.
+
+    Parameters
+    ----------
+        name (str): The name of the weapon.
+        attack_bonus (int): The attack bonus.
+        damage_table (list[int]): The damage table.
+        is_ranged_weapon (bool): Is the weapon ranged?
+
+    """
 
     def __init__(
         self,
@@ -11,6 +20,7 @@ class Weapon:
         damage_table: list[int] = [],
         is_ranged_weapon: bool = False,
     ) -> None:
+        """Initialize the weapon."""
         if not name:
             name = self.__class__.__name__
 
@@ -20,13 +30,14 @@ class Weapon:
         self.is_ranged_weapon: bool = is_ranged_weapon
 
     def get_damage(self, roll: int) -> int:
-        """
-        Get damage based on the roll.
+        """Get damage based on the roll.
 
         Args:
-            roll (int): roll
+        ----
+            roll (int): roll used to determine the index of the damage table.
 
         Returns:
+        -------
             int: damage
 
         """
@@ -37,30 +48,41 @@ class Weapon:
         return self.damage_table[roll]
 
     def __str__(self) -> str:
+        """Return the string representation of the weapon."""
         if self.attack_bonus:
             return f"{self.name} (+{self.attack_bonus})"
         return self.name
 
     def __repr__(self) -> str:
+        """Return the string representation of the weapon."""
         return self.__str__()
 
 
 class Sword(Weapon):
+    """Sword weapon class."""
+
     def __init__(self):
+        """Initialize the sword weapon."""
         super().__init__()
         self.name = "Sword"
         self.damage_table = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5]
 
 
 class Dagger(Weapon):
+    """Dagger weapon class."""
+
     def __init__(self):
+        """Initialize the dagger weapon."""
         super().__init__()
         self.name = "Dagger"
         self.damage_table = [0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4]
 
 
 class ThrowDagger(Weapon):
+    """Throwing Dagger weapon class."""
+
     def __init__(self):
+        """Initialize the throwing dagger weapon."""
         super().__init__()
         self.name = "Throwing Dagger"
         self.is_ranged_weapon = True
@@ -68,7 +90,10 @@ class ThrowDagger(Weapon):
 
 
 class Bow(Weapon):
+    """Bow weapon class."""
+
     def __init__(self):
+        """Initialize the bow weapon."""
         super().__init__()
         self.name = "Bow"
         self.is_ranged_weapon = True
@@ -76,21 +101,30 @@ class Bow(Weapon):
 
 
 class Hammer(Weapon):
+    """Hammer weapon class."""
+
     def __init__(self):
+        """Initialize the hammer weapon."""
         super().__init__()
         self.name = "Hammer"
         self.damage_table = [0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 
 
 class Ax(Weapon):
+    """Ax weapon class."""
+
     def __init__(self):
+        """Initialize the ax weapon."""
         super().__init__()
         self.name = "Ax"
         self.damage_table = [0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
 
 
 class Monster(Weapon):
+    """Monster weapon class."""
+
     def __init__(self):
+        """Initialize the monster weapon."""
         super().__init__()
         self.name = "Monster"
         self.damage_table = [0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 4, 5]

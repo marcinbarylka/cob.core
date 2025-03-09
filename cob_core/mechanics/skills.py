@@ -6,109 +6,97 @@ from cob_core.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, Weapon
 
 
 class Skill(ABC):
-    """
-    This class represents a skill. It is used to represent a skill of a character.
+    """Represent a skill. It is used to represent a skill of a character or a monster.
 
-    Attributes:
+    Attributes
+    ----------
         value: value of the skill
         skill_name: name of the skill
+
     """
 
     def __init__(self, value: int):
+        """Initialize the skill."""
         self.value: int = value
         self.skill_name: str = self.__class__.__name__
 
     @abstractmethod
     def run(self, *args, **kwargs):
+        """Run skill. This method should be implemented in child classes. It should contain all the logic
+        of the skill.
+
         """
-        Run skill. This method should be implemented in child classes. It should contain all the logic of the skill.
-        """
-        ...
 
     def __str__(self):
+        """Return the string representation of the skill."""
         return f"+{self.value} {self.skill_name}"
 
 
 class Hellgate(Skill):
-    """
-    This class represents a hellgate skill. It is used to represent a skill of a character.
-    """
+    """Represent a hellgate skill. It is used to represent a skill of a character."""
 
-    def run(self): ...
+    def run(self):
+        """Run hellgate skill."""
 
 
 class Detrap(Skill):
-    """
-    This class represents a detrap skill. It is used to represent a skill of a character.
-    """
+    """Represent a detrap skill. It is used to represent a skill of a character."""
 
-    def run(self): ...
+    def run(self):
+        """Run detrap skill."""
 
 
 class Negotiation(Skill):
-    """
-    This class represents a negotiation skill. It is used to represent a skill of a character.
-    """
+    """Represent a negotiation skill. It is used to represent a skill of a character."""
 
-    def run(self): ...
+    def run(self):
+        """Run negotiation skill."""
 
 
 ###### Weapon skills
 
 
 class WeaponSkill(Skill):
-    """
-    This class represents a weapon skill. It is used to represent a skill of a character.
-
-    :param value: value of the skill
-    """
+    """Represent a weapon skill. It is used to represent a skill of a character."""
 
     weapon: Weapon
     """ Weapon of the skill."""
 
     def __init__(self, value: int):
+        """Initialize the weapon skill."""
         super().__init__(value)
         self.skill_name = self.weapon.name
 
-    def run(self): ...
+    def run(self):
+        """Run weapon skill."""
 
 
 class SwordSkill(WeaponSkill):
-    """
-    This class represents a sword skill. It is used to represent a skill of a character.
-    """
+    """Represent a sword skill. It is used to represent a skill of a character."""
 
     weapon = Sword()
 
 
 class BowSkill(WeaponSkill):
-    """
-    This class represents a bow skill. It is used to represent a skill of a character.
-    """
+    """Represent a bow skill. It is used to represent a skill of a character."""
 
     weapon = Bow()
 
 
 class HammerSkill(WeaponSkill):
-    """
-    This class represents a hammer skill. It is used to represent a skill of a character.
-    """
+    """Represent a hammer skill. It is used to represent a skill of a character."""
 
     weapon = Hammer()
 
 
 class AxSkill(WeaponSkill):
-    """
-    This class represents an ax skill. It is used to represent a skill of a character.
-    """
+    """Represent an ax skill. It is used to represent a skill of a character."""
 
     weapon = Ax()
 
 
 class DaggerSkill(WeaponSkill):
-    """
-    This class represents a dagger skill. It is used to represent a skill of a character.
-    """
+    """Represent a dagger skill. It is used to represent a skill of a character."""
 
     weapon = Dagger()
 
@@ -117,74 +105,71 @@ class DaggerSkill(WeaponSkill):
 
 
 class MonsterSkill(Skill):
+    """Represent a monster skill. It is used to represent a skill of a monster."""
+
     def __init__(self):
+        """Initialize the monster skill."""
         super().__init__(0)
 
     def __str__(self):
+        """Return the string representation of the skill."""
         return self.skill_name
 
-    def run(self): ...
+    def run(self):
+        """Run monster skill."""
 
 
 class FireBreath(MonsterSkill):
-    """
-    This class represents a fire breath skill. It is used to represent a skill of a monster.
-    """
+    """Represent a fire breath skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run fire breath skill."""
 
 
 class Stench(MonsterSkill):
-    """
-    This class represents a stench skill. It is used to represent a skill of a monster.
-    """
+    """Represent a stench skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run stench skill."""
 
 
 class DemonSkill(MonsterSkill):
-    """
-    This class represents a demon skill. It is used to represent a skill of a monster.
-    """
+    """Represent a demon skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run demon skill."""
 
 
 class HailHydra(MonsterSkill):
-    """
-    This class represents a hydra skill. It is used to represent a skill of a monster.
-    """
+    """Represent a hail hydra skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run hail hydra skill."""
 
 
 class FleshToStone(MonsterSkill):
-    """
-    This class represents a flesh to stone skill. It is used to represent a skill of a monster.
-    """
+    """Represent a flesh to stone skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run flesh to stone skill."""
 
 
 class Regenerate(MonsterSkill):
-    """
-    This class represents a regenerate skill. It is used to represent a skill of a monster.
-    """
+    """Represent a regenerate skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run regenerate skill."""
 
 
 class Charm(MonsterSkill):
-    """
-    This class represents a charm skill. It is used to represent a skill of a monster.
-    """
+    """Represent a charm skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run charm skill."""
 
 
 class XTheUnknownSkill(MonsterSkill):
-    """
-    This class represents a XTheUnknown skill. It is used to represent a skill of a monster.
-    """
+    """Represent a x the unknown skill. It is used to represent a skill of a monster."""
 
-    def run(self): ...
+    def run(self):
+        """Run x the unknown skill."""

@@ -7,6 +7,8 @@ F = TypeVar("F", bound="Feature")
 
 
 class FeatureFactory:
+    """Factory class for creating features."""
+
     FEATURE_TABLE = {
         "Fountain": ["Poison", "Potion", "Alcohol", "Jewel", "Water", "Blood"],
         "Statue": ["Medusa", "Jewels", "Medallion", "Demon", "Talisman", "X"],
@@ -20,10 +22,10 @@ class FeatureFactory:
 
     @staticmethod
     def random_feature() -> F | None:
-        """
-        Return a random feature.
+        """Return a random feature.
 
-        Returns:
+        Returns
+        -------
             a random feature or None
 
         """
@@ -32,11 +34,11 @@ class FeatureFactory:
             return None
 
         total_variants = sum(len(variants) for variants in FeatureFactory.FEATURE_TABLE.values())
-        random_variant_number = random.randint(1, total_variants)
+        random_variant_number = random.randint(1, total_variants)  # noqa: S311 [random.randint() is used]
 
         for feature_type, variants in FeatureFactory.FEATURE_TABLE.items():
             if random_variant_number <= len(variants):
-                feature_variant = random.choice(variants)
+                feature_variant = random.choice(variants)  # noqa: S311 [random.choice() is used]
                 feature_class_name = f"{feature_variant}{feature_type}"
                 feature_class = globals().get(feature_class_name)
                 return feature_class() if feature_class else None
@@ -44,138 +46,181 @@ class FeatureFactory:
         return None
 
 
-class Feature: ...
+class Feature:
+    """Feature class."""
 
 
 ### Fountains ###
-class Fountain(Feature): ...
+class Fountain(Feature):
+    """Fountain class."""
 
 
-class PoisonFountain(Fountain): ...
+class PoisonFountain(Fountain):
+    """PoisonFountain class."""
 
 
-class PotionFountain(Fountain): ...
+class PotionFountain(Fountain):
+    """PotionFountain class."""
 
 
-class AlcoholFountain(Fountain): ...
+class AlcoholFountain(Fountain):
+    """AlcoholFountain class."""
 
 
-class JewelFouintain(Fountain): ...
+class JewelFouintain(Fountain):
+    """JewelFountain class."""
 
 
-class WaterFountain(Fountain): ...
+class WaterFountain(Fountain):
+    """WaterFountain class."""
 
 
-class BloodFountain(Fountain): ...
+class BloodFountain(Fountain):
+    """BloodFountain class."""
 
 
 ### Altars ###
-class Altar(Feature): ...
+class Altar(Feature):
+    """Altar class."""
 
 
-class AllocesAltar(Altar): ...
+class AllocesAltar(Altar):
+    """AllocesAltar class."""
 
 
-class VassagoAltar(Altar): ...
+class VassagoAltar(Altar):
+    """VassagoAltar class."""
 
 
-class AvnasAltar(Altar): ...
+class AvnasAltar(Altar):
+    """AvnasAltar class."""
 
 
-class MelthusAltar(Altar): ...
+class MelthusAltar(Altar):
+    """MelthusAltar class."""
 
 
-class LerajeAltar(Altar): ...
+class LerajeAltar(Altar):
+    """LerajeAltar class."""
 
 
-class AsmodayAltar(Altar): ...
+class AsmodayAltar(Altar):
+    """AsmodayAltar class."""
 
 
 ### Trapdoors ###
-class TrapDoor(Feature): ...
+class TrapDoor(Feature):
+    """TrapDoor class."""
 
 
-class TrapTrapDoor(TrapDoor): ...
+class TrapTrapDoor(TrapDoor):
+    """TrapTrapDoor class."""
 
 
-class RoomTrapDoor(TrapDoor): ...
+class RoomTrapDoor(TrapDoor):
+    """RoomTrapDoor class."""
 
 
-class PitTrapDoor(TrapDoor): ...
+class PitTrapDoor(TrapDoor):
+    """PitTrapDoor class."""
 
 
-class HellgateTrapDoor(TrapDoor): ...
+class HellgateTrapDoor(TrapDoor):
+    """HellgateTrapDoor class."""
 
 
 ### Stairs ###
-class Staircase(Feature): ...
+class Staircase(Feature):
+    """Staircase class."""
 
 
 ### Furnitures ###
-class Furniture(Feature): ...
+class Furniture(Feature):
+    """Furniture class."""
 
 
-class CoffinFurniture(Furniture): ...
+class CoffinFurniture(Furniture):
+    """CoffinFurniture class."""
 
 
-class BookcaseFurniture(Furniture): ...
+class BookcaseFurniture(Furniture):
+    """BookcaseFurniture class."""
 
 
-class DeskFurnitire(Furniture): ...
+class DeskFurniture(Furniture):
+    """DeskFurniture class."""
 
 
-class BedFurniture(Furniture): ...
+class BedFurniture(Furniture):
+    """BedFurniture class."""
 
 
-class ClavicordFurniture(Furniture): ...
+class ClavicordFurniture(Furniture):
+    """ClavicordFurniture class."""
 
 
-class MirrorFurniture(Furniture): ...
+class MirrorFurniture(Furniture):
+    """MirrorFurniture class."""
 
 
 ### Artworks ###
-class Artwork(Feature): ...
+class Artwork(Feature):
+    """Artwork class."""
 
 
-class TapestryArtwork(Artwork): ...
+class TapestryArtwork(Artwork):
+    """TapestryArtwork class."""
 
 
-class PaintingArtwork(Artwork): ...
+class PaintingArtwork(Artwork):
+    """PaintingArtwork class."""
 
 
-class StatueArtwork(Artwork): ...
+class StatueArtwork(Artwork):
+    """StatueArtwork class."""
 
 
-class CutGlassArtwork(Artwork): ...
+class CutGlassArtwork(Artwork):
+    """CutGlassArtwork class."""
 
 
-class IconArtwork(Artwork): ...
+class IconArtwork(Artwork):
+    """IconArtwork class."""
 
 
-class ManuscriptArtwork(Artwork): ...
+class ManuscriptArtwork(Artwork):
+    """ManuscriptArtwork class."""
 
 
 ### Statues ###
-class Statue(Feature): ...
+class Statue(Feature):
+    """Statue class."""
 
 
-class MedusaStatue(Statue): ...
+class MedusaStatue(Statue):
+    """MedusaStatue class."""
 
 
-class JewelsStatue(Statue): ...
+class JewelsStatue(Statue):
+    """JewelsStatue class."""
 
 
-class MedallionStatue(Statue): ...
+class MedallionStatue(Statue):
+    """MedallionStatue class."""
 
 
-class DemonStatue(Statue): ...
+class DemonStatue(Statue):
+    """DemonStatue class."""
 
 
-class TalismanStatue(Statue): ...
+class TalismanStatue(Statue):
+    """TalismanStatue class."""
 
 
-class XStatue(Statue): ...
+class XStatue(Statue):
+    """XStatue class."""
 
 
 ### Mirrors ###
-class Mirror(Feature): ...
+class Mirror(Feature):
+    """Mirror class."""

@@ -1,0 +1,13 @@
+"""Errors for the mechanics module."""
+
+
+class PartyCharacterError(Exception):
+    """Error raised when a party character is not found in the party."""
+
+
+class CharacterNotInPartyError(PartyCharacterError):
+    """Error raised when a character is not found in the party."""
+
+
+class CharacterAlreadyInPartyError(PartyCharacterError):
+    """Error raised when a character is already in the party."""
