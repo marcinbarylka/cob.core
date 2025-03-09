@@ -4,6 +4,7 @@ from typing import Any
 
 import pygame
 
+from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
 from citadel_of_blood.gui.settings import Settings
 
@@ -45,10 +46,10 @@ class Game:
         self.fullscreen: bool = True
         self.width: int = 0
         self.height: int = 0
-        self.settings = None
-        self.clock = pygame.time.Clock()
-        self.running = True
-        self.is_soundcard = True
+        self.settings: Settings = None
+        self.clock: pygame.time.Clock = pygame.time.Clock()
+        self.running: bool = True
+        self.is_soundcard: bool = True
 
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
@@ -70,14 +71,17 @@ class Game:
         self.width = self.settings.gui.width
         self.height = self.settings.gui.height
 
-    def init_gui(self, toml_file: str = "citadel-of-blood.toml") -> None:
+    def init_gui(self, toml_file: str = "") -> None:
         """Initialize the GUI.
 
         Args:
         ----
-            toml_file (str): The TOML file to load.
+            toml_file (str): The TOML file to load. If empty, the default settings
+                filename from SETTINGS_FILENAME constant will be used.
 
         """
+        if not toml_file:
+            toml_file = SETTINGS_FILENAME
         self.load_settings(toml_file)
         pygame.init()
 
