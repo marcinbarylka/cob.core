@@ -4,6 +4,7 @@ from typing import Any
 
 import pygame
 
+from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
 from citadel_of_blood.gui.settings import Settings
 
@@ -70,7 +71,7 @@ class Game:
         self.width = self.settings.gui.width
         self.height = self.settings.gui.height
 
-    def init_gui(self, toml_file: str = "citadel-of-blood.toml") -> None:
+    def init_gui(self, toml_file: str = "") -> None:
         """Initialize the GUI.
 
         Args:
@@ -78,6 +79,9 @@ class Game:
             toml_file (str): The TOML file to load.
 
         """
+        if not toml_file:
+            toml_file = SETTINGS_FILENAME
+
         self.load_settings(toml_file)
         pygame.init()
 

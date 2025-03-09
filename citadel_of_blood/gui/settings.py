@@ -4,8 +4,11 @@ import tomllib
 from pathlib import Path
 from typing import TypeVar
 
+import platformdirs
 import toml
 from pydantic import BaseModel
+
+from citadel_of_blood.constants import PROJECT_NAME
 
 S = TypeVar("S", bound="Settings")
 
@@ -63,8 +66,9 @@ class Settings(BaseModel):
             Settings: The settings.
 
         """
+        config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
         try:
-            with Path(toml_file).open("rb") as f:
+            with Path(config_path / toml_file).open("rb") as f:
                 toml_data = tomllib.load(f)
                 settings = Settings(**toml_data)
         except FileNotFoundError:
@@ -75,7 +79,9 @@ class Settings(BaseModel):
     def create_default_settings_conf(toml_file: str) -> S:
         """Create a default settings file."""
         settings = Settings(gui=GUISettings(colors=GUIColors()))
-
-        with Path(toml_file).open("w") as f:
+        config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
+        if not Path(config_path).exists():
+            Path(config_path).mkdir(parents=True)
+        with Path(config_path / toml_file).open("w") as f:
             toml.dump(settings.model_dump(), f=f)
         return settings
