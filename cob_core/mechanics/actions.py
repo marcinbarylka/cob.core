@@ -83,7 +83,12 @@ class Attack(Action):
     """
 
     def __init__(self, scene: Scene) -> None:
-        """Initialize the Attack class."""
+        """Initialize the Attack class.
+        
+        Parameters
+        ----------
+        scene: scene in which the attack takes place
+        """
         super().__init__(name="attack", code="AT", scene=scene)
 
     def before_action(self) -> None:
