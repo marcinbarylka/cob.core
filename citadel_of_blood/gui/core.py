@@ -76,12 +76,12 @@ class Game:
 
         Args:
         ----
-            toml_file (str): The TOML file to load.
+            toml_file (str): The TOML file to load. If empty, the default settings
+                filename from SETTINGS_FILENAME constant will be used.
 
         """
         if not toml_file:
             toml_file = SETTINGS_FILENAME
-
         self.load_settings(toml_file)
         pygame.init()
 
