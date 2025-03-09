@@ -1,13 +1,13 @@
 """Game map module."""
 
-from cob_core import (
+from citadel_of_blood import (
     Axis,
     Direction,
     Exit,
 )
-from cob_core.mechanics import dice
-from cob_core.mechanics.monsters import Monster
-from cob_core.mechanics.segment import GatewayOfEvil, Room, Segment
+from citadel_of_blood.mechanics import dice
+from citadel_of_blood.mechanics.monsters import Monster
+from citadel_of_blood.mechanics.segment import GatewayOfEvil, Room, Segment
 
 
 class Board:

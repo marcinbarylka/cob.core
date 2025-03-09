@@ -2,8 +2,8 @@
 
 import abc
 
-from cob_core.mechanics.scene import Scene
-from cob_core.mechanics.spells import Spell
+from citadel_of_blood.mechanics.scene import Scene
+from citadel_of_blood.mechanics.spells import Spell
 
 
 class Action(abc.ABC):
@@ -20,11 +20,12 @@ class Action(abc.ABC):
     def __init__(self, name: str, code: str, scene: Scene) -> None:
         """Initialize the Action class.
 
-        Parameters
-        ----------
+        Arguments:
+        ---------
             name: name of the action
             code: code of the action
             scene: scene in which the action takes place
+
         """
         self.name: str = name
         self.code: str = code
@@ -69,10 +70,11 @@ class CastSpell(Action):
     def __init__(self, scene: Scene, spell: Spell) -> None:
         """Initialize the CastSpell class.
 
-        Parameters
-        ----------
+        Arguments:
+        ---------
         scene: scene in which the spell is cast
         spell: spell to be cast
+
         """
         super().__init__(name="cast spell", code="CS", scene=scene)
         self.spell: Spell = spell
@@ -99,10 +101,11 @@ class Attack(Action):
 
     def __init__(self, scene: Scene) -> None:
         """Initialize the Attack class.
-        
-        Parameters
-        ----------
+
+        Arguments:
+        ---------
         scene: scene in which the attack takes place
+
         """
         super().__init__(name="attack", code="AT", scene=scene)
 

@@ -22,7 +22,9 @@ class EventsHandler:
         """Handle keyboard events.
 
         Args:
+        ----
             event: Pygame keyboard event.
+
         """
         if event.key == pygame.K_ESCAPE:
             self.running = False

@@ -1,8 +1,12 @@
 """Module for the party class."""
 
-from cob_core.mechanics.errors import CharacterAlreadyInPartyError, CharacterNotInPartyError, PartyCharacterError
-from cob_core.mechanics.heroes import Hero, Initiate
-from cob_core.mechanics.monsters import Monster
+from citadel_of_blood.mechanics.errors import (
+    CharacterAlreadyInPartyError,
+    CharacterNotInPartyError,
+    PartyCharacterError,
+)
+from citadel_of_blood.mechanics.heroes import Hero, Initiate
+from citadel_of_blood.mechanics.monsters import Monster
 
 Character = Hero | Initiate | Monster
 
