@@ -129,7 +129,7 @@ class Monster:
 
     @property
     def hold_treasure(self) -> Treasure:
-        """Get the treasure of the monster.
+        """Get the appropriate treasure type based on monster status (wandering or not).
 
         Returns
         -------
@@ -172,7 +172,7 @@ class Monster:
 
 
 class Chimaera(Monster):
-    """Chimaera class."""
+    """Chimaera - a powerful monster, breathing fire and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Chimaera class."""
@@ -188,7 +188,7 @@ class Chimaera(Monster):
 
 
 class Cronk(Monster):
-    """Cronk class."""
+    """Cronk - a monster with a high negotiation value and a stench."""
 
     def __init__(self):
         """Initialize the Cronk class."""
@@ -204,7 +204,7 @@ class Cronk(Monster):
 
 
 class Demon(Monster):
-    """Demon class."""
+    """Demon - a powerful monster with a high resistance value and a demon skill. A companion of the X The Unknown."""
 
     def __init__(self):
         """Initialize the Demon class."""
@@ -220,7 +220,7 @@ class Demon(Monster):
 
 
 class DireWolf(Monster):
-    """DireWolf class."""
+    """DireWolf - a wolf-like monster with a high negotiation value."""
 
     def __init__(self):
         """Initialize the DireWolf class."""
@@ -235,7 +235,7 @@ class DireWolf(Monster):
 
 
 class EvilHero(Monster):
-    """EvilHero class."""
+    """EvilHero - a powerful hero (but he's evil) with a high negotiation value and a sword skill."""
 
     def __init__(self):
         """Initialize the EvilHero class."""
@@ -252,7 +252,7 @@ class EvilHero(Monster):
 
 
 class EvilMage(Monster):
-    """EvilMage class."""
+    """EvilMage - a powerful mage (but he's evil) with a high negotiation value and a lightning spell."""
 
     def __init__(self):
         """Initialize the EvilMage class."""
@@ -268,7 +268,7 @@ class EvilMage(Monster):
 
 
 class Gargoyle(Monster):
-    """Gargoyle class."""
+    """Gargoyle - a monster with a high resistance value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Gargoyle class."""
@@ -283,7 +283,7 @@ class Gargoyle(Monster):
 
 
 class Harpy(Monster):
-    """Harpy class."""
+    """Harpy - a monster with a high negotiation value and a low resistance value."""
 
     def __init__(self):
         """Initialize the Harpy class."""
@@ -298,7 +298,7 @@ class Harpy(Monster):
 
 
 class Hydra(Monster):
-    """Hydra class."""
+    """Hydra - a powerful monster with a high negotiation value and the Hail Hydra special skill."""
 
     def __init__(self):
         """Initialize the Hydra class."""
@@ -314,7 +314,7 @@ class Hydra(Monster):
 
 
 class Medusa(Monster):
-    """Medusa class."""
+    """Medusa - a monster with a high negotiation value and the Flesh to Stone special skill."""
 
     def __init__(self):
         """Initialize the Medusa class."""
@@ -330,7 +330,7 @@ class Medusa(Monster):
 
 
 class Minotaur(Monster):
-    """Minotaur class."""
+    """Minotaur - a powerful half human, half bull monster with a high negotiation value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Minotaur class."""
@@ -345,7 +345,7 @@ class Minotaur(Monster):
 
 
 class Ogre(Monster):
-    """Ogre class."""
+    """Ogre - a powerful monster with a high resistance value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Ogre class."""
@@ -361,7 +361,7 @@ class Ogre(Monster):
 
 
 class Orc(Monster):
-    """Orc class."""
+    """Orc - a monster with a high resistance value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Orc class."""
@@ -377,7 +377,7 @@ class Orc(Monster):
 
 
 class Skeleton(Monster):
-    """Skeleton class."""
+    """Skeleton - an undead monster with a high negotiation value and a low resistance value."""
 
     def __init__(self):
         """Initialize the Skeleton class."""
@@ -392,7 +392,7 @@ class Skeleton(Monster):
 
 
 class Troll(Monster):
-    """Troll class."""
+    """Troll - a monster with a high resistance value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Troll class."""
@@ -408,7 +408,9 @@ class Troll(Monster):
 
 
 class Vampire(Monster):
-    """Vampire class."""
+    """Vampire - a powerful undead monster with a high resistance value and a high combat bonus.
+    Very rich. Has a charm special skill.
+    """
 
     def __init__(self):
         """Initialize the Vampire class."""
@@ -424,7 +426,7 @@ class Vampire(Monster):
 
 
 class Warg(Monster):
-    """Warg class."""
+    """Warg - a wolf-like monster with a high negotiation value."""
 
     def __init__(self):
         """Initialize the Warg class."""
@@ -439,7 +441,7 @@ class Warg(Monster):
 
 
 class Wight(Monster):
-    """Wight class."""
+    """Wight - an undead monster with a high resistance value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Wight class."""
@@ -454,7 +456,7 @@ class Wight(Monster):
 
 
 class Wraith(Monster):
-    """Wraith class."""
+    """Wraith - an undead monster with a high negotiation value and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Wraith class."""
@@ -469,7 +471,9 @@ class Wraith(Monster):
 
 
 class XTheUnknown(Monster):
-    """XTheUnknown class."""
+    """X The Unknown - a final boss monster with a high resistance value and a high combat bonus. A companion
+    of the bunch of demons.
+    """
 
     def __init__(self):
         """Initialize the XTheUnknown class."""
@@ -505,7 +509,7 @@ def spawn_monster(monster_class: type[Monster], level: int = 1, is_wandering: bo
 
     """
     if level < 1 or level > 3:
-        msg = "Level must be between 1 and 3"
+        msg = f"Level must be between 1 and 3. Got {level}."
         raise ValueError(msg)
 
     modifiers = LEVEL_CHART[level - 1]

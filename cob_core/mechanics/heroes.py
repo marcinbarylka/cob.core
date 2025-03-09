@@ -439,7 +439,7 @@ class HeroesEnum(enum.Enum):
 
     @staticmethod
     def to_list() -> list[Hero]:
-        """Get a list of heroes."""
+        """Get a list of initiates."""
         return list(HeroesEnum.__members__.values())
 
 

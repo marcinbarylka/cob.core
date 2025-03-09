@@ -5,9 +5,9 @@ class PartyCharacterError(Exception):
     """Error raised when a party character is not found in the party."""
 
 
-class CharacterNotInPartyError(Exception):
+class CharacterNotInPartyError(PartyCharacterError):
     """Error raised when a character is not found in the party."""
 
 
-class CharacterAlreadyInPartyError(Exception):
+class CharacterAlreadyInPartyError(PartyCharacterError):
     """Error raised when a character is already in the party."""

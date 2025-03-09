@@ -25,7 +25,9 @@ class Action(abc.ABC):
 
     @abc.abstractmethod
     def before_action(self) -> None:
-        """Execute the method before the action is executed."""
+        """Execute the method before the action is executed. For example, to check if the action can be executed or if
+        the character has enough resources, etc.
+        """
 
     @abc.abstractmethod
     def after_action(self) -> None:
