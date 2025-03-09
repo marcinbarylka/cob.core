@@ -19,21 +19,19 @@ class BaseWidget(abc.ABC):
         width (int): The width.
         height (int): The height.
         rect (pygame.Rect): The rectangle.
-
     """
 
     @abc.abstractmethod
-    def draw(self):
+    def draw(self) -> None:
         """Draw the widget. This method should be implemented by the subclass."""
 
     @abc.abstractmethod
-    def update(self):
+    def update(self) -> None:
         """Update the widget. This method should be implemented by the subclass."""
 
     @abc.abstractmethod
-    def handle_event(self):
+    def handle_event(self, event: pygame.event.Event) -> bool:
         """Handle an event. This method should be implemented by the subclass."""
-
     def __init__(
         self,
         x: int,
