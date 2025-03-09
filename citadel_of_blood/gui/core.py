@@ -46,10 +46,10 @@ class Game:
         self.fullscreen: bool = True
         self.width: int = 0
         self.height: int = 0
-        self.settings = None
-        self.clock = pygame.time.Clock()
-        self.running = True
-        self.is_soundcard = True
+        self.settings: Settings = None
+        self.clock: pygame.time.Clock = pygame.time.Clock()
+        self.running: bool = True
+        self.is_soundcard: bool = True
 
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
