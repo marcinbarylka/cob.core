@@ -18,7 +18,14 @@ class Action(abc.ABC):
     """
 
     def __init__(self, name: str, code: str, scene: Scene) -> None:
-        """Initialize the Action class."""
+        """Initialize the Action class.
+
+        Parameters
+        ----------
+            name: name of the action
+            code: code of the action
+            scene: scene in which the action takes place
+        """
         self.name: str = name
         self.code: str = code
         self.scene: Scene = scene
