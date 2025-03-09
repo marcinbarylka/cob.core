@@ -13,5 +13,17 @@ class EventsHandler:
     def handle_events(self) -> None:
         """Handle the events."""
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            if event.type == pygame.QUIT:
                 self.running = False
+            elif event.type == pygame.KEYDOWN:
+                self._handle_keydown_event(event)
+
+    def _handle_keydown_event(self, event) -> None:
+        """Handle keyboard events.
+
+        Args:
+            event: Pygame keyboard event.
+        """
+        if event.key == pygame.K_ESCAPE:
+            self.running = False
+        # Handle other keyboard events here
