@@ -93,5 +93,5 @@ class Attack(Action):
         """Execute the method after the action is executed."""
 
     def execute(self) -> None:
-        """Execute the action."""
+        """Execute the attack action by calling the attack method of the scene object."""
         self.scene.attack()
