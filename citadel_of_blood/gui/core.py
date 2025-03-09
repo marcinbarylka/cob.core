@@ -70,7 +70,7 @@ class Game:
         self.width = self.settings.gui.width
         self.height = self.settings.gui.height
 
-    def init_gui(self, toml_file: str = "gui.toml") -> None:
+    def init_gui(self, toml_file: str = "citadel-of-blood.toml") -> None:
         """Initialize the GUI.
 
         Args:
@@ -96,6 +96,7 @@ class Game:
             else pygame.display.set_mode((self.width, self.height))
         )
         pygame.display.set_caption(self.settings.gui.caption)
+        print(f"Caption set to: {self.settings.gui.caption}")
         print("Screen initialized.")
 
     def update(self) -> None:
