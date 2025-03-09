@@ -37,7 +37,6 @@ class Hellgate(Skill):
 
     def run(self):
         """Run hellgate skill."""
-        pass
 
 
 class Detrap(Skill):
@@ -45,7 +44,6 @@ class Detrap(Skill):
 
     def run(self):
         """Run detrap skill."""
-        pass
 
 
 class Negotiation(Skill):
@@ -53,7 +51,6 @@ class Negotiation(Skill):
 
     def run(self):
         """Run negotiation skill."""
-        pass
 
 
 ###### Weapon skills
@@ -72,7 +69,6 @@ class WeaponSkill(Skill):
 
     def run(self):
         """Run weapon skill."""
-        pass
 
 
 class SwordSkill(WeaponSkill):
@@ -121,7 +117,6 @@ class MonsterSkill(Skill):
 
     def run(self):
         """Run monster skill."""
-        pass
 
 
 class FireBreath(MonsterSkill):
@@ -129,7 +124,6 @@ class FireBreath(MonsterSkill):
 
     def run(self):
         """Run fire breath skill."""
-        pass
 
 
 class Stench(MonsterSkill):
@@ -137,7 +131,6 @@ class Stench(MonsterSkill):
 
     def run(self):
         """Run stench skill."""
-        pass
 
 
 class DemonSkill(MonsterSkill):
@@ -145,7 +138,6 @@ class DemonSkill(MonsterSkill):
 
     def run(self):
         """Run demon skill."""
-        pass
 
 
 class HailHydra(MonsterSkill):
@@ -153,7 +145,6 @@ class HailHydra(MonsterSkill):
 
     def run(self):
         """Run hail hydra skill."""
-        pass
 
 
 class FleshToStone(MonsterSkill):
@@ -161,7 +152,6 @@ class FleshToStone(MonsterSkill):
 
     def run(self):
         """Run flesh to stone skill."""
-        pass
 
 
 class Regenerate(MonsterSkill):
@@ -169,7 +159,6 @@ class Regenerate(MonsterSkill):
 
     def run(self):
         """Run regenerate skill."""
-        pass
 
 
 class Charm(MonsterSkill):
@@ -177,7 +166,6 @@ class Charm(MonsterSkill):
 
     def run(self):
         """Run charm skill."""
-        pass
 
 
 class XTheUnknownSkill(MonsterSkill):
@@ -185,4 +173,3 @@ class XTheUnknownSkill(MonsterSkill):
 
     def run(self):
         """Run x the unknown skill."""
-        pass

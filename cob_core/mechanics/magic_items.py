@@ -19,7 +19,6 @@ class MagicItem(abc.ABC):
     @abc.abstractmethod
     def effect(self):
         """Effect of the magic item."""
-        pass
 
 
 ### Potions ###
