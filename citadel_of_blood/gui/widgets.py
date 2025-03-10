@@ -53,6 +53,12 @@ class BaseWidget(abc.ABC):
             id (str | None): The ID.
 
         """
+    def __init__(self, id, x, y, width, height, background_color, foreground_color):
+        """Initialize the BaseWidget class.
+
+        Additional Attributes:
+            active (bool): Określa, czy widżet jest aktywny.
+        """
         self.id = id or self.create_id()
 
         self.x = x
