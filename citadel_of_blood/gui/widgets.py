@@ -1,6 +1,7 @@
 """Widgets for the GUI."""
 
 import abc
+import uuid
 
 import pygame
 
@@ -21,43 +22,19 @@ class BaseWidget(abc.ABC):
         """Update the widget. This method should be implemented by the subclass."""
 
     @abc.abstractmethod
-    def handle_event(self, event: pygame.event.Event) -> bool:
+    def handle_event(self, event: pygame.event.Event) -> None:
         """Handle an event. This method should be implemented by the subclass.
 
         Args:
-          event: pygame.event.Event: 
-
-        Returns:
+          event: pygame.event.Event:
 
         """
 
-    def __init__(
-        self,
-        x: int,
-        y: int,
-        width: int,
-        height: int,
-        foreground_color: GUIColor | None,
-        background_color: GUIColor | None,
-        id: str | None = None,
-    ):
-        """Initialize the BaseWidget class.
-
-        Args:
-            x (int): The x-coordinate.
-            y (int): The y-coordinate.
-            width (int): The width.
-            height (int): The height.
-            foreground_color (GUIColor | None): The foreground color.
-            background_color (GUIColor | None): The background color.
-            id (str | None): The ID.
-
-        """
-    def __init__(self, id, x, y, width, height, background_color, foreground_color):
+    def __init__(self, x, y, width, height, background_color, foreground_color, id: str = ""):
         """Initialize the BaseWidget class.
 
         Additional Attributes:
-            active (bool): Określa, czy widżet jest aktywny.
+            active (bool): Whether the widget is active.
         """
         self.id = id or self.create_id()
 
@@ -75,9 +52,6 @@ class BaseWidget(abc.ABC):
 
         self.active: bool = True
 
-import uuid
-
     def create_id(self) -> str:
         """Create an ID."""
         return f"{self.__class__.__name__}_{uuid.uuid4()}"
-

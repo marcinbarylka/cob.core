@@ -1,12 +1,10 @@
 """Core module."""
 
-from typing import Any
-
 import pygame
 
 from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
-from citadel_of_blood.gui.settings import Settings
+from citadel_of_blood.gui.settings import GUIColors, GUISettings, Settings
 
 
 class Game:
@@ -30,7 +28,7 @@ class Game:
         self.fullscreen: bool = True
         self.width: int = 0
         self.height: int = 0
-        self.settings: Settings = None
+        self.settings: Settings = Settings(gui=GUISettings(colors=GUIColors()))
         self.clock: pygame.time.Clock = pygame.time.Clock()
         self.running: bool = True
         self.is_soundcard: bool = True
@@ -38,15 +36,15 @@ class Game:
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
 
-    def load_settings(self, toml_file: str) -> Settings:
+    def load_settings(self, toml_file: str) -> None:
         """Load the settings.
-        
+
         Args:
             toml_file (str): The TOML file to load.
-        
+
         Returns:
             Settings: The settings object.
-        
+
         """
         self.settings = Settings.load(toml_file)
         self.fullscreen = self.settings.gui.fullscreen

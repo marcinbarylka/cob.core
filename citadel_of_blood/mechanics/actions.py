@@ -12,10 +12,10 @@ class Action(abc.ABC):
     def __init__(self, name: str, code: str, scene: Scene) -> None:
         """Initialize the Action class.
 
-       Args:
-        name: name of the action
-        code: code of the action
-        scene: scene of the action
+        Args:
+         name: name of the action
+         code: code of the action
+         scene: scene of the action
 
         """
         self.name: str = name
@@ -50,7 +50,6 @@ class Action(abc.ABC):
 
 class CastSpell(Action):
     """CastSpell class. It is used to represent a spell casting action of a character."""
-
 
     def __init__(self, scene: Scene, spell: Spell) -> None:
         """Initialize the CastSpell class.
