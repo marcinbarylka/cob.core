@@ -25,7 +25,6 @@ class FeatureFactory:
         """Return a random feature.
 
         Returns
-        -------
             a random feature or None
 
         """

@@ -25,11 +25,9 @@ class Board:
         """Get exits of the segments adjacent to the segment at given position.
 
         Args:
-        ----
             position: position of the segment
 
         Returns:
-        -------
             list of exits of the adjacent segments
 
         """
@@ -52,11 +50,9 @@ class Board:
         """Get segment at given position. If there is no segment at given position, then it is created.
 
         Args:
-        ----
             position: position of the segment
 
         Returns:
-        -------
             segment at given position
 
         """

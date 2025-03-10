@@ -16,17 +16,18 @@ class Party(list):
 
     The Party is organized in ranks. Every rank can have at most 3 characters. The first rank is the front rank, the
     second rank is the middle rank, and the third rank (if any) is the back rank.
-
-    Parameters
-    ----------
-        characters (list[Hero | Initiate | Monster | None]): list of characters to initialize the party with
-
     """
 
     MAX_CHARACTER_IN_RANK = 3
 
     def __init__(self, characters: list[Character | None] | None = None):
-        """Initialize the Party class."""
+        """Initialize the Party class.
+
+
+        Args:
+            characters: list of characters to add to the party
+
+        """
         super().__init__()
         if characters:
             for character in characters:
@@ -36,8 +37,7 @@ class Party(list):
     def get_size_xy(self) -> tuple[int, int]:
         """Get the size of the party in the x and y dimensions.
 
-        Returns
-        -------
+        Returns:
             tuple of the size of the party in the x and y dimensions
 
         """
@@ -47,7 +47,6 @@ class Party(list):
         """Check if the position is valid.
 
         Args:
-        ----
             x_pos: x position
             y_pos: y position
 
@@ -65,7 +64,6 @@ class Party(list):
         """Check if the character is valid.
 
         Args:
-        ----
             character: character to check
 
         """
@@ -76,12 +74,10 @@ class Party(list):
         """Calculate the linear index from the x and y positions.
 
         Args:
-        ----
             x_pos: x position
             y_pos: y position
 
         Returns:
-        -------
             linear index
 
         """
@@ -91,11 +87,9 @@ class Party(list):
         """Calculate the x and y positions from the linear index.
 
         Args:
-        ----
             linear_index: linear index
 
         Returns:
-        -------
             x and y positions
 
         """
@@ -105,11 +99,9 @@ class Party(list):
         """Add a character to the party.
 
         Args:
-        ----
             character: character to add to the party
 
         Raises:
-        ------
             CharacterAlreadyInPartyError: if the character is already in the party
 
         """
@@ -122,11 +114,9 @@ class Party(list):
         """Remove a character from the party.
 
         Args:
-        ----
             character: character to remove from the party
 
         Raises:
-        ------
             CharacterNotInPartyError: if the character is not in the party
 
         """
@@ -139,7 +129,6 @@ class Party(list):
         """Remove a character from the party at a specific index.
 
         Args:
-        ----
             x_pos: x position
             y_pos: y position
 
@@ -151,15 +140,12 @@ class Party(list):
         """Find the position of a character in the party.
 
         Args:
-        ----
             character: character to find
 
         Returns:
-        -------
             position of the character in the party
 
         Raises:
-        ------
             CharacterNotInPartyError: if the character is not in the party
 
         """
@@ -173,7 +159,6 @@ class Party(list):
         """Set a character at a specific index.
 
         Args:
-        ----
             character: character to set
             x_pos: x position
             y_pos: y position
@@ -189,12 +174,10 @@ class Party(list):
         """Get a character at a specific index.
 
         Args:
-        ----
             x_pos: x position
             y_pos: y position
 
         Returns:
-        -------
             character at the given position
 
         """
@@ -207,11 +190,9 @@ class Party(list):
         """Get the characters of a specific rank.
 
         Args:
-        ----
             rank_no: rank number
 
         Returns:
-        -------
             list of characters of the given rank
 
         """
@@ -226,7 +207,6 @@ class Party(list):
         """Get the characters of all ranks.
 
         Returns
-        -------
             list of lists of characters of all ranks
 
         """

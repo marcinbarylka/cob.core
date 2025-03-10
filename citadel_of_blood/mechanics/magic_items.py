@@ -27,8 +27,14 @@ class MagicItem(abc.ABC):
 class Potion(MagicItem):
     """Potion class."""
 
-    def __init__(self, name, description):
-        """Initialize the Potion class."""
+    def __init__(self, name: str, description: str) -> None:
+        """Initialize the Potion class.
+
+        Args:
+            name (str): The name of the potion.
+            description (str): The description of the potion.
+
+        """
         super().__init__("potion", name, description)
 
     def effect(self):

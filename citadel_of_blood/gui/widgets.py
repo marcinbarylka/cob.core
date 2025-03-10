@@ -10,16 +10,7 @@ from citadel_of_blood.gui.types import GUIColor
 
 
 class BaseWidget(abc.ABC):
-    """The base widget class.
-
-    Attributes
-    ----------
-        x (int): The x-coordinate.
-        y (int): The y-coordinate.
-        width (int): The width.
-        height (int): The height.
-        rect (pygame.Rect): The rectangle.
-    """
+    """The base widget class."""
 
     @abc.abstractmethod
     def draw(self) -> None:
@@ -31,7 +22,15 @@ class BaseWidget(abc.ABC):
 
     @abc.abstractmethod
     def handle_event(self, event: pygame.event.Event) -> bool:
-        """Handle an event. This method should be implemented by the subclass."""
+        """Handle an event. This method should be implemented by the subclass.
+
+        Args:
+          event: pygame.event.Event: 
+
+        Returns:
+
+        """
+
     def __init__(
         self,
         x: int,
@@ -45,7 +44,6 @@ class BaseWidget(abc.ABC):
         """Initialize the BaseWidget class.
 
         Args:
-        ----
             x (int): The x-coordinate.
             y (int): The y-coordinate.
             width (int): The width.
@@ -59,21 +57,24 @@ class BaseWidget(abc.ABC):
 
         self.x = x
         self.y = y
+        if width <= 0 or height <= 0:
+            msg = "Width and height must be greater than 0."
+            raise ValueError(msg)
         self.width = width
         self.height = height
         self.rect = pygame.Rect(x, y, width, height)
 
-        self.background_color: tuple[int, int, int] | int | pygame.Color | None = background_color
-        self.foreground_color: tuple[int, int, int] | int | pygame.Color | None = foreground_color
+        self.background_color: GUIColor | None = background_color
+        self.foreground_color: GUIColor | None = foreground_color
 
         self.active: bool = True
 
     def create_id(self) -> str:
         """Create an ID.
 
-        Returns
-        -------
+        Returns:
             str: The ID.
 
         """
         return f"{self.__class__.__name__}_{str(hex(id(self)))[2:]}"
+

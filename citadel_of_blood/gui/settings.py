@@ -21,18 +21,7 @@ class GUIColors(BaseModel):
 
 
 class GUISettings(BaseModel):
-    """The settings for the GUI.
-
-    Attributes
-    ----------
-        fullscreen (bool): Whether to run in fullscreen mode.
-        width (int): The width of the window.
-        height (int): The height of the window.
-        caption (str): The caption of the window.
-        fps (int): The frames per second.
-        colors (GUIColors): The colors.
-
-    """
+    """The settings for the GUI."""
 
     fullscreen: bool = False
     width: int = 1920
@@ -43,13 +32,7 @@ class GUISettings(BaseModel):
 
 
 class Settings(BaseModel):
-    """The settings.
-
-    Attributes
-    ----------
-        gui (GUISettings): The GUI settings.
-
-    """
+    """The settings."""
 
     gui: GUISettings
 
@@ -58,12 +41,7 @@ class Settings(BaseModel):
         """Load the settings.
 
         Args:
-        ----
             toml_file (str): The TOML file to load.
-
-        Returns:
-        -------
-            Settings: The settings.
 
         """
         config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
@@ -78,6 +56,7 @@ class Settings(BaseModel):
     @staticmethod
     def create_default_settings_conf(toml_file: str) -> S:
         """Create a default settings file."""
+
         settings = Settings(gui=GUISettings(colors=GUIColors()))
         config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
         if not Path(config_path).exists():

@@ -7,24 +7,15 @@ from citadel_of_blood.mechanics.spells import Spell
 
 
 class Action(abc.ABC):
-    """Action base class. It is used to represent an action of a character.
-
-    Attributes
-    ----------
-        name: name of the action
-        code: code of the action
-        scene: scene of the action
-
-    """
+    """Action base class. It is used to represent an action of a character."""
 
     def __init__(self, name: str, code: str, scene: Scene) -> None:
         """Initialize the Action class.
 
-        Arguments:
-        ---------
-            name: name of the action
-            code: code of the action
-            scene: scene in which the action takes place
+       Args:
+        name: name of the action
+        code: code of the action
+        scene: scene of the action
 
         """
         self.name: str = name
@@ -50,8 +41,7 @@ class Action(abc.ABC):
     def __str__(self) -> str:
         """Return the string representation of the action.
 
-        Returns
-        -------
+        Returns:
             str: the string representation of the action
 
         """
@@ -59,21 +49,15 @@ class Action(abc.ABC):
 
 
 class CastSpell(Action):
-    """CastSpell class. It is used to represent a spell casting action of a character.
+    """CastSpell class. It is used to represent a spell casting action of a character."""
 
-    Attributes
-    ----------
-        spell: spell to cast
-
-    """
 
     def __init__(self, scene: Scene, spell: Spell) -> None:
         """Initialize the CastSpell class.
 
-        Arguments:
-        ---------
-        scene: scene in which the spell is cast
-        spell: spell to be cast
+        Args:
+            scene: scene in which the spell is cast
+            spell: spell to cast
 
         """
         super().__init__(name="cast spell", code="CS", scene=scene)
@@ -91,20 +75,13 @@ class CastSpell(Action):
 
 
 class Attack(Action):
-    """Attack class. It is used to represent an attack action of a character.
-
-    Attributes
-    ----------
-        scene: scene of the action
-
-    """
+    """Attack class. It is used to represent an attack action of a character."""
 
     def __init__(self, scene: Scene) -> None:
         """Initialize the Attack class.
 
-        Arguments:
-        ---------
-        scene: scene in which the attack takes place
+        Args:
+            scene: scene in which the attack is executed
 
         """
         super().__init__(name="attack", code="AT", scene=scene)

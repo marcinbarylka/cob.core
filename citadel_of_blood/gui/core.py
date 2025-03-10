@@ -10,23 +10,7 @@ from citadel_of_blood.gui.settings import Settings
 
 
 class Game:
-    """Game class.
-
-    Attributes
-    ----------
-        screen (pygame.Surface): The screen.
-        fullscreen (bool): Fullscreen mode.
-        width (int): The width.
-        height (int): The height.
-        settings (Any): The settings.
-        clock (pygame.time.Clock): The clock.
-        running (bool): Running state.
-
-        events_handler (EventsHandler): The events handler.
-        is_soundcard (bool): Sound card availability.
-        frame (int): Frame counter.
-
-    """
+    """Game class."""
 
     def __init__(self) -> None:
         """Initialize the Game class.
@@ -54,17 +38,15 @@ class Game:
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
 
-    def load_settings(self, toml_file: str) -> Any:
+    def load_settings(self, toml_file: str) -> Settings:
         """Load the settings.
-
+        
         Args:
-        ----
             toml_file (str): The TOML file to load.
-
+        
         Returns:
-        -------
-            Any: The settings.
-
+            Settings: The settings object.
+        
         """
         self.settings = Settings.load(toml_file)
         self.fullscreen = self.settings.gui.fullscreen
@@ -75,9 +57,7 @@ class Game:
         """Initialize the GUI.
 
         Args:
-        ----
-            toml_file (str): The TOML file to load. If empty, the default settings
-                filename from SETTINGS_FILENAME constant will be used.
+            toml_file (str): The TOML file to load.
 
         """
         if not toml_file:
@@ -108,7 +88,7 @@ class Game:
         if not self.events_handler.running:
             self.running = False
 
-    def run(self):
+    def run(self) -> None:
         """Run the GUI."""
         if self.screen is None:
             msg = "Screen is not initialized. Call init_gui() before run()."

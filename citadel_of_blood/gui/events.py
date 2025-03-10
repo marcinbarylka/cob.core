@@ -22,7 +22,6 @@ class EventsHandler:
         """Handle keyboard events.
 
         Args:
-        ----
             event: Pygame keyboard event.
 
         """
