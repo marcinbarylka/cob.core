@@ -56,7 +56,6 @@ class Settings(BaseModel):
     @staticmethod
     def create_default_settings_conf(toml_file: str) -> S:
         """Create a default settings file."""
-
         settings = Settings(gui=GUISettings(colors=GUIColors()))
         config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
         if not Path(config_path).exists():

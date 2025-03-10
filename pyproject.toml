@@ -26,6 +26,7 @@ pygame = "^2.6.1"
 pydantic = "^2.10.6"
 toml = "^0.10.2"
 platformdirs = "^4.3.6"
+
 [tool.ruff]
 line-length = 120
 exclude = [
@@ -90,6 +91,7 @@ select = [
     "YTT", # flake8-2020
 ]
 ignore = ["D203", "D213", "D205", "S311"]
+pydocstyle = { convention = "google" }
 
 [build-system]
 requires = ["poetry-core"]

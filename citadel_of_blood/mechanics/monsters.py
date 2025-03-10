@@ -101,7 +101,7 @@ class Monster:
     def max_wound_points(self) -> int:
         """Get the maximum wound points of the monster.
 
-        Returns
+        Returns:
             int: The maximum wound points of the monster.
 
         """
@@ -111,7 +111,7 @@ class Monster:
     def hold_treasure(self) -> Treasure:
         """Get the appropriate treasure type based on monster status (wandering or not).
 
-        Returns
+        Returns:
             Treasure: The treasure of the monster.
 
         """
@@ -120,7 +120,7 @@ class Monster:
     def get_treasure(self) -> Treasure:
         """Get the treasure of the monster.
 
-        Returns
+        Returns:
              Treasure: The treasure of the monster.
 
         """
@@ -141,7 +141,7 @@ class Monster:
     def is_alive(self) -> bool:
         """Check if the monster is alive.
 
-        Returns
+        Returns:
             bool: True if the monster is alive.
 
         """

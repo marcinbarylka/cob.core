@@ -150,7 +150,7 @@ class FlamingOil(Trap):
 def roll_trap() -> list[Trap]:
     """Roll dice for trap.
 
-    Returns
+    Returns:
         list: list of traps
 
     """

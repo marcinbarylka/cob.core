@@ -24,7 +24,7 @@ class FeatureFactory:
     def random_feature() -> F | None:
         """Return a random feature.
 
-        Returns
+        Returns:
             a random feature or None
 
         """

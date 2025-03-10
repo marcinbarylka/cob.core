@@ -89,7 +89,7 @@ class Dice:
     def min(self):  # noqa: D102
         """Min value of the roll.
 
-        Returns
+        Returns:
             int. The min value of the roll.
 
         """

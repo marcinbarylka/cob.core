@@ -206,7 +206,7 @@ class Party(list):
     def get_ranks(self) -> list[list[Character | None]]:
         """Get the characters of all ranks.
 
-        Returns
+        Returns:
             list of lists of characters of all ranks
 
         """

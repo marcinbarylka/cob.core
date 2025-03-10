@@ -54,7 +54,7 @@ class Segment:
     def _exits_to_str(self) -> tuple[str, ...]:
         """Return the exits as a tuple of strings.
 
-        Returns
+        Returns:
             tuple of strings representing the exits
 
         """
