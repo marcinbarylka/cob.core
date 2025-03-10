@@ -69,12 +69,9 @@ class BaseWidget(abc.ABC):
 
         self.active: bool = True
 
+import uuid
+
     def create_id(self) -> str:
-        """Create an ID.
-
-        Returns:
-            str: The ID.
-
-        """
-        return f"{self.__class__.__name__}_{str(hex(id(self)))[2:]}"
+        """Create an ID."""
+        return f"{self.__class__.__name__}_{uuid.uuid4()}"
 
