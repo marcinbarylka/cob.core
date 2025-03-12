@@ -2,27 +2,35 @@
 
 import pygame
 
+from citadel_of_blood.errors import GameScreenError
 from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
+from citadel_of_blood.gui.screens import GameScreen
 from citadel_of_blood.gui.settings import GUIColors, GUISettings, Settings
 
 
 class Game:
-    """Game class."""
+    """Game class.
+
+    Attributes:
+          screen (pygame.Surface | None): The screen.
+          fullscreen (bool): Whether the screen is fullscreen.
+          width (int): The width of the screen.
+          height (int): The height of the screen.
+          settings (Settings): The settings.
+          clock (pygame.time.Clock): The clock.
+          running (bool): Whether the game is running.
+          is_soundcard (bool): Whether the sound card is available.
+          active_game_screen (GameScreen | None): The active screen.
+          events_handler (EventsHandler): The events handler.
+          frame (int): The frame counter.
+
+    """
 
     def __init__(self) -> None:
         """Initialize the Game class.
 
-        This method initializes all the necessary attributes:
-        - screen: The Pygame surface for display
-        - fullscreen: Boolean indicating fullscreen mode
-        - width, height: Dimensions of the game window
-        - settings: Game configuration
-        - clock: Pygame clock for frame timing
-        - running: Game state indicator
-        - events_handler: Handler for game events
-        - is_soundcard: Boolean indicating sound card availability
-        - frame: Frame counter
+        This method initializes all the necessary attributes.
         """
         self.screen: pygame.Surface | None = None
         self.fullscreen: bool = True
@@ -33,6 +41,7 @@ class Game:
         self.running: bool = True
         self.is_soundcard: bool = True
 
+        self.active_game_screen: GameScreen | None = None
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
 
@@ -94,6 +103,9 @@ class Game:
         if self.settings is None:
             msg = "Settings are not initialized. Call init_gui() before run()."
             raise ValueError(msg)
+        if self.active_game_screen is None:
+            msg = "Active screen is not set. Set an active game screen before run()."
+            raise GameScreenError(msg)
         while self.running:
             self.events_handler.handle_events()
             self.update()

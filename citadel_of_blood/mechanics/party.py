@@ -1,6 +1,6 @@
 """Module for the party class."""
 
-from citadel_of_blood.mechanics.errors import (
+from citadel_of_blood.errors import (
     CharacterAlreadyInPartyError,
     CharacterNotInPartyError,
     PartyCharacterError,

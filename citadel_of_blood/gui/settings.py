@@ -26,7 +26,7 @@ class GUISettings(BaseModel):
     fullscreen: bool = False
     width: int = 1920
     height: int = 1080
-    caption: str = "GUI"
+    caption: str = "Citadel of Blood"
     fps: int = 60
     colors: GUIColors
 
