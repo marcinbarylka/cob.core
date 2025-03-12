@@ -29,6 +29,7 @@ class GUISettings(BaseModel):
     caption: str = "Citadel of Blood"
     fps: int = 60
     colors: GUIColors
+    basic_font: str = "/assets/fonts/Roboto-Regular.ttf"
 
 
 class Settings(BaseModel):
@@ -50,6 +51,7 @@ class Settings(BaseModel):
                 toml_data = tomllib.load(f)
                 settings = Settings(**toml_data)
         except FileNotFoundError:
+            # Create a default settings file if it doesn't exist.
             settings = Settings.create_default_settings_conf(toml_file)
         return settings
 

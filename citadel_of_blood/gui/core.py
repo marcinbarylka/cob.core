@@ -27,7 +27,7 @@ class Game:
 
     """
 
-    def __init__(self) -> None:
+    def __init__(self, active_game_screen: GameScreen | None = None) -> None:
         """Initialize the Game class.
 
         This method initializes all the necessary attributes.
@@ -41,7 +41,7 @@ class Game:
         self.running: bool = True
         self.is_soundcard: bool = True
 
-        self.active_game_screen: GameScreen | None = None
+        self.active_game_screen: GameScreen | None = active_game_screen
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
 
@@ -95,6 +95,11 @@ class Game:
         if not self.events_handler.running:
             self.running = False
 
+    def open_screen(self, screen: GameScreen) -> None:
+        """Add a screen."""
+        screen.settings = self.settings
+        self.active_game_screen = screen
+
     def run(self) -> None:
         """Run the GUI."""
         if self.screen is None:
@@ -106,7 +111,10 @@ class Game:
         if self.active_game_screen is None:
             msg = "Active screen is not set. Set an active game screen before run()."
             raise GameScreenError(msg)
+
+        self.active_game_screen.draw()
         while self.running:
+            self.active_game_screen.handle_event()
             self.events_handler.handle_events()
             self.update()
             self.screen.fill(pygame.Color(self.settings.gui.colors.background))
