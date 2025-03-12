@@ -114,7 +114,8 @@ class Game:
 
         self.active_game_screen.draw()
         while self.running:
-            self.active_game_screen.handle_event()
+            events = pygame.event.get()
+            self.active_game_screen.handle_events(events)
             self.events_handler.handle_events()
             self.update()
             self.screen.fill(pygame.Color(self.settings.gui.colors.background))
