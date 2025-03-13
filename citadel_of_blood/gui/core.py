@@ -114,11 +114,12 @@ class Game:
 
         self.active_game_screen.draw()
         while self.running:
-            self.active_game_screen.handle_event()
-            self.events_handler.handle_events()
+            events = pygame.event.get()
+            events = self.events_handler.handle_events(events)
+            _ = self.active_game_screen.handle_events(events)
+            self.active_game_screen.update()
             self.update()
-            self.screen.fill(pygame.Color(self.settings.gui.colors.background))
-            pygame.display.flip()
+            pygame.display.update()
             self.clock.tick(self.settings.gui.fps)
             self.frame += 1
         pygame.quit()

@@ -5,6 +5,7 @@ import uuid
 
 import pygame
 
+from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.gui.types import GUIColor
 
 # TODO: Add widgets for the GUI.
@@ -78,7 +79,9 @@ class Button(BaseWidget):
         """Initialize the Button class."""
         super().__init__(x, y, width, height, background_color, foreground_color, id)
         self.caption = caption
-        self.font: pygame.font.Font = pygame.font.Font("Arial", 36)  # todo: make this configurable
+        self.font: pygame.font.Font = pygame.font.Font(
+            PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf", 36
+        )  # todo: make this configurable
         self.hover_background_color: GUIColor = hover_background_color
         self.hover_foreground_color: GUIColor = hover_foreground_color
 

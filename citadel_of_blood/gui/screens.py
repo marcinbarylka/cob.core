@@ -34,16 +34,20 @@ class GameScreen:
 
     def update(self) -> None:
         """Update the screen."""
+        self.surface.fill(self.background_color)
         for widget in self.widgets:
             widget.update()
             self.surface.blit(widget.surface, (widget.x, widget.y))
 
-    def handle_events(self, events: list[pygame.event.Event]) -> None:
+    def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event] | None:
         """Handle an event."""
+        if not events:
+            events = pygame.event.get()
         if not self.is_active:
             return
         for widget in self.widgets:
             widget.handle_events(events)
+        return events
 
 
 class DefaultScreen(GameScreen):
@@ -51,7 +55,7 @@ class DefaultScreen(GameScreen):
 
     def __init__(self, settings: GUISettings | None = None) -> None:
         """Initialize the DefaultScreen class."""
-        super().__init__(background_color="#333333", settings=settings)
+        super().__init__(background_color="#ff0000", settings=settings)
         self.is_active = True
         self.add_widget(
             Button(
