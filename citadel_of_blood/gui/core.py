@@ -94,6 +94,7 @@ class Game:
         """Check the state."""
         if not self.events_handler.running:
             self.running = False
+        self.screen.blit(self.active_game_screen.surface, (0, 0))
 
     def open_screen(self, screen: GameScreen) -> None:
         """Add a screen."""
@@ -112,12 +113,12 @@ class Game:
             msg = "Active screen is not set. Set an active game screen before run()."
             raise GameScreenError(msg)
 
-        self.active_game_screen.draw()
         while self.running:
             events = pygame.event.get()
             events = self.events_handler.handle_events(events)
             _ = self.active_game_screen.handle_events(events)
             self.active_game_screen.update()
+            self.active_game_screen.draw()
             self.update()
             pygame.display.update()
             self.clock.tick(self.settings.gui.fps)

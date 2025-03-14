@@ -29,15 +29,13 @@ class GameScreen:
         """Draw the screen."""
         self.surface.fill(self.background_color)
         for widget in self.widgets:
+            widget.update()
             widget.draw()
             self.surface.blit(widget.surface, (widget.x, widget.y))
 
     def update(self) -> None:
         """Update the screen."""
-        self.surface.fill(self.background_color)
-        for widget in self.widgets:
-            widget.update()
-            self.surface.blit(widget.surface, (widget.x, widget.y))
+        pass  # todo: implement update method
 
     def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event] | None:
         """Handle an event."""
@@ -65,6 +63,8 @@ class DefaultScreen(GameScreen):
                 height=50,
                 background_color="#ffffff",
                 foreground_color="#000000",
+                hover_background_color="#333333",
+                hover_foreground_color="#ffffff",
                 caption="Click me",
             )
         )

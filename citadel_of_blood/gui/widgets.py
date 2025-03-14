@@ -55,6 +55,10 @@ class BaseWidget(abc.ABC):
         self.is_active: bool = True
         self.surface: pygame.Surface = pygame.Surface((width, height))
 
+        self.state = "normal"
+        self.default_background_color = background_color
+        self.default_foreground_color = foreground_color
+
     def create_id(self) -> str:
         """Create an ID."""
         return f"{self.__class__.__name__}_{uuid.uuid4()}"
@@ -71,8 +75,8 @@ class Button(BaseWidget):
         height: int,
         background_color: GUIColor = (0, 0, 0),
         foreground_color: GUIColor = (0xFF, 0xFF, 0xFF),
-        hover_background_color: GUIColor = (0x00, 0x00, 0x00),
-        hover_foreground_color: GUIColor = (0xFF, 0xFF, 0xFF),
+        hover_background_color: GUIColor = (0xFF, 0xFF, 0xFF),
+        hover_foreground_color: GUIColor = (0, 0, 0),
         caption: str = "Click me",
         id: str = "",
     ):
@@ -95,7 +99,6 @@ class Button(BaseWidget):
 
     def update(self) -> None:
         """Update the button."""
-        pass
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         """Handle an event."""
@@ -108,18 +111,21 @@ class Button(BaseWidget):
                     self.on_click()
         # hover effect
         if self.rect.collidepoint(pygame.mouse.get_pos()):
+            self.state = "hover"
             self.on_hover_in()
         else:
+            self.state = "normal"
             self.on_hover_out()
 
     def on_click(self) -> None:
         """The on click event."""
-        pass
 
     def on_hover_in(self) -> None:
         """The on hover in event."""
-        pass
+        self.background_color = self.hover_background_color
+        self.foreground_color = self.hover_foreground_color
 
     def on_hover_out(self) -> None:
         """The on hover out event."""
-        pass
+        self.background_color = self.default_background_color
+        self.foreground_color = self.default_foreground_color
