@@ -4,6 +4,7 @@ from typing import TypeVar
 
 import pygame
 
+from citadel_of_blood.errors import ColorError
 from citadel_of_blood.gui.types import GUIColor
 
 SF = TypeVar("SF", bound="SerializableFont")
@@ -83,3 +84,35 @@ def deserialize_surface(surface: dict) -> pygame.Surface:
 
     """
     return pygame.Surface(surface["size"], surface["flags"], surface["depth"])
+
+
+def serialize_color(color: GUIColor) -> tuple[int, int, int] | str:
+    """Converts a GUIColor into a JSON-serializable format.
+    If 'color' is a pygame.Color or a tuple, returns a tuple (R, G, B).
+    If it is a hex string (e.g., "#rrggbb"), returns it unchanged.
+    """
+    if isinstance(color, pygame.Color):
+        return (
+            color.r,
+            color.g,
+            color.b,
+        )
+    elif isinstance(color, tuple | str):
+        return color
+    else:
+        msg = f"Unsupported color type: {type(color)}"
+        raise ColorError(msg)
+
+
+def deserialize_color(data: tuple[int, int, int] | str) -> pygame.Color:
+    """Reconstructs a pygame.Color from the serialized data.
+    If 'data' is a tuple, creates a pygame.Color with that tuple.
+    If 'data' is a hex string, creates a pygame.Color from the string.
+    """
+    if isinstance(data, tuple | list):
+        return pygame.Color(*data)
+    elif isinstance(data, str):
+        return pygame.Color(data)
+    else:
+        msg = f"Unsupported serialized color type: {type(data)}"
+        raise ColorError(msg)

@@ -1,14 +1,15 @@
 """Widgets for the GUI."""
 
 import abc
+import dataclasses
 import uuid
 from typing import Any
 
 import pygame
 
 from citadel_of_blood.constants import PROJECT_ROOT
+from citadel_of_blood.gui.colors import ColorPair, WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont, deserialize_surface, serialize_surface
-from citadel_of_blood.gui.types import GUIColor
 
 # TODO: Add widgets for the GUI.
 
@@ -33,34 +34,32 @@ class BaseWidget(abc.ABC):
 
         """
 
-    def __init__(self, x, y, width, height, background_color, foreground_color, id: str = ""):
+    def __init__(self, x, y, width, height, colors: WidgetColors, id: str = ""):
         """Initialize the BaseWidget class.
 
         Additional Attributes:
             active (bool): Whether the widget is active.
             surface (pygame.Surface): The surface for the widget.
         """
-        self.id = id or self.create_id()
+        self.id: str = id or self.create_id()
 
-        self.x = x
-        self.y = y
+        self.x: int = x
+        self.y: int = y
         if width <= 0 or height <= 0:
             msg = "Width and height must be greater than 0."
             raise ValueError(msg)
-        self.width = width
-        self.height = height
-        self.rect = pygame.Rect(x, y, width, height)
+        self.width: int = width
+        self.height: int = height
+        self.rect: pygame.Rect = pygame.Rect(x, y, width, height)
 
-        self.background_color: GUIColor | None = background_color
-        self.foreground_color: GUIColor | None = foreground_color
+        self.colors: WidgetColors = colors
+        self._render_colors: ColorPair = self.colors.normal
 
         self.is_active: bool = True
         self.is_visible: bool = True
         self.surface: pygame.Surface = pygame.Surface((width, height))
 
         self.state = "normal"
-        self.default_background_color = background_color
-        self.default_foreground_color = foreground_color
 
     def create_id(self) -> str:
         """Create an ID."""
@@ -74,6 +73,7 @@ class BaseWidget(abc.ABC):
 
         """
         data = self.__dict__.copy()
+        data["colors"] = dataclasses.asdict(data["colors"])
         data["rect"] = self.rect.x, self.rect.y, self.rect.width, self.rect.height
         data["surface"] = serialize_surface(self.surface)
         return data
@@ -94,13 +94,10 @@ class BaseWidget(abc.ABC):
             y=data["y"],
             width=data["width"],
             height=data["height"],
-            background_color=data["background_color"],
-            foreground_color=data["foreground_color"],
+            colors=WidgetColors(**data["colors"]),
             id=data["id"],
         )
         obj.state = data["state"]
-        obj.default_background_color = data["default_background_color"]
-        obj.default_foreground_color = data["default_foreground_color"]
         obj.is_active = data["is_active"]
         obj.is_visible = data["is_visible"]
 
@@ -125,28 +122,23 @@ class Button(BaseWidget):
         y: int,
         width: int,
         height: int,
-        background_color: GUIColor = (0, 0, 0),
-        foreground_color: GUIColor = (0xFF, 0xFF, 0xFF),
-        hover_background_color: GUIColor = (0xFF, 0xFF, 0xFF),
-        hover_foreground_color: GUIColor = (0, 0, 0),
+        colors: WidgetColors,
         caption: str = "Click me",
         id: str = "",
     ):
         """Initialize the Button class."""
-        super().__init__(x, y, width, height, background_color, foreground_color, id)
+        super().__init__(x, y, width, height, colors, id)
         self.caption = caption
         self.font = SerializableFont(
             font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf",
             size=36,
         )  # todo: make this configurable
-        self.hover_background_color: GUIColor = hover_background_color
-        self.hover_foreground_color: GUIColor = hover_foreground_color
 
     def draw(self) -> None:
         """Draw the button."""
-        pygame.draw.rect(self.surface, self.background_color, self.rect)
-        self.surface.fill(self.background_color)
-        text = self.font.render(caption=self.caption, color=self.foreground_color)
+        pygame.draw.rect(self.surface, self._render_colors.background_color, self.rect)
+        self.surface.fill(self._render_colors.background_color)
+        text = self.font.render(caption=self.caption, color=self._render_colors.foreground_color)
         text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
         self.surface.blit(text, text_rect)
 
@@ -188,13 +180,11 @@ class Button(BaseWidget):
 
     def on_hover_in(self) -> None:
         """The on hover in event."""
-        self.background_color = self.hover_background_color
-        self.foreground_color = self.hover_foreground_color
+        self._render_colors = self.colors.hover
 
     def on_hover_out(self) -> None:
         """The on hover out event."""
-        self.background_color = self.default_background_color
-        self.foreground_color = self.default_foreground_color
+        self._render_colors = self.colors.normal
 
     def serialize(self) -> dict[str, Any]:
         """Convert the widget to a dictionary.
@@ -206,8 +196,6 @@ class Button(BaseWidget):
         data = super().serialize()
         data["caption"] = self.caption
         data["font"] = self.font.serialize()
-        data["hover_background_color"] = self.hover_background_color
-        data["hover_foreground_color"] = self.hover_foreground_color
         return data
 
     @classmethod
@@ -225,6 +213,4 @@ class Button(BaseWidget):
         obj.caption = data["caption"]
         font_data = data["font"]
         obj.font = SerializableFont.deserialize(font_data)
-        obj.hover_background_color = data["hover_background_color"]
-        obj.hover_foreground_color = data["hover_foreground_color"]
         return obj
