@@ -2,10 +2,12 @@
 
 import abc
 import uuid
+from typing import Any
 
 import pygame
 
 from citadel_of_blood.constants import PROJECT_ROOT
+from citadel_of_blood.gui.helpers import deserialize_surface, serialize_surface
 from citadel_of_blood.gui.types import GUIColor
 
 # TODO: Add widgets for the GUI.
@@ -53,6 +55,7 @@ class BaseWidget(abc.ABC):
         self.foreground_color: GUIColor | None = foreground_color
 
         self.is_active: bool = True
+        self.is_visible: bool = True
         self.surface: pygame.Surface = pygame.Surface((width, height))
 
         self.state = "normal"
@@ -62,6 +65,55 @@ class BaseWidget(abc.ABC):
     def create_id(self) -> str:
         """Create an ID."""
         return f"{self.__class__.__name__}_{uuid.uuid4()}"
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert the widget to a dictionary.
+
+        Returns:
+            dict[str, Any]: The widget as a dictionary.
+
+        """
+        data = self.__dict__.copy()
+        data["rect"] = self.rect.x, self.rect.y, self.rect.width, self.rect.height
+        data["surface"] = serialize_surface(self.surface)
+        return data
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "BaseWidget":
+        """Create a widget from a dictionary.
+
+        Args:
+            data: dict[str, Any]: The data to create the widget from.
+
+        Returns:
+            BaseWidget: The widget.
+
+        """
+        obj = cls(
+            x=data["x"],
+            y=data["y"],
+            width=data["width"],
+            height=data["height"],
+            background_color=data["background_color"],
+            foreground_color=data["foreground_color"],
+            id=data["id"],
+        )
+        obj.state = data["state"]
+        obj.default_background_color = data["default_background_color"]
+        obj.default_foreground_color = data["default_foreground_color"]
+        obj.is_active = data["is_active"]
+        obj.is_visible = data["is_visible"]
+
+        rect_data = data["rect"]
+        if rect_data:
+            obj.rect = pygame.Rect(rect_data)
+
+        surface_data = data.get("surface")
+        if surface_data:
+            obj.surface = deserialize_surface(surface_data)
+        else:
+            obj.surface = pygame.Surface((obj.width, obj.height))
+        return obj
 
 
 class Button(BaseWidget):
@@ -104,10 +156,7 @@ class Button(BaseWidget):
         """Handle an event."""
         if not self.is_active:
             return
-        for event in events:
-            if event.type == pygame.MOUSEBUTTONDOWN:  # noqa: SIM102
-                if self.rect.collidepoint(event.pos):
-                    self.on_click()
+
         # hover effect
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             self.state = "hover"
@@ -115,6 +164,22 @@ class Button(BaseWidget):
         else:
             self.state = "normal"
             self.on_hover_out()
+
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:  # noqa: SIM102
+                if self.rect.collidepoint(event.pos):
+                    self.state = "mousedown"
+                    self.on_mouse_down()
+            if event.type == pygame.MOUSEBUTTONUP:
+                pass
+
+    def on_mouse_down(self) -> None:
+        """The on mouse down event."""
+        pass
+
+    def on_mouse_up(self) -> None:
+        """The on mouse up event."""
+        pass
 
     def on_click(self) -> None:
         """The on click event."""

@@ -53,7 +53,7 @@ class DefaultScreen(GameScreen):
 
     def __init__(self, settings: GUISettings | None = None) -> None:
         """Initialize the DefaultScreen class."""
-        super().__init__(background_color="#ff0000", settings=settings)
+        super().__init__(background_color="#333333", settings=settings)
         self.is_active = True
         self.add_widget(
             Button(
@@ -63,7 +63,7 @@ class DefaultScreen(GameScreen):
                 height=50,
                 background_color="#ffffff",
                 foreground_color="#000000",
-                hover_background_color="#333333",
+                hover_background_color="#000000",
                 hover_foreground_color="#ffffff",
                 caption="Click me",
             )
