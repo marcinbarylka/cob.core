@@ -7,7 +7,7 @@ from typing import Any
 import pygame
 
 from citadel_of_blood.constants import PROJECT_ROOT
-from citadel_of_blood.gui.helpers import deserialize_surface, serialize_surface
+from citadel_of_blood.gui.serialization import SerializableFont, deserialize_surface, serialize_surface
 from citadel_of_blood.gui.types import GUIColor
 
 # TODO: Add widgets for the GUI.
@@ -66,7 +66,7 @@ class BaseWidget(abc.ABC):
         """Create an ID."""
         return f"{self.__class__.__name__}_{uuid.uuid4()}"
 
-    def to_dict(self) -> dict[str, Any]:
+    def serialize(self) -> dict[str, Any]:
         """Convert the widget to a dictionary.
 
         Returns:
@@ -79,7 +79,7 @@ class BaseWidget(abc.ABC):
         return data
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "BaseWidget":
+    def deserialize(cls, data: dict[str, Any]) -> "BaseWidget":
         """Create a widget from a dictionary.
 
         Args:
@@ -135,8 +135,9 @@ class Button(BaseWidget):
         """Initialize the Button class."""
         super().__init__(x, y, width, height, background_color, foreground_color, id)
         self.caption = caption
-        self.font: pygame.font.Font = pygame.font.Font(
-            PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf", 36
+        self.font = SerializableFont(
+            font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf",
+            size=36,
         )  # todo: make this configurable
         self.hover_background_color: GUIColor = hover_background_color
         self.hover_foreground_color: GUIColor = hover_foreground_color
@@ -145,7 +146,7 @@ class Button(BaseWidget):
         """Draw the button."""
         pygame.draw.rect(self.surface, self.background_color, self.rect)
         self.surface.fill(self.background_color)
-        text = self.font.render(self.caption, True, self.foreground_color)
+        text = self.font.render(caption=self.caption, color=self.foreground_color)
         text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
         self.surface.blit(text, text_rect)
 
@@ -194,3 +195,36 @@ class Button(BaseWidget):
         """The on hover out event."""
         self.background_color = self.default_background_color
         self.foreground_color = self.default_foreground_color
+
+    def serialize(self) -> dict[str, Any]:
+        """Convert the widget to a dictionary.
+
+        Returns:
+            dict[str, Any]: The widget as a dictionary.
+
+        """
+        data = super().serialize()
+        data["caption"] = self.caption
+        data["font"] = self.font.serialize()
+        data["hover_background_color"] = self.hover_background_color
+        data["hover_foreground_color"] = self.hover_foreground_color
+        return data
+
+    @classmethod
+    def deserialize(cls, data: dict[str, Any]) -> "Button":
+        """Create a widget from a dictionary.
+
+        Args:
+            data: dict[str, Any]: The data to create the widget from.
+
+        Returns:
+            BaseWidget: The widget.
+
+        """
+        obj = super().deserialize(data)
+        obj.caption = data["caption"]
+        font_data = data["font"]
+        obj.font = SerializableFont.deserialize(font_data)
+        obj.hover_background_color = data["hover_background_color"]
+        obj.hover_foreground_color = data["hover_foreground_color"]
+        return obj
