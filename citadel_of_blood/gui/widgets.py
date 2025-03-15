@@ -94,7 +94,7 @@ class Button(BaseWidget):
         pygame.draw.rect(self.surface, self.background_color, self.rect)
         self.surface.fill(self.background_color)
         text = self.font.render(self.caption, True, self.foreground_color)
-        text_rect = text.get_rect(center=self.rect.center)
+        text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
         self.surface.blit(text, text_rect)
 
     def update(self) -> None:
@@ -107,7 +107,6 @@ class Button(BaseWidget):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:  # noqa: SIM102
                 if self.rect.collidepoint(event.pos):
-                    print(f"Button {self.id} clicked.")
                     self.on_click()
         # hover effect
         if self.rect.collidepoint(pygame.mouse.get_pos()):
@@ -119,6 +118,7 @@ class Button(BaseWidget):
 
     def on_click(self) -> None:
         """The on click event."""
+        print(f"Button {self.id} clicked.")
 
     def on_hover_in(self) -> None:
         """The on hover in event."""
