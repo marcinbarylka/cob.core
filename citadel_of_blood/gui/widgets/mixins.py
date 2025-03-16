@@ -11,7 +11,7 @@ class ClickableMixin(abc.ABC):
     """Mixin providing click-handling functionality.
     It assumes that the class has attributes:
       - rect: pygame.Rect
-      - _pressed: bool
+      - state: WidgetStateEnum
       - on_mouse_down(), on_mouse_up(), on_click().
     """
 
