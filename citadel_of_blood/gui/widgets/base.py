@@ -132,7 +132,11 @@ class BaseWidget(abc.ABC):
 
         surface_data = data.get("surface")
         if surface_data:
-            obj.surface = deserialize_surface(surface_data)
+            try:
+                obj.surface = deserialize_surface(surface_data)
+            except Exception as e:
+                print(f"Nie udało się deserializować powierzchni: {e}")
+                obj.surface = pygame.Surface((obj.width, obj.height))
         else:
             obj.surface = pygame.Surface((obj.width, obj.height))
         return obj
