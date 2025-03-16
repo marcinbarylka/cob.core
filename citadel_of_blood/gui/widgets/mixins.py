@@ -4,6 +4,8 @@ import abc
 
 import pygame
 
+from citadel_of_blood.gui.widgets import WidgetStateEnum
+
 
 class ClickableMixin(abc.ABC):
     """Mixin providing click-handling functionality.
@@ -15,7 +17,6 @@ class ClickableMixin(abc.ABC):
 
     def __init__(self) -> None:
         """Initialize the ClickableMixin class."""
-        self._pressed: bool = False
 
     def handle_click_events(self, events: list[pygame.event.Event]) -> None:
         """Processes mouse click events."""
@@ -23,12 +24,12 @@ class ClickableMixin(abc.ABC):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(event.pos):
                     self.on_mouse_down()
-                    self._pressed = True
+                    self.state = WidgetStateEnum.MOUSE_DOWN
             elif event.type == pygame.MOUSEBUTTONUP and self._pressed:
                 self.on_mouse_up()
                 if self.rect.collidepoint(event.pos):
                     self.on_click()
-                self._pressed = False
+                    self.state = WidgetStateEnum.MOUSE_UP
 
     @abc.abstractmethod
     def on_mouse_down(self) -> None:

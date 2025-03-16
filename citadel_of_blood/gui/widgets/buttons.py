@@ -7,6 +7,7 @@ import pygame
 from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.gui.colors import WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
+from citadel_of_blood.gui.widgets import WidgetStateEnum
 from citadel_of_blood.gui.widgets.base import BaseWidget
 from citadel_of_blood.gui.widgets.mixins import ClickableMixin
 
@@ -43,30 +44,44 @@ class Button(BaseWidget, ClickableMixin):
 
     def update(self) -> None:
         """Update the button."""
+        if self.state == WidgetStateEnum.CLICK:
+            self._render_colors = self.colors.click
+        elif self.state == WidgetStateEnum.NORMAL:
+            self._render_colors = self.colors.normal
+        elif self.state == WidgetStateEnum.HOVER:
+            self._render_colors = self.colors.hover
+        elif self.state == WidgetStateEnum.MOUSE_DOWN:
+            self._render_colors = self.colors.click
+        elif self.state == WidgetStateEnum.MOUSE_UP:
+            self._render_colors = self.colors.hover
+
+    def handle_hover_events(self, events: list[pygame.event.Event]) -> None:
+        """Handle hover events."""
+        for event in events:
+            if event.type == pygame.MOUSEMOTION:
+                if self.rect.collidepoint(event.pos):
+                    if self.state != WidgetStateEnum.HOVER:
+                        self.on_hover_in()
+                        self.state = WidgetStateEnum.HOVER
+                else:
+                    if self.state == WidgetStateEnum.HOVER:
+                        self.on_hover_out()
+                        self.state = WidgetStateEnum.NORMAL
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         """Handle an event."""
-        if not self.is_active:
+        if not self.is_active or not self.is_visible:
             return
 
-        # hover effect
-        if self.rect.collidepoint(pygame.mouse.get_pos()):
-            self.state = "hover"
-            self.on_hover_in()
-        else:
-            self.state = "normal"
-            self.on_hover_out()
-
         # Delegate click events to mixin method
+        self.handle_hover_events(events)
         self.handle_click_events(events)
 
     def on_mouse_down(self) -> None:
         """The on mouse down event."""
-        pass
 
     def on_mouse_up(self) -> None:
         """The on mouse up event."""
-        pass
 
     def on_click(self) -> None:
         """The on click event."""
@@ -74,11 +89,9 @@ class Button(BaseWidget, ClickableMixin):
 
     def on_hover_in(self) -> None:
         """The on hover in event."""
-        self._render_colors = self.colors.hover
 
     def on_hover_out(self) -> None:
         """The on hover out event."""
-        self._render_colors = self.colors.normal
 
     def serialize(self) -> dict[str, Any]:
         """Convert the widget to a dictionary.

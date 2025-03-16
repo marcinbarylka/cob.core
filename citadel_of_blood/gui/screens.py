@@ -58,7 +58,7 @@ class DefaultScreen(GameScreen):
         colors = WidgetColors(
             normal=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
             hover=ColorPair(background_color=(0x11, 0x11, 0x11), foreground_color=(0xFF, 0xFF, 0xFF)),
-            click=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
+            click=ColorPair(background_color=(0xFF, 0xFF, 0xFF), foreground_color=(0, 0, 0)),
         )
         self.add_widget(
             Button(

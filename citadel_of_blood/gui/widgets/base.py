@@ -2,6 +2,7 @@
 
 import abc
 import dataclasses
+import enum
 import uuid
 from typing import Any
 
@@ -9,6 +10,16 @@ import pygame
 
 from citadel_of_blood.gui.colors import ColorPair, WidgetColors
 from citadel_of_blood.gui.serialization import deserialize_surface, serialize_surface
+
+
+class WidgetStateEnum(enum.Enum):
+    """Enum for widget states."""
+
+    NORMAL = "normal"
+    HOVER = "hover"
+    MOUSE_DOWN = "mouse_down"
+    MOUSE_UP = "mouse_up"
+    CLICK = "click"
 
 
 class BaseWidget(abc.ABC):
@@ -56,7 +67,7 @@ class BaseWidget(abc.ABC):
         self.is_visible: bool = True
         self.surface: pygame.Surface = pygame.Surface((width, height))
 
-        self.state = "normal"
+        self.state = WidgetStateEnum.NORMAL
 
     def create_id(self) -> str:
         """Create an ID."""
