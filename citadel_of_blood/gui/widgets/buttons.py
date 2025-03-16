@@ -30,9 +30,13 @@ class Button(BaseWidget, ClickableMixin):
         self.caption = caption
         self.font = SerializableFont(
             font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf",
-            size=36,
-        )  # todo: make this configurable
+            size=16,
+        )  # Default font
         self._pressed: bool = False
+
+    def set_font(self, font: SerializableFont) -> None:
+        """Set the font."""
+        self.font = font
 
     def draw(self) -> None:
         """Draw the button."""
