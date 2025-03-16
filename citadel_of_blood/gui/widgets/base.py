@@ -44,9 +44,21 @@ class BaseWidget(abc.ABC):
     def __init__(self, x, y, width, height, colors: WidgetColors, id: str = ""):
         """Initialize the BaseWidget class.
 
+        Args:
+            x: int: The x-coordinate of the widget.
+            y: int: The y-coordinate of the widget.
+            width: int: The width of the widget.
+            height: int: The height of the widget.
+            colors: WidgetColors: The colors of the widget.
+            id: str: The ID of the widget.
+
         Additional Attributes:
-            active (bool): Whether the widget is active.
-            surface (pygame.Surface): The surface for the widget.
+            rect: pygame.Rect: The rectangle of the widget.
+            _render_colors: ColorPair: The colors to render.
+            is_active: bool: Whether the widget is active.
+            is_visible: bool: Whether the widget is visible.
+            surface: pygame.Surface: The surface of the widget.
+            state: WidgetStateEnum: The state of the widget.
         """
         self.id: str = id or self.create_id()
 
