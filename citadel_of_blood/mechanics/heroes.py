@@ -59,8 +59,7 @@ class Hero:
     def max_wound_points(self):
         """Return the maximum wound points of the hero.
 
-        Returns
-        -------
+        Returns:
             int: maximum wound points of the hero
 
         """
@@ -70,8 +69,7 @@ class Hero:
     def is_alive(self) -> bool:
         """Check if the hero is alive.
 
-        Returns
-        -------
+        Returns:
             bool: True if the hero is alive, False otherwise
 
         """
@@ -85,15 +83,12 @@ class Hero:
         that the hero deals to the opponent.
 
         Args:
-        ----
             weapon: weapon of the hero
 
         Returns:
-        -------
             int: damage that the hero deals to the opponent
 
         Raises:
-        ------
             ValueError: if the hero does not have the weapon
 
         """
@@ -120,7 +115,6 @@ class Initiate(Hero):
         """Add new weapon to the initiate.
 
         Args:
-        ----
             weapon: weapon to add
 
         """
@@ -574,12 +568,13 @@ def random_heroes(how_many: int = 3) -> list[Hero]:
     """Get random heroes.
 
     Args:
-    ----
         how_many: number of heroes to get
 
     Returns:
-    -------
         list: list of random heroes
+
+    Raises:
+        ValueError: if too many or too few heroes requested
 
     """
     if how_many > 3:

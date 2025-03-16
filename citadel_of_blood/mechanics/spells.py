@@ -27,16 +27,7 @@ MAGIC_POTENTIAL_TABLE = [
 
 @dataclass
 class Spell(abc.ABC):
-    """Spell class.
-
-    Attributes
-    ----------
-        name: name of the spell
-        code: code of the spell
-        cost: cost of the spell
-        type: type of the spell
-
-    """
+    """Spell class."""
 
     name: str
     code: str
@@ -48,11 +39,9 @@ class Spell(abc.ABC):
         """Return a list of instances of Spell subclasses that match the given spell_type.
 
         Args:
-        ----
             spell_type: SpellType
 
         Returns:
-        -------
             list: list of Spell instances
 
         """

@@ -1,69 +1,58 @@
 """Core module."""
 
-from typing import Any
-
 import pygame
 
+from citadel_of_blood.errors import GameScreenError
 from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
-from citadel_of_blood.gui.settings import Settings
+from citadel_of_blood.gui.screens import GameScreen
+from citadel_of_blood.gui.settings import GUIColors, GUISettings, Settings
 
 
 class Game:
     """Game class.
 
-    Attributes
-    ----------
-        screen (pygame.Surface): The screen.
-        fullscreen (bool): Fullscreen mode.
-        width (int): The width.
-        height (int): The height.
-        settings (Any): The settings.
-        clock (pygame.time.Clock): The clock.
-        running (bool): Running state.
-
-        events_handler (EventsHandler): The events handler.
-        is_soundcard (bool): Sound card availability.
-        frame (int): Frame counter.
+    Attributes:
+          screen (pygame.Surface | None): The screen.
+          fullscreen (bool): Whether the screen is fullscreen.
+          width (int): The width of the screen.
+          height (int): The height of the screen.
+          settings (Settings): The settings.
+          clock (pygame.time.Clock): The clock.
+          running (bool): Whether the game is running.
+          is_soundcard (bool): Whether the sound card is available.
+          active_game_screen (GameScreen | None): The active screen.
+          events_handler (EventsHandler): The events handler.
+          frame (int): The frame counter.
 
     """
 
-    def __init__(self) -> None:
+    def __init__(self, active_game_screen: GameScreen | None = None) -> None:
         """Initialize the Game class.
 
-        This method initializes all the necessary attributes:
-        - screen: The Pygame surface for display
-        - fullscreen: Boolean indicating fullscreen mode
-        - width, height: Dimensions of the game window
-        - settings: Game configuration
-        - clock: Pygame clock for frame timing
-        - running: Game state indicator
-        - events_handler: Handler for game events
-        - is_soundcard: Boolean indicating sound card availability
-        - frame: Frame counter
+        This method initializes all the necessary attributes.
         """
         self.screen: pygame.Surface | None = None
         self.fullscreen: bool = True
         self.width: int = 0
         self.height: int = 0
-        self.settings: Settings = None
+        self.settings: Settings = Settings(gui=GUISettings(colors=GUIColors()))
         self.clock: pygame.time.Clock = pygame.time.Clock()
         self.running: bool = True
         self.is_soundcard: bool = True
 
+        self.active_game_screen: GameScreen | None = active_game_screen
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
 
-    def load_settings(self, toml_file: str) -> Any:
+    def load_settings(self, toml_file: str) -> None:
         """Load the settings.
 
         Args:
-        ----
             toml_file (str): The TOML file to load.
 
         Returns:
-        -------
-            Any: The settings.
+            Settings: The settings object.
 
         """
         self.settings = Settings.load(toml_file)
@@ -75,9 +64,7 @@ class Game:
         """Initialize the GUI.
 
         Args:
-        ----
-            toml_file (str): The TOML file to load. If empty, the default settings
-                filename from SETTINGS_FILENAME constant will be used.
+            toml_file (str): The TOML file to load.
 
         """
         if not toml_file:
@@ -107,8 +94,14 @@ class Game:
         """Check the state."""
         if not self.events_handler.running:
             self.running = False
+        self.screen.blit(self.active_game_screen.surface, (0, 0))
 
-    def run(self):
+    def open_screen(self, screen: GameScreen) -> None:
+        """Add a screen."""
+        screen.settings = self.settings
+        self.active_game_screen = screen
+
+    def run(self) -> None:
         """Run the GUI."""
         if self.screen is None:
             msg = "Screen is not initialized. Call init_gui() before run()."
@@ -116,11 +109,18 @@ class Game:
         if self.settings is None:
             msg = "Settings are not initialized. Call init_gui() before run()."
             raise ValueError(msg)
+        if self.active_game_screen is None:
+            msg = "Active screen is not set. Set an active game screen before run()."
+            raise GameScreenError(msg)
+
         while self.running:
-            self.events_handler.handle_events()
+            events = pygame.event.get()
+            events = self.events_handler.handle_events(events)
+            _ = self.active_game_screen.handle_events(events)
+            self.active_game_screen.update()
+            self.active_game_screen.draw()
             self.update()
-            self.screen.fill(pygame.Color(self.settings.gui.colors.background))
-            pygame.display.flip()
+            pygame.display.update()
             self.clock.tick(self.settings.gui.fps)
             self.frame += 1
         pygame.quit()

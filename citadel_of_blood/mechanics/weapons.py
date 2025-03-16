@@ -2,16 +2,7 @@
 
 
 class Weapon:
-    """Base class for all weapons.
-
-    Parameters
-    ----------
-        name (str): The name of the weapon.
-        attack_bonus (int): The attack bonus.
-        damage_table (list[int]): The damage table.
-        is_ranged_weapon (bool): Is the weapon ranged?
-
-    """
+    """Base class for all weapons."""
 
     def __init__(
         self,
@@ -20,7 +11,15 @@ class Weapon:
         damage_table: list[int] = [],
         is_ranged_weapon: bool = False,
     ) -> None:
-        """Initialize the weapon."""
+        """Initialize the weapon.
+
+        Args:
+            name (str): name of the weapon
+            attack_bonus (int): attack bonus of the weapon
+            damage_table (list[int]): damage table of the weapon
+            is_ranged_weapon (bool): is the weapon a ranged weapon
+
+        """
         if not name:
             name = self.__class__.__name__
 
@@ -33,11 +32,9 @@ class Weapon:
         """Get damage based on the roll.
 
         Args:
-        ----
             roll (int): roll used to determine the index of the damage table.
 
         Returns:
-        -------
             int: damage
 
         """

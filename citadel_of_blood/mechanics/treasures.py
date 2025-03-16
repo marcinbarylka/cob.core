@@ -95,11 +95,9 @@ class Treasure(enum.Enum):
         """Move to the next treasure.
 
         Args:
-        ----
             number (int, optional): number of treasures to move. Defaults to 0.
 
         Returns:
-        -------
             Treasure: new treasure
 
         """
@@ -117,8 +115,7 @@ class Treasure(enum.Enum):
     def roll_gold(self) -> int:
         """Roll for gold.
 
-        Returns
-        -------
+        Returns:
             int: gold amount
 
         """
@@ -131,8 +128,7 @@ class Treasure(enum.Enum):
     def roll_jewelery(self) -> list[int]:
         """Roll for jewelery.
 
-        Returns
-        -------
+        Returns:
             list: list of jewelery
 
         """
@@ -145,8 +141,7 @@ class Treasure(enum.Enum):
     def roll_magic_items(self) -> dict[str, list[Any]]:
         """Roll for magic items.
 
-        Returns
-        -------
+        Returns:
             dict: dictionary of magic items
 
         """
@@ -185,8 +180,7 @@ class Treasure(enum.Enum):
     def roll_treasure(self) -> dict[str, Any]:
         """Get treasure.
 
-        Returns
-        -------
+        Returns:
             dict: treasure
 
         """
@@ -199,8 +193,7 @@ class Treasure(enum.Enum):
     def _get_weapon_bonus(self) -> int:
         """Get weapon bonus.
 
-        Returns
-        -------
+        Returns:
             int: weapon bonus
 
         """
@@ -212,8 +205,7 @@ class Treasure(enum.Enum):
     def _get_armor_bonus(self) -> int:
         """Get armor bonus.
 
-        Returns
-        -------
+        Returns:
             int: armor bonus
 
         """
@@ -227,11 +219,9 @@ class Treasure(enum.Enum):
         """Parse a treasure code.
 
         Args:
-        ----
             code (str): treasure code
 
         Returns:
-        -------
             tuple: probability and dice code
 
         """
@@ -242,8 +232,7 @@ class Treasure(enum.Enum):
     def empty_treasure() -> dict[str, Any]:
         """Empty treasure.
 
-        Returns
-        -------
+        Returns:
             dict: empty treasure
 
         """

@@ -10,19 +10,21 @@ class EventsHandler:
         """Initialize the EventsHandler class."""
         self.running: bool = True
 
-    def handle_events(self) -> None:
+    def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event]:
         """Handle the events."""
-        for event in pygame.event.get():
+        if not events:
+            events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 self.running = False
             elif event.type == pygame.KEYDOWN:
                 self._handle_keydown_event(event)
+        return events
 
     def _handle_keydown_event(self, event) -> None:
         """Handle keyboard events.
 
         Args:
-        ----
             event: Pygame keyboard event.
 
         """

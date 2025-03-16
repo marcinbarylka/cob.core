@@ -2,20 +2,13 @@
 
 
 class Armor:
-    """Armor class for the player.
-
-    Attributes
-    ----------
-        defense: defense of the armor
-
-    """
+    """Armor class for the player."""
 
     def __init__(self, defense):
         """Initialize the Armor class.
 
         Args:
-        ----
-            defense: defense of the armor
+            defense (int): The defense value of the armor.
 
         """
         self.defense = defense
@@ -23,8 +16,7 @@ class Armor:
     def __str__(self):
         """Return the string representation of the armor.
 
-        Returns
-        -------
+        Returns:
             str: the string representation of the armor
 
         """
@@ -33,8 +25,7 @@ class Armor:
     def __repr__(self):
         """Return the string representation of the armor.
 
-        Returns
-        -------
+        Returns:
             str: the string representation of the armor
 
         """

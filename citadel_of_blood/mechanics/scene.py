@@ -29,7 +29,6 @@ class Scene:
         """Attack the target monster with the attacker monster.
 
         Args:
-        ----
             attacker (Hero | Initiate | Monster): The monster attacking.
             target (Hero | Initiate | Monster): The monster being attacked.
             weapon (Weapon): The weapon being used to attack.

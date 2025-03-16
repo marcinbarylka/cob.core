@@ -8,16 +8,15 @@ from citadel_of_blood.mechanics.features import Feature, FeatureFactory
 
 
 class Segment:
-    """Segment of the board.
-
-    Attributes
-    ----------
-        exits: list of exits of the segment
-
-    """
+    """Segment of the board."""
 
     def __init__(self, exits: list[int] | None) -> None:
-        """Initialize the segment."""
+        """Initialize the segment.
+
+        Args:
+            exits: list of exits of the segment
+
+        """
         self.exits: list[int] = (
             exits
             if exits is not None
@@ -55,8 +54,7 @@ class Segment:
     def _exits_to_str(self) -> tuple[str, ...]:
         """Return the exits as a tuple of strings.
 
-        Returns
-        -------
+        Returns:
             tuple of strings representing the exits
 
         """
@@ -77,17 +75,16 @@ class Segment:
 
 
 class Room(Segment):
-    """A room segment.
-
-    Attributes
-    ----------
-        exits: list of exits of the room
-        feature: feature of the room
-
-    """
+    """A room segment."""
 
     def __init__(self, exits: list[int] | None, feature: Feature | None = None) -> None:
-        """Initialize the room segment."""
+        """Initialize the room segment.
+
+        Args:
+            exits: list of exits of the room
+            feature: feature of the room
+
+        """
         super().__init__(exits)
         self.feature: Feature | None = feature
 

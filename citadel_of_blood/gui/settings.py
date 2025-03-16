@@ -21,35 +21,19 @@ class GUIColors(BaseModel):
 
 
 class GUISettings(BaseModel):
-    """The settings for the GUI.
-
-    Attributes
-    ----------
-        fullscreen (bool): Whether to run in fullscreen mode.
-        width (int): The width of the window.
-        height (int): The height of the window.
-        caption (str): The caption of the window.
-        fps (int): The frames per second.
-        colors (GUIColors): The colors.
-
-    """
+    """The settings for the GUI."""
 
     fullscreen: bool = False
     width: int = 1920
     height: int = 1080
-    caption: str = "GUI"
+    caption: str = "Citadel of Blood"
     fps: int = 60
     colors: GUIColors
+    basic_font: str = "/assets/fonts/Roboto-Regular.ttf"
 
 
 class Settings(BaseModel):
-    """The settings.
-
-    Attributes
-    ----------
-        gui (GUISettings): The GUI settings.
-
-    """
+    """The settings."""
 
     gui: GUISettings
 
@@ -58,12 +42,7 @@ class Settings(BaseModel):
         """Load the settings.
 
         Args:
-        ----
             toml_file (str): The TOML file to load.
-
-        Returns:
-        -------
-            Settings: The settings.
 
         """
         config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
@@ -72,6 +51,7 @@ class Settings(BaseModel):
                 toml_data = tomllib.load(f)
                 settings = Settings(**toml_data)
         except FileNotFoundError:
+            # Create a default settings file if it doesn't exist.
             settings = Settings.create_default_settings_conf(toml_file)
         return settings
 

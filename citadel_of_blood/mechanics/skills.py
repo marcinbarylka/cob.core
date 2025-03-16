@@ -6,17 +6,15 @@ from citadel_of_blood.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, W
 
 
 class Skill(ABC):
-    """Represent a skill. It is used to represent a skill of a character or a monster.
-
-    Attributes
-    ----------
-        value: value of the skill
-        skill_name: name of the skill
-
-    """
+    """Represent a skill. It is used to represent a skill of a character or a monster."""
 
     def __init__(self, value: int):
-        """Initialize the skill."""
+        """Initialize the skill.
+
+        Args:
+            value: The value of the skill.
+
+        """
         self.value: int = value
         self.skill_name: str = self.__class__.__name__
 

@@ -8,27 +8,24 @@ from citadel_of_blood.mechanics.party import Party
 
 
 class Trap(ABC):
-    """Trap class. It is an abstract class for traps.
-
-    Attributes
-    ----------
-        name: name of the trap
-
-    """
+    """Trap class. It is an abstract class for traps."""
 
     def __init__(self, name: str) -> None:
-        """Initialize the trap."""
+        """Initialize the trap.
+
+        Args:
+            name: The name of the trap.
+
+        """
         self.name: str = name
 
     def detrap(self, detrapper: Hero | Initiate) -> bool:
         """Detrap trap. This method should be implemented in child classes.
 
         Args:
-        ----
             detrapper: hero or initiate trying to detrap the trap
 
         Returns:
-        -------
             bool: True if the trap is detrapped, False otherwise
 
         """
@@ -43,12 +40,10 @@ class Trap(ABC):
         """Run trap. This method should be implemented in child classes. It should contain all the logic of the trap.
 
         Args:
-        ----
             detrapper: hero or initiate that triggered the trap
             party: party of the heroes
 
         """
-        ...
 
 
 class Arrow(Trap):
@@ -62,7 +57,6 @@ class Arrow(Trap):
         """Run arrow trap.
 
         Args:
-        ----
             detrapper: hero or initiate that triggered the trap
             party: party of the heroes
 
@@ -85,7 +79,6 @@ class PoisonedArrow(Trap):
         """Run poisoned arrow trap.
 
         Args:
-        ----
             detrapper: hero or initiate that triggered the trap
             party: party of the heroes
 
@@ -110,7 +103,6 @@ class PoisonGas(Trap):
         """Run poison gas trap.
 
         Args:
-        ----
             detrapper: hero or initiate that triggered the trap
             party: party of the heroes
 
@@ -129,7 +121,6 @@ class Explosion(Trap):
         """Run explosion trap.
 
         Args:
-        ----
             detrapper: hero or initiate that triggered the trap
             party: party of the heroes
 
@@ -149,7 +140,6 @@ class FlamingOil(Trap):
         """Run flaming oil trap.
 
         Args:
-        ----
             detrapper: hero or initiate that triggered the trap
             party: party of the heroes
 
@@ -160,8 +150,7 @@ class FlamingOil(Trap):
 def roll_trap() -> list[Trap]:
     """Roll dice for trap.
 
-    Returns
-    -------
+    Returns:
         list: list of traps
 
     """

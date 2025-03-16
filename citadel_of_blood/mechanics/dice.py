@@ -5,20 +5,15 @@ from random import randint
 
 
 class Dice:
-    """A dice representation. It can parse and roll a dice.
-
-    Attributes
-    ----------
-        code: str. A code of the dice: i.e. 2d10+20.
-        number: int. The number of dice.
-        type: int. The type of dice.
-        modifier: int. The modifier of the dice.
-        multiplier: int. The multiplier of the dice.
-
-    """
+    """A dice representation. It can parse and roll a dice."""
 
     def __init__(self, dice_code="D6"):
-        """Initialize the Dice class."""
+        """Initialize the Dice class.
+
+        Args:
+            dice_code: a code of the dice: i.e. 2d10+20.
+
+        """
         self.code = dice_code
         self.number = 0
         self.type = 0
@@ -30,12 +25,7 @@ class Dice:
         """Dice parser.
 
         Args:
-        ----
             dice_code: a code of the dice: i.e. 2d10+20.
-
-        Raises:
-        ------
-            ValueError: if the dice code is not recognized.
 
         """
         if dice_code:
@@ -70,11 +60,9 @@ class Dice:
         """Roll a parsed dice.
 
         Args:
-        ----
             dice_code: a code of the dice: i.e. 2d10+20.
 
         Returns:
-        -------
             int. The result of the roll.
 
         """
@@ -91,8 +79,7 @@ class Dice:
     def max(self):  # noqa: D102
         """Max value of the roll.
 
-        Returns
-        -------
+        Returns:
             int. The max value of the roll.
 
         """
@@ -102,8 +89,7 @@ class Dice:
     def min(self):  # noqa: D102
         """Min value of the roll.
 
-        Returns
-        -------
+        Returns:
             int. The min value of the roll.
 
         """
@@ -116,11 +102,9 @@ def roll(dice_code):
     This is a wrapper function for the Dice class.
 
     Args:
-    ----
         dice_code: a code of the dice: i.e. 2d10+20.
 
     Returns:
-    -------
         int. The result of the roll.
 
     """

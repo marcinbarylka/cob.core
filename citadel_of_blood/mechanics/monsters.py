@@ -72,26 +72,7 @@ WANDERING_MONSTER_TABLE = [
 
 @dataclass
 class Monster:
-    """Monster class.
-
-    Attributes
-    ----------
-        name (str): The name of the monster.
-        resistance_value (int): The resistance value of the monster.
-        negotiation_value (int): The negotiation value of the monster.
-        weapon (Weapon): The weapon of the monster.
-        spells (list[Spell]): The spells of the monster.
-        treasure (tuple[Treasure, Treasure]): The treasure of the monster.
-        special (Skill): The special skill of the monster.
-        combat_bonus (int): The combat bonus of the monster.
-        weapon_skill (WeaponSkill): The weapon skill of the monster.
-        is_wandering (bool): True if the monster is a wandering monster.
-        wound_points (int): The wound points of the monster.
-        wound_points_code (str): The wound points code of the monster.
-        experience_points (int): The experience points of the monster.
-        actual_treasure (dict[str, Any]): The actual treasure of the monster.
-
-    """
+    """Monster class."""
 
     name: str = ""
     resistance_value: int = 0
@@ -120,8 +101,7 @@ class Monster:
     def max_wound_points(self) -> int:
         """Get the maximum wound points of the monster.
 
-        Returns
-        -------
+        Returns:
             int: The maximum wound points of the monster.
 
         """
@@ -131,8 +111,7 @@ class Monster:
     def hold_treasure(self) -> Treasure:
         """Get the appropriate treasure type based on monster status (wandering or not).
 
-        Returns
-        -------
+        Returns:
             Treasure: The treasure of the monster.
 
         """
@@ -141,9 +120,8 @@ class Monster:
     def get_treasure(self) -> Treasure:
         """Get the treasure of the monster.
 
-        Returns
-        -------
-            Treasure: The treasure of the monster.
+        Returns:
+             Treasure: The treasure of the monster.
 
         """
         if self.is_wandering:
@@ -163,8 +141,7 @@ class Monster:
     def is_alive(self) -> bool:
         """Check if the monster is alive.
 
-        Returns
-        -------
+        Returns:
             bool: True if the monster is alive.
 
         """
@@ -494,17 +471,14 @@ def spawn_monster(monster_class: type[Monster], level: int = 1, is_wandering: bo
     """Spawn a monster of the given class and level.
 
     Args:
-    ----
         monster_class (Type[Monster]): The class of the monster to spawn.
         level (int): The level of the maze.
         is_wandering (bool): True if the monster is a wandering monster.
 
     Returns:
-    -------
         list[Monster]: A list of monsters.
 
     Raises:
-    ------
         ValueError: If the level is not between 1 and 3.
 
     """
@@ -545,14 +519,12 @@ def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Mons
     """Roll a random monster.
 
     Args:
-    ----
         wandering (bool): True if the monster is a wandering monster.
         d1 (int): The first die roll.
         d2 (int): The second die roll.
         level (int): The level of the maze.
 
     Returns:
-    -------
         list[Monster]: A list of monsters.
 
     """
@@ -574,11 +546,9 @@ def roll_room_monster(level: int = 1):
     """Roll a random room monster.
 
     Args:
-    ----
         level (int): The level of the maze.
 
     Returns:
-    -------
         list[Monster]: A list of monsters.
 
     """
@@ -591,11 +561,9 @@ def roll_wandering_monster(level: int = 1) -> list[Monster]:
     """Roll a random wandering monster.
 
     Args:
-    ----
         level (int): The level of the maze.
 
     Returns:
-    -------
         list[Monster]: A list of monsters.
 
     """
