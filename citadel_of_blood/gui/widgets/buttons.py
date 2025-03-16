@@ -44,8 +44,6 @@ class Button(BaseWidget, ClickableMixin):
 
     def update(self) -> None:
         """Update the button."""
-        # if self.state == WidgetStateEnum.CLICK:
-        #     self._render_colors = self.colors.click
         if self.state == WidgetStateEnum.NORMAL:
             self._render_colors = self.colors.normal
         elif self.state == WidgetStateEnum.HOVER:
