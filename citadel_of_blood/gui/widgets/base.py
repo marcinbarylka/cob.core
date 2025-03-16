@@ -34,13 +34,12 @@ class BaseWidget(abc.ABC):
         """Update the widget. This method should be implemented by the subclass."""
 
     @abc.abstractmethod
-    def handle_events(self, events: list[pygame.event.Event]) -> None:
-        """Handle an event. This method should be implemented by the subclass.
+    def on_hover_in(self) -> None:
+        """The on hover in event."""
 
-        Args:
-          events: list[pygame.event.Event]: The list of Pygame events to handle.
-
-        """
+    @abc.abstractmethod
+    def on_hover_out(self) -> None:
+        """The on hover out event."""
 
     def __init__(self, x, y, width, height, colors: WidgetColors, id: str = ""):
         """Initialize the BaseWidget class.
@@ -72,6 +71,24 @@ class BaseWidget(abc.ABC):
     def create_id(self) -> str:
         """Create an ID."""
         return f"{self.__class__.__name__}_{uuid.uuid4()}"
+
+    def handle_events(self, events: list[pygame.event.Event]) -> None:
+        """Handle an event. This method should be implemented by the subclass.
+
+        Args:
+          events: list[pygame.event.Event]: The list of Pygame events to handle.
+
+        """
+        for event in events:
+            if event.type == pygame.MOUSEMOTION:
+                if self.rect.collidepoint(event.pos):
+                    if self.state != WidgetStateEnum.HOVER:
+                        self.on_hover_in()
+                        self.state = WidgetStateEnum.HOVER
+                else:
+                    if self.state == WidgetStateEnum.HOVER:
+                        self.on_hover_out()
+                        self.state = WidgetStateEnum.NORMAL
 
     def serialize(self) -> dict[str, Any]:
         """Convert the widget to a dictionary.

@@ -44,9 +44,9 @@ class Button(BaseWidget, ClickableMixin):
 
     def update(self) -> None:
         """Update the button."""
-        if self.state == WidgetStateEnum.CLICK:
-            self._render_colors = self.colors.click
-        elif self.state == WidgetStateEnum.NORMAL:
+        # if self.state == WidgetStateEnum.CLICK:
+        #     self._render_colors = self.colors.click
+        if self.state == WidgetStateEnum.NORMAL:
             self._render_colors = self.colors.normal
         elif self.state == WidgetStateEnum.HOVER:
             self._render_colors = self.colors.hover
@@ -55,26 +55,13 @@ class Button(BaseWidget, ClickableMixin):
         elif self.state == WidgetStateEnum.MOUSE_UP:
             self._render_colors = self.colors.hover
 
-    def handle_hover_events(self, events: list[pygame.event.Event]) -> None:
-        """Handle hover events."""
-        for event in events:
-            if event.type == pygame.MOUSEMOTION:
-                if self.rect.collidepoint(event.pos):
-                    if self.state != WidgetStateEnum.HOVER:
-                        self.on_hover_in()
-                        self.state = WidgetStateEnum.HOVER
-                else:
-                    if self.state == WidgetStateEnum.HOVER:
-                        self.on_hover_out()
-                        self.state = WidgetStateEnum.NORMAL
-
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         """Handle an event."""
         if not self.is_active or not self.is_visible:
             return
 
         # Delegate click events to mixin method
-        self.handle_hover_events(events)
+        super().handle_events(events)
         self.handle_click_events(events)
 
     def on_mouse_down(self) -> None:

@@ -25,7 +25,7 @@ class ClickableMixin(abc.ABC):
                 if self.rect.collidepoint(event.pos):
                     self.on_mouse_down()
                     self.state = WidgetStateEnum.MOUSE_DOWN
-            elif event.type == pygame.MOUSEBUTTONUP and self._pressed:
+            elif event.type == pygame.MOUSEBUTTONUP and self.state == WidgetStateEnum.MOUSE_DOWN:
                 self.on_mouse_up()
                 if self.rect.collidepoint(event.pos):
                     self.on_click()
