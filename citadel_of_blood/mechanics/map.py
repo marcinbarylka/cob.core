@@ -1,10 +1,6 @@
 """Game map module."""
 
-from citadel_of_blood import (
-    Axis,
-    Direction,
-    Exit,
-)
+from citadel_of_blood import Axis, Direction, Exit
 from citadel_of_blood.mechanics import dice
 from citadel_of_blood.mechanics.monsters import Monster
 from citadel_of_blood.mechanics.segment import GatewayOfEvil, Room, Segment

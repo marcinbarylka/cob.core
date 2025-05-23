@@ -2,9 +2,12 @@
 
 import pygame
 
+from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.gui.colors import ColorPair, WidgetColors
+from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.settings import GUISettings
-from citadel_of_blood.gui.widgets import BaseWidget, Button
+from citadel_of_blood.gui.widgets import BaseWidget
+from citadel_of_blood.gui.widgets.buttons import GothicButton
 
 
 class GameScreen:
@@ -60,13 +63,18 @@ class DefaultScreen(GameScreen):
             hover=ColorPair(background_color=(0x11, 0x11, 0x11), foreground_color=(0xFF, 0xFF, 0xFF)),
             click=ColorPair(background_color=(0xFF, 0xFF, 0xFF), foreground_color=(0, 0, 0)),
         )
+        _font = SerializableFont(
+            font_path=PROJECT_ROOT / "assets/fonts/alagard.ttf",
+            size=16,
+        )
         self.add_widget(
-            Button(
+            GothicButton(
                 x=100,
                 y=100,
                 width=200,
                 height=50,
                 colors=colors,
                 caption="Click me",
+                font=_font,
             )
         )

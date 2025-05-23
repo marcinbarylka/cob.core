@@ -3,8 +3,8 @@
 import pygame
 
 from citadel_of_blood.gui.colors import ColorPair, WidgetColors
-from citadel_of_blood.gui.serialization import serialize_color, deserialize_color
-
+from citadel_of_blood.gui.serialization import (deserialize_color,
+                                                serialize_color)
 
 # --- Tests for serialize_color and deserialize_color functions ---
 

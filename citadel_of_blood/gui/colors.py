@@ -95,3 +95,35 @@ DEFAULT_WIDGET_COLORS = WidgetColors(
     hover=ColorPair(background_color=(0x11, 0x11, 0x11), foreground_color=(0xFF, 0xFF, 0xFF)),
     click=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
 )
+
+
+def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
+    """Dim a color by a factor.
+
+    Args:
+        color (GUIColor): The color to dim.
+        shadow_ratio (float): The ratio to dim by.
+
+    Returns:
+        GUIColor: The dimmed color.
+    """
+    if not isinstance(color, tuple) and len(color) == 3:
+        msg = f"Color must be a tuple of three integers (R, G, B), got {color}."
+        raise ValueError(msg)
+    return tuple(int(c * shadow_ratio) for c in color)
+
+
+def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
+    """Tint a color by a factor.
+
+    Args:
+        color (GUIColor): The color to tint.
+        shadow_ratio (float): The ratio to tint by.
+
+    Returns:
+        GUIColor: The tinted color.
+    """
+    if not isinstance(color, tuple) and len(color) == 3:
+        msg = f"Color must be a tuple of three integers (R, G, B), got {color}."
+        raise ValueError(msg)
+    return tuple(int(c + (255 - c) * shadow_ratio) for c in color)

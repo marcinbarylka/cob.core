@@ -23,15 +23,15 @@ class Button(BaseWidget, ClickableMixin):
         height: int,
         colors: WidgetColors,
         caption: str = "Click me",
+        font: SerializableFont | None = None,
         id: str = "",
     ):
         """Initialize the Button class."""
         super().__init__(x, y, width, height, colors, id)
         self.caption = caption
-        self.font = SerializableFont(
-            font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf",
-            size=16,
-        )  # Default font
+        self.font = (
+            font if font else SerializableFont(font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf", size=16)
+        )
         self._pressed: bool = False
 
     def set_font(self, font: SerializableFont) -> None:
@@ -110,3 +110,10 @@ class Button(BaseWidget, ClickableMixin):
         font_data = data["font"]
         obj.font = SerializableFont.deserialize(font_data)
         return obj
+
+
+class GothicButton(Button):
+    """The Gothic button class."""
+
+    def draw(self) -> None:
+        """Draw the gothic button."""
