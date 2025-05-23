@@ -115,5 +115,36 @@ class Button(BaseWidget, ClickableMixin):
 class GothicButton(Button):
     """The Gothic button class."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize the Gothic button class."""
+        super().__init__(*args, **kwargs)
+        self.button_normal_left: pygame.Surface | None = None
+        self.button_normal_right: pygame.Surface | None = None
+        self.button_hover_left: pygame.Surface | None = None
+        self.button_hover_right: pygame.Surface | None = None
+        self._render_parts()
+
+    def _render_parts(self) -> None:
+        """Render the button parts."""
+        self.button_normal_left = pygame.image.load(
+            str(PROJECT_ROOT / "assets" / "gui" / "button-normal-left.png")
+        ).convert_alpha()
+        self.button_normal_right = pygame.image.load(
+            str(PROJECT_ROOT / "assets" / "gui" / "button-normal-right.png")
+        ).convert_alpha()
+        self.button_hover_left = pygame.image.load(
+            str(PROJECT_ROOT / "assets" / "gui" / "button-hover-left.png")
+        ).convert_alpha()
+        self.button_hover_right = pygame.image.load(
+            str(PROJECT_ROOT / "assets" / "gui" / "button-hover-right.png")
+        ).convert_alpha()
+
     def draw(self) -> None:
         """Draw the gothic button."""
+        self._render_parts()  # todo: load images only once
+        if self.state == WidgetStateEnum.NORMAL:
+            self.surface.blit(self.button_normal_left, (0, 0))
+            self.surface.blit(self.button_normal_right, (self.rect.width - self.button_normal_right.get_width(), 0))
+        elif self.state == WidgetStateEnum.HOVER or self.state == WidgetStateEnum.MOUSE_DOWN:
+            self.surface.blit(self.button_hover_left, (0, 0))
+            self.surface.blit(self.button_hover_right, (self.rect.width - self.button_hover_right.get_width(), 0))
