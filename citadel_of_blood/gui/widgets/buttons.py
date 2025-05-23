@@ -141,7 +141,6 @@ class GothicButton(Button):
 
     def draw(self) -> None:
         """Draw the gothic button."""
-        self._render_parts()  # todo: load images only once
         if self.state == WidgetStateEnum.NORMAL:
             self.surface.blit(self.button_normal_left, (0, 0))
             self.surface.blit(self.button_normal_right, (self.rect.width - self.button_normal_right.get_width(), 0))
