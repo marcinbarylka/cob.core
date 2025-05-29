@@ -1,107 +1,111 @@
-"""Module for the party class."""
+"""Module for managing party of characters in the game."""
 
 from citadel_of_blood.engine.heroes import Hero, Initiate
 from citadel_of_blood.engine.monsters import Monster
-from citadel_of_blood.errors import CharacterAlreadyInPartyError, CharacterNotInPartyError, PartyCharacterError
-
-Character = Hero | Initiate | Monster
+from citadel_of_blood.engine.types import MAX_CHARACTERS_IN_RANK, MIN_RANK, Character, PartyPosition, PartyRank
+from citadel_of_blood.errors.engine_errors import (
+    CharacterAlreadyInPartyError,
+    CharacterNotInPartyError,
+    InvalidPartyCharacterError,
+    InvalidPartyPositionError,
+    InvalidPartyRankError,
+)
 
 
 class Party(list):
-    """Party class. It is responsible for storing the heroes and the initiate of the party.
+    """A group of characters organized in ranks.
 
-    The Party is organized in ranks. Every rank can have at most 3 characters. The first rank is the front rank, the
-    second rank is the middle rank, and the third rank (if any) is the back rank.
+    The Party is organized in ranks, where each rank can have at most 3 characters.
+    The ranks are:
+    - Front rank (rank 0)
+    - Middle rank (rank 1)
+    - Back rank (rank 2, if present)
+
+    Characters in each rank can support and interact with characters in other ranks
+    based on their position and abilities.
     """
 
-    MAX_CHARACTER_IN_RANK = 3
-
-    def __init__(self, characters: list[Character | None] | None = None):
-        """Initialize the Party class.
-
+    def __init__(self, characters: list[Character | None] | None = None) -> None:
+        """Initialize a new party.
 
         Args:
-            characters: list of characters to add to the party
-
+            characters: Optional list of characters to add to the party initially
         """
         super().__init__()
         if characters:
             for character in characters:
-                self._check_character(character)
+                self._validate_character(character)
                 self.append(character)
 
-    def get_size_xy(self) -> tuple[int, int]:
-        """Get the size of the party in the x and y dimensions.
+    def get_size_xy(self) -> PartyPosition:
+        """Get the party's dimensions.
 
         Returns:
-            tuple of the size of the party in the x and y dimensions
-
+            Tuple of (width, height) where width is always MAX_CHARACTERS_IN_RANK
+            and height is at least 1
         """
-        return Party.MAX_CHARACTER_IN_RANK, max(1, len(self) // Party.MAX_CHARACTER_IN_RANK)
+        return MAX_CHARACTERS_IN_RANK, max(1, len(self) // MAX_CHARACTERS_IN_RANK)
 
-    def _check_position(self, x_pos: int, y_pos: int) -> None:
-        """Check if the position is valid.
+    def _validate_position(self, x_pos: int, y_pos: int) -> None:
+        """Validate if a position is within party bounds.
 
         Args:
-            x_pos: x position
-            y_pos: y position
-
-        """
-        if (
-            x_pos < 0
-            or x_pos >= Party.MAX_CHARACTER_IN_RANK
-            or y_pos < 0
-            or y_pos >= len(self) // Party.MAX_CHARACTER_IN_RANK
-        ):
-            msg = "Invalid position"
-            raise PartyCharacterError(msg)
-
-    def _check_character(self, character: Character | None) -> None:
-        """Check if the character is valid.
-
-        Args:
-            character: character to check
-
-        """
-        if character is not None and not isinstance(character, Character):
-            raise TypeError("Character must be of type Hero, Initiate, Monster or None")  # noqa: TRY003
-
-    def calculate_linear_index(self, x_pos: int, y_pos: int) -> int:
-        """Calculate the linear index from the x and y positions.
-
-        Args:
-            x_pos: x position
-            y_pos: y position
-
-        Returns:
-            linear index
-
-        """
-        return x_pos + y_pos * Party.MAX_CHARACTER_IN_RANK
-
-    def calculate_position(self, linear_index: int) -> tuple[int, int]:
-        """Calculate the x and y positions from the linear index.
-
-        Args:
-            linear_index: linear index
-
-        Returns:
-            x and y positions
-
-        """
-        return linear_index % Party.MAX_CHARACTER_IN_RANK, linear_index // Party.MAX_CHARACTER_IN_RANK
-
-    def add_character(self, character: Character | None) -> None:
-        """Add a character to the party.
-
-        Args:
-            character: character to add to the party
+            x_pos: Horizontal position (0 to MAX_CHARACTERS_IN_RANK - 1)
+            y_pos: Vertical position (rank number)
 
         Raises:
-            CharacterAlreadyInPartyError: if the character is already in the party
-
+            InvalidPartyPositionError: If the position is out of bounds
         """
-        self._check_character(character)
+        width, height = self.get_size_xy()
+        if not (0 <= x_pos < width and 0 <= y_pos < height):
+            raise InvalidPartyPositionError(x_pos, y_pos)
+
+    def _validate_character(self, character: Character | None) -> None:
+        """Validate if a character can be added to the party.
+
+        Args:
+            character: The character to validate
+
+        Raises:
+            InvalidPartyCharacterError: If the character is not of a valid type
+        """
+        if character is not None and not isinstance(character, Hero | Initiate | Monster):
+            raise InvalidPartyCharacterError()
+
+    def calculate_linear_index(self, x_pos: int, y_pos: int) -> int:
+        """Convert 2D position to linear index.
+
+        Args:
+            x_pos: Horizontal position
+            y_pos: Vertical position (rank number)
+
+        Returns:
+            Linear index in the party list
+        """
+        return x_pos + y_pos * MAX_CHARACTERS_IN_RANK
+
+    def calculate_position(self, linear_index: int) -> PartyPosition:
+        """Convert linear index to 2D position.
+
+        Args:
+            linear_index: Index in the party list
+
+        Returns:
+            Tuple of (x_pos, y_pos) coordinates
+        """
+        return linear_index % MAX_CHARACTERS_IN_RANK, linear_index // MAX_CHARACTERS_IN_RANK
+
+    def add_character(self, character: Character | None) -> None:
+        """Add a character to the next available position.
+
+        Args:
+            character: The character to add
+
+        Raises:
+            InvalidPartyCharacterError: If the character is not of a valid type
+            CharacterAlreadyInPartyError: If the character is already in the party
+        """
+        self._validate_character(character)
         if character in self:
             raise CharacterAlreadyInPartyError()
         self.append(character)
@@ -110,107 +114,114 @@ class Party(list):
         """Remove a character from the party.
 
         Args:
-            character: character to remove from the party
+            character: The character to remove
 
         Raises:
-            CharacterNotInPartyError: if the character is not in the party
-
+            CharacterNotInPartyError: If the character is not in the party
         """
         if character not in self:
             raise CharacterNotInPartyError()
-        linear = self.index(character)
-        self.add_character_at(None, *self.calculate_position(linear))
+        position = self.calculate_position(self.index(character))
+        self.add_character_at(None, *position)
 
     def remove_at(self, x_pos: int, y_pos: int) -> None:
-        """Remove a character from the party at a specific index.
+        """Remove a character at a specific position.
 
         Args:
-            x_pos: x position
-            y_pos: y position
-
-        """
-        self._check_position(x_pos, y_pos)
-        self.add_character_at(None, x_pos, y_pos)
-
-    def find_character(self, character: Character) -> tuple[int, int]:
-        """Find the position of a character in the party.
-
-        Args:
-            character: character to find
-
-        Returns:
-            position of the character in the party
+            x_pos: Horizontal position
+            y_pos: Vertical position (rank number)
 
         Raises:
-            CharacterNotInPartyError: if the character is not in the party
-
+            InvalidPartyPositionError: If the position is out of bounds
         """
-        self._check_character(character)
-        if character not in self:
-            raise CharacterNotInPartyError()
-        linear_index = self.index(character)
-        return self.calculate_position(linear_index)
+        self._validate_position(x_pos, y_pos)
+        self.add_character_at(None, x_pos, y_pos)
 
-    def add_character_at(self, character: Character | None, x_pos: int, y_pos: int) -> None:
-        """Set a character at a specific index.
+    def find_character(self, character: Character) -> PartyPosition:
+        """Find a character's position in the party.
 
         Args:
-            character: character to set
-            x_pos: x position
-            y_pos: y position
+            character: The character to find
 
+        Returns:
+            Tuple of (x_pos, y_pos) coordinates
+
+        Raises:
+            InvalidPartyCharacterError: If the character is not of a valid type
+            CharacterNotInPartyError: If the character is not in the party
         """
+        self._validate_character(character)
+        if character not in self:
+            raise CharacterNotInPartyError()
+        return self.calculate_position(self.index(character))
+
+    def add_character_at(self, character: Character | None, x_pos: int, y_pos: int) -> None:
+        """Place a character at a specific position.
+
+        If the position is beyond the current party size, the party will be
+        expanded with None values up to that position.
+
+        Args:
+            character: The character to add
+            x_pos: Horizontal position
+            y_pos: Vertical position (rank number)
+
+        Raises:
+            InvalidPartyCharacterError: If the character is not of a valid type
+        """
+        self._validate_character(character)
         linear_index = self.calculate_linear_index(x_pos, y_pos)
-        if linear_index >= len(self):
-            for _ in range(len(self), linear_index + 1):
-                self.append(None)
+
+        # Expand party if needed
+        while len(self) <= linear_index:
+            self.append(None)
+
         self[linear_index] = character
 
     def get_from(self, x_pos: int, y_pos: int) -> Character | None:
-        """Get a character at a specific index.
+        """Get the character at a specific position.
 
         Args:
-            x_pos: x position
-            y_pos: y position
+            x_pos: Horizontal position
+            y_pos: Vertical position (rank number)
 
         Returns:
-            character at the given position
-
+            The character at the position, or None if the position is empty
+            or out of bounds
         """
         linear_index = self.calculate_linear_index(x_pos, y_pos)
-        if linear_index >= len(self):
-            return None
-        return self[self.calculate_linear_index(x_pos, y_pos)]
+        return self[linear_index] if linear_index < len(self) else None
 
-    def get_rank(self, rank_no: int) -> list[Character | None]:
-        """Get the characters of a specific rank.
+    def get_rank(self, rank_no: int) -> PartyRank:
+        """Get all characters in a specific rank.
 
         Args:
-            rank_no: rank number
+            rank_no: The rank number (0 for front, 1 for middle, 2 for back)
 
         Returns:
-            list of characters of the given rank
+            List of characters in the rank
 
+        Raises:
+            InvalidPartyRankError: If the rank number is invalid
         """
-        if rank_no < 0 or rank_no * Party.MAX_CHARACTER_IN_RANK >= len(self):
-            msg = "Invalid rank number"
-            raise PartyCharacterError(msg)
-        start_index = rank_no * Party.MAX_CHARACTER_IN_RANK
-        end_index = min(start_index + Party.MAX_CHARACTER_IN_RANK, len(self))
+        if rank_no < MIN_RANK or rank_no * MAX_CHARACTERS_IN_RANK >= len(self):
+            raise InvalidPartyRankError(rank_no)
+
+        start_index = rank_no * MAX_CHARACTERS_IN_RANK
+        end_index = min(start_index + MAX_CHARACTERS_IN_RANK, len(self))
         return self[start_index:end_index]
 
-    def get_ranks(self) -> list[list[Character | None]]:
-        """Get the characters of all ranks.
+    def get_ranks(self) -> list[PartyRank]:
+        """Get all ranks in the party.
 
         Returns:
-            list of lists of characters of all ranks
-
+            List of ranks, where each rank is a list of characters
         """
-        num_full_ranks = len(self) // Party.MAX_CHARACTER_IN_RANK
+        num_full_ranks = len(self) // MAX_CHARACTERS_IN_RANK
         ranks = [self.get_rank(rank_no) for rank_no in range(num_full_ranks)]
 
-        # Check for remaining characters in a partial rank
-        if len(self) % Party.MAX_CHARACTER_IN_RANK != 0:
+        # Add partial rank if it exists
+        if len(self) % MAX_CHARACTERS_IN_RANK:
             ranks.append(self.get_rank(num_full_ranks))
 
         return ranks
