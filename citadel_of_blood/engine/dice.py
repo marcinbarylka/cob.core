@@ -1,111 +1,147 @@
 """Module for dice rolling."""
 
 import re
+from dataclasses import dataclass
 from random import randint
+from typing import Final
+
+from citadel_of_blood.errors.engine_errors import InvalidDiceCodeError
+
+
+@dataclass
+class DiceComponents:
+    """Components of a parsed dice code."""
+
+    number: int = 1
+    type: int = 0
+    modifier: int = 0
+    multiplier: int = 1
 
 
 class Dice:
-    """A dice representation. It can parse and roll a dice."""
+    """A dice representation that can parse and roll dice notation.
 
-    def __init__(self, dice_code="D6"):
+    The dice notation follows the format: NdS[+/-/]*M
+    where:
+    - N is the number of dice (optional, defaults to 1)
+    - S is the number of sides on each die
+    - +/-/* is the optional operator
+    - M is the optional modifier or multiplier
+
+    Examples:
+        >>> dice = Dice("2d6+3")  # roll 2 six-sided dice and add 3
+        >>> dice = Dice("d20")    # roll 1 twenty-sided die
+        >>> dice = Dice("3d8*2")  # roll 3 eight-sided dice and multiply by 2
+    """
+
+    DICE_PATTERN: Final = r"^(\d*)[dD](\d+)([\+\-\*]?)(\d*)$"
+
+    def __init__(self, dice_code: str = "D6") -> None:
         """Initialize the Dice class.
 
         Args:
-            dice_code: a code of the dice: i.e. 2d10+20.
+            dice_code: A code representing dice roll (e.g. "2d10+20")
 
+        Raises:
+            InvalidDiceCodeError: If the dice code format is invalid
         """
+        self._components = DiceComponents()
         self.code = dice_code
-        self.number = 0
-        self.type = 0
-        self.modifier = 0
-        self.multiplier = 1
-        self.parse()
+        self.parse(dice_code)
 
-    def parse(self, dice_code: str | None = None) -> None:
-        """Dice parser.
+    def _parse_modifier(self, operator: str, value: str) -> tuple[int, int]:
+        """Parse modifier or multiplier from dice code.
 
         Args:
-            dice_code: a code of the dice: i.e. 2d10+20.
-
-        """
-        if dice_code:
-            self.code = dice_code
-
-        pattern = r"^(\d*)[dD](\d+)([\+\-\*]?)(\d*)$"
-        self.number = 1
-        self.type = 0
-        modifier_sign = 1
-        self.modifier = 0
-        self.multiplier = 1
-
-        match_data = re.match(pattern, self.code)
-        if match_data:
-            if match_data.group(1) != "":
-                self.number = int(match_data.group(1))
-            if match_data.group(2) != "":
-                self.type = int(match_data.group(2))
-            if match_data.group(3) == "-":
-                modifier_sign = -1
-            if match_data.group(4) != "" and match_data.group(3) != "*":
-                self.modifier = int(match_data.group(4)) * modifier_sign
-                self.multiplier = 1
-            if match_data.group(3) == "*":
-                self.multiplier = int(match_data.group(4))
-                self.modifier = 0
-        else:
-            msg = f"Unrecognized dice code: {dice_code}"
-            raise ValueError(msg)
-
-    def roll(self, dice_code: str | None = None) -> int:
-        """Roll a parsed dice.
-
-        Args:
-            dice_code: a code of the dice: i.e. 2d10+20.
+            operator: The operator ('+', '-', or '*')
+            value: The value to parse
 
         Returns:
-            int. The result of the roll.
+            tuple[int, int]: (modifier, multiplier)
+        """
+        if not value:
+            return 0, 1
 
+        parsed_value = int(value)
+        if operator == "*":
+            return 0, parsed_value
+        if operator == "-":
+            return -parsed_value, 1
+        return parsed_value, 1
+
+    def parse(self, dice_code: str) -> None:
+        """Parse a dice code string into its components.
+
+        Args:
+            dice_code: A code representing dice roll (e.g. "2d10+20")
+
+        Raises:
+            InvalidDiceCodeError: If the dice code format is invalid
+        """
+        match = re.match(self.DICE_PATTERN, dice_code)
+        if not match:
+            raise InvalidDiceCodeError(dice_code)
+
+        number_str, type_str, operator, mod_str = match.groups()
+
+        self._components.number = int(number_str) if number_str else 1
+        self._components.type = int(type_str)
+        self._components.modifier, self._components.multiplier = self._parse_modifier(operator, mod_str)
+
+    def roll(self, dice_code: str | None = None) -> int:
+        """Roll the dice according to the parsed dice code.
+
+        Args:
+            dice_code: Optional new dice code to parse before rolling
+
+        Returns:
+            The result of the dice roll
+
+        Raises:
+            InvalidDiceCodeError: If the new dice code format is invalid
         """
         if dice_code:
             self.parse(dice_code)
-        result = 0
-        for _ in range(0, self.number):
-            result += randint(1, self.type)
-        result *= self.multiplier
-        result += self.modifier
-        return result
+
+        result = sum(randint(1, self._components.type) for _ in range(self._components.number))
+        return result * self._components.multiplier + self._components.modifier
 
     @property
-    def max(self):  # noqa: D102
-        """Max value of the roll.
+    def max(self) -> int:
+        """Calculate the maximum possible value for this dice roll.
 
         Returns:
-            int. The max value of the roll.
-
+            The maximum possible roll value
         """
-        return self.type * self.number * self.multiplier + self.modifier
+        return self._components.type * self._components.number * self._components.multiplier + self._components.modifier
 
     @property
-    def min(self):  # noqa: D102
-        """Min value of the roll.
+    def min(self) -> int:
+        """Calculate the minimum possible value for this dice roll.
 
         Returns:
-            int. The min value of the roll.
-
+            The minimum possible roll value
         """
-        return self.number * self.multiplier + self.modifier
+        return self._components.number * self._components.multiplier + self._components.modifier
 
 
-def roll(dice_code):
-    """Roll a dice.
+def roll(dice_code: str) -> int:
+    """Roll dice using the specified dice code.
 
-    This is a wrapper function for the Dice class.
+    This is a convenience wrapper function for the Dice class.
 
     Args:
-        dice_code: a code of the dice: i.e. 2d10+20.
+        dice_code: A code representing dice roll (e.g. "2d10+20")
 
     Returns:
-        int. The result of the roll.
+        The result of the dice roll
 
+    Raises:
+        InvalidDiceCodeError: If the dice code format is invalid
+
+    Examples:
+        >>> roll("2d6+3")  # roll 2 six-sided dice and add 3
+        >>> roll("d20")    # roll 1 twenty-sided die
+        >>> roll("3d8*2")  # roll 3 eight-sided dice and multiply by 2
     """
     return Dice().roll(dice_code)
