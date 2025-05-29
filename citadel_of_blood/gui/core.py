@@ -2,7 +2,7 @@
 
 import pygame
 
-from citadel_of_blood.errors import GameScreenError
+from citadel_of_blood.errors.engine_errors import GameScreenError
 from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
 from citadel_of_blood.gui.screens import GameScreen

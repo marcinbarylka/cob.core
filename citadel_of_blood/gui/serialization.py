@@ -4,7 +4,7 @@ from typing import TypeVar
 
 import pygame
 
-from citadel_of_blood.errors import ColorError
+from citadel_of_blood.errors.engine_errors import ColorError
 from citadel_of_blood.gui.types import GUIColor
 
 SF = TypeVar("SF", bound="SerializableFont")
