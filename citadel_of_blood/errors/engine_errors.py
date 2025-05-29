@@ -27,3 +27,19 @@ class InvalidDiceCodeError(ValueError):
     def __init__(self, dice_code: str) -> None:
         """Initialize the InvalidDiceCodeError class."""
         super().__init__(f"Unrecognized dice code: {dice_code}")
+
+
+class WeaponNotFoundError(ValueError):
+    """Raised when a hero doesn't have the specified weapon."""
+
+    def __init__(self, hero_name: str) -> None:
+        """Initialize the WeaponNotFoundError class."""
+        super().__init__(f"{hero_name} does not have this weapon.")
+
+
+class MaxWeaponsReachedError(ValueError):
+    """Raised when trying to add more weapons than allowed."""
+
+    def __init__(self) -> None:
+        """Initialize the MaxWeaponsReachedError class."""
+        super().__init__("The Initiate already has two weapons.")
