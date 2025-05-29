@@ -1,15 +1,15 @@
-"""Scene module for the mechanics package."""
+"""Scene module for the engine package."""
 
-from citadel_of_blood.mechanics import dice
-from citadel_of_blood.mechanics.heroes import Hero, Initiate
-from citadel_of_blood.mechanics.monsters import Monster
-from citadel_of_blood.mechanics.party import Party
-from citadel_of_blood.mechanics.segment import Segment
-from citadel_of_blood.mechanics.weapons import Weapon
+from citadel_of_blood.engine import dice
+from citadel_of_blood.engine.heroes import Hero, Initiate
+from citadel_of_blood.engine.monsters import Monster
+from citadel_of_blood.engine.party import Party
+from citadel_of_blood.engine.segment import Segment
+from citadel_of_blood.engine.weapons import Weapon
 
 
 class Scene:
-    """Scene class for the mechanics package."""
+    """Scene class for the engine package."""
 
     def __init__(self, party: Party, monsters: Party | list[Monster], segment: Segment) -> None:
         """Initialize the Scene class."""

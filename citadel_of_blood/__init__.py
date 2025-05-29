@@ -1,6 +1,6 @@
 """citadel_of_blood package."""
 
-from citadel_of_blood.mechanics.enums import Axis, Direction, Exit, FontMap
+from citadel_of_blood.engine.enums import Axis, Direction, Exit, FontMap
 
 __all__ = [
     "Axis",

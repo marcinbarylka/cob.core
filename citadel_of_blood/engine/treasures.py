@@ -4,9 +4,9 @@ import enum
 from dataclasses import dataclass
 from typing import Any
 
-from citadel_of_blood.mechanics.armors import Armor
-from citadel_of_blood.mechanics.dice import Dice, roll
-from citadel_of_blood.mechanics.magic_items import (
+from citadel_of_blood.engine.armors import Armor
+from citadel_of_blood.engine.dice import Dice, roll
+from citadel_of_blood.engine.magic_items import (
     AllSuns,
     BlueSun,
     CharmMonster,
@@ -29,7 +29,7 @@ from citadel_of_blood.mechanics.magic_items import (
     Strength,
     YellowSun,
 )
-from citadel_of_blood.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
+from citadel_of_blood.engine.weapons import Ax, Bow, Dagger, Hammer, Sword, ThrowDagger
 
 JEWELERY = [1, 5, 10, 15, 20, 25, 35, 50, 75, 100, 150]
 MAGIC_ITEM_TYPES = ["weapon", "armor", "potion", "talisman", "medallion", "ring"]

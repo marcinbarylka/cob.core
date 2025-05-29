@@ -2,9 +2,9 @@
 
 from abc import ABC, abstractmethod
 
-from citadel_of_blood.mechanics import dice
-from citadel_of_blood.mechanics.heroes import Hero, Initiate
-from citadel_of_blood.mechanics.party import Party
+from citadel_of_blood.engine import dice
+from citadel_of_blood.engine.heroes import Hero, Initiate
+from citadel_of_blood.engine.party import Party
 
 
 class Trap(ABC):
@@ -61,7 +61,7 @@ class Arrow(Trap):
             party: party of the heroes
 
         """
-        from citadel_of_blood.mechanics.weapons import Bow
+        from citadel_of_blood.engine.weapons import Bow
 
         d6 = dice.roll("d6")
         wounds = Bow().get_damage(d6)
@@ -83,7 +83,7 @@ class PoisonedArrow(Trap):
             party: party of the heroes
 
         """
-        from citadel_of_blood.mechanics.weapons import Bow
+        from citadel_of_blood.engine.weapons import Bow
 
         d6 = dice.roll("d6")
         wounds = Bow().get_damage(d6)

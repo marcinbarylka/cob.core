@@ -3,8 +3,8 @@
 from dataclasses import dataclass
 from typing import Any
 
-from citadel_of_blood.mechanics.dice import roll
-from citadel_of_blood.mechanics.skills import (
+from citadel_of_blood.engine.dice import roll
+from citadel_of_blood.engine.skills import (
     Charm,
     DemonSkill,
     FireBreath,
@@ -17,11 +17,11 @@ from citadel_of_blood.mechanics.skills import (
     WeaponSkill,
     XTheUnknownSkill,
 )
-from citadel_of_blood.mechanics.spells import LightningSpell as Lightning
-from citadel_of_blood.mechanics.spells import Spell
-from citadel_of_blood.mechanics.treasures import Treasure
-from citadel_of_blood.mechanics.weapons import Hammer, Sword, Weapon
-from citadel_of_blood.mechanics.weapons import Monster as MonsterWeapon
+from citadel_of_blood.engine.spells import LightningSpell as Lightning
+from citadel_of_blood.engine.spells import Spell
+from citadel_of_blood.engine.treasures import Treasure
+from citadel_of_blood.engine.weapons import Hammer, Sword, Weapon
+from citadel_of_blood.engine.weapons import Monster as MonsterWeapon
 
 LEVEL_CHART = [
     {

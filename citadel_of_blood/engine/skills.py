@@ -2,7 +2,7 @@
 
 from abc import ABC, abstractmethod
 
-from citadel_of_blood.mechanics.weapons import Ax, Bow, Dagger, Hammer, Sword, Weapon
+from citadel_of_blood.engine.weapons import Ax, Bow, Dagger, Hammer, Sword, Weapon
 
 
 class Skill(ABC):

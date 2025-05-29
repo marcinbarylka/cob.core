@@ -2,9 +2,9 @@
 
 import random
 
-from citadel_of_blood.mechanics import dice
-from citadel_of_blood.mechanics.enums import Exit
-from citadel_of_blood.mechanics.features import Feature, FeatureFactory
+from citadel_of_blood.engine import dice
+from citadel_of_blood.engine.enums import Exit
+from citadel_of_blood.engine.features import Feature, FeatureFactory
 
 
 class Segment:

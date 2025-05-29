@@ -1,4 +1,4 @@
-"""Errors for the mechanics module."""
+"""Module containing custom exceptions for the Citadel of Blood engine."""
 
 
 class PartyCharacterError(Exception):
