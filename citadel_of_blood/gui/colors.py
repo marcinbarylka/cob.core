@@ -18,6 +18,14 @@ class ColorPair:
     background_color: GUIColor
     foreground_color: GUIColor
 
+    def __repr__(self) -> str:
+        """Represents the ColorPair instance as a string.
+
+        Returns:
+            str: The string representation of the ColorPair instance
+        """
+        return f"ColorPair(bg={self.background_color}, fg={self.foreground_color})"
+
     def serialize(self) -> dict:
         """Serializes the ColorPair into a dictionary.
 
@@ -60,6 +68,14 @@ class WidgetColors:
     hover: ColorPair
     click: ColorPair | None = None
 
+    def __repr__(self) -> str:
+        """Represents the WidgetColors instance as a string.
+
+        Returns:
+            str: The string representation of the WidgetColors instance
+        """
+        return f"WidgetColors(normal={self.normal}, hover={self.hover}, click={self.click})"
+
     def serialize(self) -> dict:
         """Serializes the WidgetColors into a dictionary.
 
@@ -97,6 +113,37 @@ DEFAULT_WIDGET_COLORS = WidgetColors(
 )
 
 
+def validate_color(color: GUIColor) -> None:
+    """Validate that the color is a valid RGB tuple.
+
+    Args:
+        color (GUIColor): The color to validate.
+
+    Raises:
+        ValueError: If the color is invalid.
+    """
+    if not (isinstance(color, tuple) and len(color) == 3):
+        msg = f"Color must be a tuple of three integers (R, G, B), got {color}."
+        raise ValueError(msg)
+    if not all(0 <= c <= 255 for c in color):
+        msg = f"Color values must be between 0 and 255, got {color}."
+        raise ValueError(msg)
+
+
+def validate_ratio(ratio: float) -> None:
+    """Validate that the ratio is between 0 and 1.
+
+    Args:
+        ratio (float): The ratio to validate.
+
+    Raises:
+        ValueError: If the ratio is invalid.
+    """
+    if not 0 <= ratio <= 1:
+        msg = f"Ratio must be between 0 and 1, got {ratio}."
+        raise ValueError(msg)
+
+
 def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
     """Dim a color by a factor.
 
@@ -107,9 +154,8 @@ def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
     Returns:
         GUIColor: The dimmed color.
     """
-    if not isinstance(color, tuple) and len(color) == 3:
-        msg = f"Color must be a tuple of three integers (R, G, B), got {color}."
-        raise ValueError(msg)
+    validate_color(color)
+    validate_ratio(shadow_ratio)
     return tuple(int(c * shadow_ratio) for c in color)
 
 
@@ -123,7 +169,6 @@ def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
     Returns:
         GUIColor: The tinted color.
     """
-    if not isinstance(color, tuple) and len(color) == 3:
-        msg = f"Color must be a tuple of three integers (R, G, B), got {color}."
-        raise ValueError(msg)
+    validate_color(color)
+    validate_ratio(shadow_ratio)
     return tuple(int(c + (255 - c) * shadow_ratio) for c in color)

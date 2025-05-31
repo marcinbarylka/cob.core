@@ -1,0 +1,10 @@
+[gui]
+fullscreen = false
+width = 1920
+height = 1080
+caption = "GUI"
+fps = 60
+
+[gui.colors]
+background = "#000000"
+foreground = "#ffffff"
