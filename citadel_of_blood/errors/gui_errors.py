@@ -36,3 +36,22 @@ class ScreenError(Exception):
         """Initialize the ScreenError class."""
         message = self.ERROR_MESSAGES[error_type].format(error=error)
         super().__init__(message)
+
+
+class WidgetError(Exception):
+    """Base class for widget-related errors."""
+
+    ERROR_MESSAGES = {
+        "invalid_dimensions": "Invalid dimensions: {error}",
+        "invalid_colors": "Invalid colors: {error}",
+        "missing_required_field": "Missing required field: {error}",
+        "deserialization_failed": "Failed to deserialize widget: {error}",
+        "surface_deserialization_failed": "Failed to deserialize surface: {error}",
+        "asset_loading_failed": "Failed to load asset: {error}",
+        "asset_not_found": "Asset not found: {error}",
+    }
+
+    def __init__(self, error_type: str, error: Exception) -> None:
+        """Initialize the WidgetError class."""
+        message = self.ERROR_MESSAGES[error_type].format(error=error)
+        super().__init__(message)

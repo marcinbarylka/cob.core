@@ -1,10 +1,13 @@
 """The button class."""
 
-from typing import Any
+from pathlib import Path
+from typing import Any, ClassVar
 
 import pygame
+from pygame.surface import Surface
 
 from citadel_of_blood.constants import PROJECT_ROOT
+from citadel_of_blood.errors.gui_errors import WidgetError
 from citadel_of_blood.gui.colors import WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.widgets import WidgetStateEnum
@@ -25,37 +28,73 @@ class Button(BaseWidget, ClickableMixin):
         caption: str = "Click me",
         font: SerializableFont | None = None,
         id: str = "",
-    ):
-        """Initialize the Button class."""
+    ) -> None:
+        """Initialize the Button class.
+
+        Args:
+            x: The x-coordinate of the button
+            y: The y-coordinate of the button
+            width: The width of the button
+            height: The height of the button
+            colors: The color scheme for the button
+            caption: The button text
+            font: Custom font for the button text
+            id: Unique identifier for the button
+
+        Raises:
+            WidgetError: If font initialization fails
+        """
         super().__init__(x, y, width, height, colors, id)
-        self.caption = caption
-        self.font = (
-            font if font else SerializableFont(font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf", size=16)
-        )
-        self._pressed: bool = False
+        self.caption: str = caption
+        try:
+            self.font: SerializableFont = (
+                font if font else SerializableFont(font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf", size=16)
+            )
+        except Exception as e:
+            raise WidgetError("font_initialization_failed", str(e)) from e
+
+    @staticmethod
+    def _raise_missing_asset(path: Path) -> None:
+        """Raise an error if a required asset is missing.
+
+        Args:
+            path: The path to the required asset
+
+        Raises:
+            WidgetError: If the asset is missing
+
+        """
+        raise WidgetError("missing_asset", f"Required asset not found: {path}")
 
     def set_font(self, font: SerializableFont) -> None:
-        """Set the font."""
+        """Set the button font.
+
+        Args:
+            font: The new font to use
+        """
         self.font = font
 
     def draw(self) -> None:
-        """Draw the button."""
-        pygame.draw.rect(self.surface, self._render_colors.background_color, self.rect)
+        """Draw the button with its current state."""
         self.surface.fill(self._render_colors.background_color)
-        text = self.font.render(caption=self.caption, color=self._render_colors.foreground_color)
-        text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
-        self.surface.blit(text, text_rect)
+        try:
+            text = self.font.render(caption=self.caption, color=self._render_colors.foreground_color)
+            text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
+            self.surface.blit(text, text_rect)
+        except Exception as e:
+            raise WidgetError("text_rendering_failed", str(e)) from e
 
     def update(self) -> None:
-        """Update the button."""
-        if self.state == WidgetStateEnum.NORMAL:
-            self._render_colors = self.colors.normal
-        elif self.state == WidgetStateEnum.HOVER:
-            self._render_colors = self.colors.hover
-        elif self.state == WidgetStateEnum.MOUSE_DOWN:
-            self._render_colors = self.colors.click
-        elif self.state == WidgetStateEnum.MOUSE_UP:
-            self._render_colors = self.colors.hover
+        """Update the button's appearance based on its state."""
+        match self.state:
+            case WidgetStateEnum.NORMAL:
+                self._render_colors = self.colors.normal
+            case WidgetStateEnum.HOVER:
+                self._render_colors = self.colors.hover
+            case WidgetStateEnum.MOUSE_DOWN:
+                self._render_colors = self.colors.click or self.colors.hover
+            case WidgetStateEnum.MOUSE_UP:
+                self._render_colors = self.colors.hover
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         """Handle an event."""
@@ -67,27 +106,26 @@ class Button(BaseWidget, ClickableMixin):
         self.handle_click_events(events)
 
     def on_mouse_down(self) -> None:
-        """The on mouse down event."""
+        """Handle mouse down event."""
 
     def on_mouse_up(self) -> None:
-        """The on mouse up event."""
+        """Handle mouse up event."""
 
     def on_click(self) -> None:
-        """The on click event."""
+        """Handle click event."""
         print(f"Button {self.id} clicked.")
 
     def on_hover_in(self) -> None:
-        """The on hover in event."""
+        """Handle hover in event."""
 
     def on_hover_out(self) -> None:
-        """The on hover out event."""
+        """Handle hover out event."""
 
     def serialize(self) -> dict[str, Any]:
-        """Convert the widget to a dictionary.
+        """Serialize the button to a dictionary.
 
         Returns:
-            dict[str, Any]: The widget as a dictionary.
-
+            The serialized button data
         """
         data = super().serialize()
         data["caption"] = self.caption
@@ -96,54 +134,83 @@ class Button(BaseWidget, ClickableMixin):
 
     @classmethod
     def deserialize(cls, data: dict[str, Any]) -> "Button":
-        """Create a widget from a dictionary.
+        """Create a button from serialized data.
 
         Args:
-            data: dict[str, Any]: The data to create the widget from.
+            data: The serialized button data
 
         Returns:
-            BaseWidget: The widget.
+            The deserialized button instance
 
+        Raises:
+            WidgetError: If deserialization fails
         """
-        obj = super().deserialize(data)
-        obj.caption = data["caption"]
-        font_data = data["font"]
-        obj.font = SerializableFont.deserialize(font_data)
-        return obj
+        try:
+            obj = super().deserialize(data)
+            obj.caption = data["caption"]
+            obj.font = SerializableFont.deserialize(data["font"])
+        except Exception as e:
+            raise WidgetError("button_deserialization_failed", str(e)) from e
+        else:
+            return obj
 
 
 class GothicButton(Button):
-    """The Gothic button class."""
+    """Gothic-styled button with custom graphics."""
 
-    def __init__(self, *args, **kwargs):
-        """Initialize the Gothic button class."""
+    # Cache for button graphics
+    _BUTTON_ASSETS: ClassVar[dict[str, Surface]] = {}
+    _ASSET_PATHS: ClassVar[dict[str, Path]] = {
+        "normal_left": PROJECT_ROOT / "assets/gui/button-normal-left.png",
+        "normal_right": PROJECT_ROOT / "assets/gui/button-normal-right.png",
+        "hover_left": PROJECT_ROOT / "assets/gui/button-hover-left.png",
+        "hover_right": PROJECT_ROOT / "assets/gui/button-hover-right.png",
+    }
+
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
+        """Initialize the Gothic button.
+
+        Raises:
+            WidgetError: If button assets cannot be loaded
+        """
         super().__init__(*args, **kwargs)
-        self.button_normal_left: pygame.Surface | None = None
-        self.button_normal_right: pygame.Surface | None = None
-        self.button_hover_left: pygame.Surface | None = None
-        self.button_hover_right: pygame.Surface | None = None
-        self._render_parts()
+        if not self._BUTTON_ASSETS:
+            self._load_assets()
 
-    def _render_parts(self) -> None:
-        """Render the button parts."""
-        self.button_normal_left = pygame.image.load(
-            str(PROJECT_ROOT / "assets" / "gui" / "button-normal-left.png")
-        ).convert_alpha()
-        self.button_normal_right = pygame.image.load(
-            str(PROJECT_ROOT / "assets" / "gui" / "button-normal-right.png")
-        ).convert_alpha()
-        self.button_hover_left = pygame.image.load(
-            str(PROJECT_ROOT / "assets" / "gui" / "button-hover-left.png")
-        ).convert_alpha()
-        self.button_hover_right = pygame.image.load(
-            str(PROJECT_ROOT / "assets" / "gui" / "button-hover-right.png")
-        ).convert_alpha()
+    @classmethod
+    def _load_assets(cls) -> None:
+        """Load and cache button graphics.
+
+        Raises:
+            WidgetError: If any asset fails to load
+        """
+        try:
+            for name, path in cls._ASSET_PATHS.items():
+                if not path.exists():
+                    cls._raise_missing_asset(path)
+                cls._BUTTON_ASSETS[name] = pygame.image.load(str(path)).convert_alpha()
+        except Exception as e:
+            raise WidgetError("asset_loading_failed", str(e)) from e
 
     def draw(self) -> None:
-        """Draw the gothic button."""
-        if self.state == WidgetStateEnum.NORMAL:
-            self.surface.blit(self.button_normal_left, (0, 0))
-            self.surface.blit(self.button_normal_right, (self.rect.width - self.button_normal_right.get_width(), 0))
-        elif self.state == WidgetStateEnum.HOVER or self.state == WidgetStateEnum.MOUSE_DOWN:
-            self.surface.blit(self.button_hover_left, (0, 0))
-            self.surface.blit(self.button_hover_right, (self.rect.width - self.button_hover_right.get_width(), 0))
+        """Draw the gothic button with its current state."""
+        self.surface.fill((0, 0, 0, 0))  # Clear with transparency
+
+        if self.state in [WidgetStateEnum.HOVER, WidgetStateEnum.MOUSE_DOWN]:
+            left_img = self._BUTTON_ASSETS["hover_left"]
+            right_img = self._BUTTON_ASSETS["hover_right"]
+        else:
+            left_img = self._BUTTON_ASSETS["normal_left"]
+            right_img = self._BUTTON_ASSETS["normal_right"]
+
+        # Draw button parts
+        self.surface.blit(left_img, (0, 0))
+        self.surface.blit(right_img, (self.rect.width - right_img.get_width(), 0))
+
+        # Draw text
+        try:
+            text = self.font.render(caption=self.caption, color=self._render_colors.foreground_color)
+            text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
+            self.surface.blit(text, text_rect)
+        except Exception as e:
+            raise WidgetError("text_rendering_failed", str(e)) from e

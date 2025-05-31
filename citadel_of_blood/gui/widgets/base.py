@@ -4,12 +4,16 @@ import abc
 import dataclasses
 import enum
 import uuid
-from typing import Any
+from typing import Any, TypeVar, cast
 
 import pygame
+from pygame.surface import Surface
 
+from citadel_of_blood.errors.gui_errors import WidgetError
 from citadel_of_blood.gui.colors import ColorPair, WidgetColors
 from citadel_of_blood.gui.serialization import deserialize_surface, serialize_surface
+
+T = TypeVar("T", bound="BaseWidget")
 
 
 class WidgetStateEnum(enum.Enum):
@@ -41,32 +45,34 @@ class BaseWidget(abc.ABC):
     def on_hover_out(self) -> None:
         """The on hover out event."""
 
-    def __init__(self, x, y, width, height, colors: WidgetColors, id: str = ""):
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        colors: WidgetColors,
+        id: str = "",
+    ) -> None:
         """Initialize the BaseWidget class.
 
         Args:
-            x: int: The x-coordinate of the widget.
-            y: int: The y-coordinate of the widget.
-            width: int: The width of the widget.
-            height: int: The height of the widget.
-            colors: WidgetColors: The colors of the widget.
-            id: str: The ID of the widget.
+            x: The x-coordinate of the widget.
+            y: The y-coordinate of the widget.
+            width: The width of the widget.
+            height: The height of the widget.
+            colors: The colors of the widget.
+            id: The ID of the widget.
 
-        Additional Attributes:
-            rect: pygame.Rect: The rectangle of the widget.
-            _render_colors: ColorPair: The colors to render.
-            is_active: bool: Whether the widget is active.
-            is_visible: bool: Whether the widget is visible.
-            surface: pygame.Surface: The surface of the widget.
-            state: WidgetStateEnum: The state of the widget.
+        Raises:
+            WidgetError: If width or height is invalid, or if colors are invalid.
         """
         self.id: str = id or self.create_id()
 
         self.x: int = x
         self.y: int = y
         if width <= 0 or height <= 0:
-            msg = "Width and height must be greater than 0."
-            raise ValueError(msg)
+            raise WidgetError("invalid_dimensions", f"Width and height must be greater than 0, got {width}x{height}")
         self.width: int = width
         self.height: int = height
         self.rect: pygame.Rect = pygame.Rect(x, y, width, height)
@@ -76,21 +82,22 @@ class BaseWidget(abc.ABC):
 
         self.is_active: bool = True
         self.is_visible: bool = True
-        self.surface: pygame.Surface = pygame.Surface((width, height))
-
-        self.state = WidgetStateEnum.NORMAL
+        self.surface: Surface = Surface((width, height), pygame.SRCALPHA)
+        self.state: WidgetStateEnum = WidgetStateEnum.NORMAL
 
     def create_id(self) -> str:
-        """Create an ID."""
+        """Create a unique ID for the widget."""
         return f"{self.__class__.__name__}_{uuid.uuid4()}"
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
-        """Handle an event. This method should be implemented by the subclass.
+        """Handle pygame events for the widget.
 
         Args:
-          events: list[pygame.event.Event]: The list of Pygame events to handle.
-
+            events: The list of Pygame events to handle.
         """
+        if not self.is_active or not self.is_visible:
+            return
+
         for event in events:
             if event.type == pygame.MOUSEMOTION:
                 if self.rect.collidepoint(event.pos):
@@ -106,49 +113,53 @@ class BaseWidget(abc.ABC):
         """Convert the widget to a dictionary.
 
         Returns:
-            dict[str, Any]: The widget as a dictionary.
-
+            The widget as a dictionary.
         """
         data = self.__dict__.copy()
         data["colors"] = dataclasses.asdict(data["colors"])
-        data["rect"] = self.rect.x, self.rect.y, self.rect.width, self.rect.height
+        data["rect"] = (self.rect.x, self.rect.y, self.rect.width, self.rect.height)
         data["surface"] = serialize_surface(self.surface)
+        data["state"] = self.state.value
         return data
 
     @classmethod
-    def deserialize(cls, data: dict[str, Any]) -> "BaseWidget":
+    def deserialize(cls: type[T], data: dict[str, Any]) -> T:
         """Create a widget from a dictionary.
 
         Args:
-            data: dict[str, Any]: The data to create the widget from.
+            data: The data to create the widget from.
 
         Returns:
-            BaseWidget: The widget.
+            The deserialized widget instance.
 
+        Raises:
+            WidgetError: If deserialization fails.
         """
-        obj = cls(
-            x=data["x"],
-            y=data["y"],
-            width=data["width"],
-            height=data["height"],
-            colors=WidgetColors(**data["colors"]),
-            id=data["id"],
-        )
-        obj.state = data["state"]
-        obj.is_active = data["is_active"]
-        obj.is_visible = data["is_visible"]
+        try:
+            obj = cls(
+                x=data["x"],
+                y=data["y"],
+                width=data["width"],
+                height=data["height"],
+                colors=WidgetColors(**data["colors"]),
+                id=data["id"],
+            )
+            obj.state = WidgetStateEnum(data["state"])
+            obj.is_active = data["is_active"]
+            obj.is_visible = data["is_visible"]
 
-        rect_data = data["rect"]
-        if rect_data:
-            obj.rect = pygame.Rect(rect_data)
+            rect_data = data["rect"]
+            if rect_data:
+                obj.rect = pygame.Rect(*rect_data)
 
-        surface_data = data.get("surface")
-        if surface_data:
-            try:
-                obj.surface = deserialize_surface(surface_data)
-            except Exception as e:
-                print(f"Nie udało się deserializować powierzchni: {e}")
-                obj.surface = pygame.Surface((obj.width, obj.height))
-        else:
-            obj.surface = pygame.Surface((obj.width, obj.height))
-        return obj
+            surface_data = data.get("surface")
+            if surface_data:
+                try:
+                    obj.surface = deserialize_surface(surface_data)
+                except Exception as e:
+                    raise WidgetError("surface_deserialization_failed", str(e)) from e
+            return cast(T, obj)
+        except KeyError as e:
+            raise WidgetError("missing_required_field", f"Missing field: {e}") from e
+        except Exception as e:
+            raise WidgetError("deserialization_failed", str(e)) from e

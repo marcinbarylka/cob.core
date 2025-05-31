@@ -1,25 +1,51 @@
 """Mixins for the GUI widgets."""
 
 import abc
+from typing import Protocol, runtime_checkable
 
 import pygame
+from pygame import Rect
+from pygame.event import Event
 
 from citadel_of_blood.gui.widgets import WidgetStateEnum
 
 
+@runtime_checkable
+class Clickable(Protocol):
+    """Protocol defining the interface for clickable objects."""
+
+    rect: Rect
+    state: WidgetStateEnum
+
+    def on_mouse_down(self) -> None:
+        """Called when the mouse button is pressed over the widget."""
+        ...
+
+    def on_mouse_up(self) -> None:
+        """Called when the mouse button is released."""
+        ...
+
+    def on_click(self) -> None:
+        """Called when a valid click (down+up) is detected."""
+        ...
+
+
 class ClickableMixin(abc.ABC):
     """Mixin providing click-handling functionality.
-    It assumes that the class has attributes:
-      - rect: pygame.Rect
-      - state: WidgetStateEnum
-      - on_mouse_down(), on_mouse_up(), on_click().
+
+    This mixin implements click event handling for widgets. The class using this mixin
+    must implement the Clickable protocol, providing:
+        - rect: pygame.Rect
+        - state: WidgetStateEnum
+        - on_mouse_down(), on_mouse_up(), on_click() methods
     """
 
-    def __init__(self) -> None:
-        """Initialize the ClickableMixin class."""
+    def handle_click_events(self: Clickable, events: list[Event]) -> None:
+        """Process mouse click events.
 
-    def handle_click_events(self, events: list[pygame.event.Event]) -> None:
-        """Processes mouse click events."""
+        Args:
+            events: List of pygame events to process
+        """
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(event.pos):
@@ -34,14 +60,11 @@ class ClickableMixin(abc.ABC):
     @abc.abstractmethod
     def on_mouse_down(self) -> None:
         """Called when the mouse button is pressed over the widget."""
-        raise NotImplementedError
 
     @abc.abstractmethod
     def on_mouse_up(self) -> None:
         """Called when the mouse button is released."""
-        raise NotImplementedError
 
     @abc.abstractmethod
     def on_click(self) -> None:
         """Called when a valid click (down+up) is detected."""
-        raise NotImplementedError
