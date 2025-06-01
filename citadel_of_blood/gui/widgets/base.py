@@ -7,6 +7,7 @@ import uuid
 from typing import Any, TypeVar, cast
 
 import pygame
+from pygame import Rect
 from pygame.surface import Surface
 
 from citadel_of_blood.errors.gui_errors import WidgetError
@@ -75,7 +76,6 @@ class BaseWidget(abc.ABC):
             raise WidgetError("invalid_dimensions", f"Width and height must be greater than 0, got {width}x{height}")
         self.width: int = width
         self.height: int = height
-        self.rect: pygame.Rect = pygame.Rect(x, y, width, height)
 
         self.colors: WidgetColors = colors
         self._render_colors: ColorPair = self.colors.normal
@@ -163,3 +163,8 @@ class BaseWidget(abc.ABC):
             raise WidgetError("missing_required_field", f"Missing field: {e}") from e
         except Exception as e:
             raise WidgetError("deserialization_failed", str(e)) from e
+
+    @property
+    def rect(self):
+        """Get the rectangle of the widget."""
+        return Rect(self.x, self.y, self.width, self.height)

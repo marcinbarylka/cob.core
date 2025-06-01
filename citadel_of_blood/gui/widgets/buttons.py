@@ -8,7 +8,7 @@ from pygame.surface import Surface
 
 from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.errors.gui_errors import WidgetError
-from citadel_of_blood.gui.colors import WidgetColors
+from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.widgets import WidgetStateEnum
 from citadel_of_blood.gui.widgets.base import BaseWidget
@@ -155,8 +155,8 @@ class Button(BaseWidget, ClickableMixin):
             return obj
 
 
-class GothicButton(Button):
-    """Gothic-styled button with custom graphics."""
+class PixelButton(Button):
+    """A button with gothic pixel art style."""
 
     # Cache for button graphics
     _BUTTON_ASSETS: ClassVar[dict[str, Surface]] = {}
@@ -166,16 +166,40 @@ class GothicButton(Button):
         "hover_left": PROJECT_ROOT / "assets/gui/button-hover-left.png",
         "hover_right": PROJECT_ROOT / "assets/gui/button-hover-right.png",
     }
+    _WIDGET_COLORS = WidgetColors(
+        normal=ColorPair(background_color=ColorsEnum.GOTHIC_BUTTON_INSIDE, foreground_color=ColorsEnum.WHITE),
+        hover=ColorPair(background_color=ColorsEnum.GOTHIC_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
+        click=ColorPair(background_color=ColorsEnum.GOTHIC_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
+    )
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        """Initialize the Gothic button.
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        caption: str = "Click me",
+        font: SerializableFont | None = None,
+        id: str = "",
+    ) -> None:
+        """Initialize the pixel button.
 
         Raises:
             WidgetError: If button assets cannot be loaded
         """
-        super().__init__(*args, **kwargs)
+        super().__init__(
+            x=x,
+            y=y,
+            width=width,
+            height=56,  # Fixed height for pixel buttons
+            colors=self._WIDGET_COLORS,
+            caption=caption,
+            font=font,
+            id=id,
+        )
         if not self._BUTTON_ASSETS:
             self._load_assets()
+        self.left_image = self._BUTTON_ASSETS["normal_left"]
+        self.right_image = self._BUTTON_ASSETS["normal_right"]
 
     @classmethod
     def _load_assets(cls) -> None:
@@ -192,20 +216,29 @@ class GothicButton(Button):
         except Exception as e:
             raise WidgetError("asset_loading_failed", str(e)) from e
 
+    def update(self) -> None:
+        """Update the button's appearance based on its state."""
+        match self.state:
+            case WidgetStateEnum.NORMAL:
+                self._render_colors = self.colors.normal
+                self.left_image = self._BUTTON_ASSETS["normal_left"]
+                self.right_image = self._BUTTON_ASSETS["normal_right"]
+            case WidgetStateEnum.HOVER:
+                self._render_colors = self.colors.hover
+                self.left_image = self._BUTTON_ASSETS["hover_left"]
+                self.right_image = self._BUTTON_ASSETS["hover_right"]
+            case WidgetStateEnum.MOUSE_DOWN:
+                self._render_colors = self.colors.click or self.colors.hover
+            case WidgetStateEnum.MOUSE_UP:
+                self._render_colors = self.colors.hover
+
     def draw(self) -> None:
         """Draw the gothic button with its current state."""
         self.surface.fill((0, 0, 0, 0))  # Clear with transparency
 
-        if self.state in [WidgetStateEnum.HOVER, WidgetStateEnum.MOUSE_DOWN]:
-            left_img = self._BUTTON_ASSETS["hover_left"]
-            right_img = self._BUTTON_ASSETS["hover_right"]
-        else:
-            left_img = self._BUTTON_ASSETS["normal_left"]
-            right_img = self._BUTTON_ASSETS["normal_right"]
-
         # Draw button parts
-        self.surface.blit(left_img, (0, 0))
-        self.surface.blit(right_img, (self.rect.width - right_img.get_width(), 0))
+        self.surface.blit(self.left_image, (0, 0))
+        self.surface.blit(self.right_image, (self.rect.width - self.right_image.get_width(), 0))
 
         # Draw text
         try:

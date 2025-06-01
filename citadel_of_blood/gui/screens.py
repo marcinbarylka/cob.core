@@ -12,7 +12,7 @@ from citadel_of_blood.gui.colors import ColorPair, WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.settings import GUISettings
 from citadel_of_blood.gui.widgets import BaseWidget
-from citadel_of_blood.gui.widgets.buttons import GothicButton
+from citadel_of_blood.gui.widgets.buttons import PixelButton
 
 
 class GameScreen:
@@ -126,12 +126,10 @@ class DefaultScreen(GameScreen):
                 size=16,
             )
             self.add_widget(
-                GothicButton(
+                PixelButton(
                     x=100,
                     y=100,
                     width=200,
-                    height=50,
-                    colors=self.DEFAULT_WIDGET_COLORS,
                     caption="Click me",
                     font=font,
                 )

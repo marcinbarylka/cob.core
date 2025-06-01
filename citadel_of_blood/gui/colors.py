@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass
 
+import pygame
+
 from citadel_of_blood.gui.serialization import deserialize_color, serialize_color
 from citadel_of_blood.gui.types import GUIColor
 
@@ -172,3 +174,26 @@ def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
     validate_color(color)
     validate_ratio(shadow_ratio)
     return tuple(int(c + (255 - c) * shadow_ratio) for c in color)
+
+
+class ColorsEnum:
+    """Enum for predefined colors used in the GUI."""
+
+    BLACK: pygame.Color = pygame.Color(0, 0, 0, 255)
+    WHITE: pygame.Color = pygame.Color(255, 255, 255, 255)
+    GOTHIC_BUTTON_INSIDE: pygame.Color = pygame.Color(0x34, 0x2A, 0x25, 0xFF)
+    GOTHIC_BUTTON_INSIDE_HOVER: pygame.Color = pygame.Color(0x5C, 0x46, 0x35, 0xFF)
+    SEGMENT_BLUE: pygame.Color = pygame.Color(0x60, 0x90, 0xCA, 0xFF)
+    MONSTER_RED: pygame.Color = pygame.Color(0xFA, 0x5A, 0x38, 0xFF)
+
+    @classmethod
+    def get_color(cls, name: str) -> GUIColor:
+        """Get a color by its name.
+
+        Args:
+            name (str): The name of the color.
+
+        Returns:
+            GUIColor: The corresponding color tuple.
+        """
+        return getattr(cls, name.upper(), cls.BLACK)
