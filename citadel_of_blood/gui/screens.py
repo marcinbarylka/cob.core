@@ -8,9 +8,9 @@ import pygame
 
 from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.errors.gui_errors import ScreenError
-from citadel_of_blood.gui.colors import ColorPair, WidgetColors
+from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
-from citadel_of_blood.gui.settings import GUISettings
+from citadel_of_blood.gui.settings import Settings
 from citadel_of_blood.gui.widgets import BaseWidget
 from citadel_of_blood.gui.widgets.buttons import PixelButton
 
@@ -26,25 +26,25 @@ class GameScreen:
         widgets (list[BaseWidget]): List of widgets contained in the screen
         surface (pygame.Surface): The screen's drawing surface
         is_active (bool): Whether the screen is currently active
-        settings (GUISettings | None): GUI settings for the screen
+        settings (Settings | None): GUI settings for the screen
     """
 
-    def __init__(self, colors: ColorPair, settings: GUISettings | None = None) -> None:
+    def __init__(self, colors: ColorPair, settings: Settings | None = None) -> None:
         """Initialize a new game screen.
 
         Args:
             colors (ColorPair): The color scheme for the screen
-            settings (GUISettings | None, optional): GUI settings. Defaults to None.
+            settings (Settings | None, optional): GUI settings. Defaults to None.
         """
         self.colors: ColorPair = colors
         self.widgets: list[BaseWidget] = []
         self.is_active: bool = False
-        self.settings: GUISettings | None = settings
+        self.settings: Settings | None = settings
 
         if settings:
-            self.surface: pygame.Surface = pygame.Surface((settings.gui.width, settings.gui.height))
+            self.surface = pygame.Surface((settings.gui.width, settings.gui.height))
         else:
-            self.surface: pygame.Surface = pygame.Surface((1920, 1080))
+            self.surface = pygame.Surface((1920, 1080))
 
     def add_widget(self, widget: BaseWidget) -> None:
         """Add a widget to the screen.
@@ -100,7 +100,7 @@ class DefaultScreen(GameScreen):
     It serves as an example of how to create custom screen classes.
     """
 
-    DEFAULT_COLORS = ColorPair(background_color=(0x33, 0x33, 0x33), foreground_color=(0xFF, 0xFF, 0xFF))
+    DEFAULT_COLORS = ColorPair(background_color=ColorsEnum.DEFAULT_BACKGROUND, foreground_color=ColorsEnum.WHITE)
 
     DEFAULT_WIDGET_COLORS = WidgetColors(
         normal=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
@@ -108,11 +108,11 @@ class DefaultScreen(GameScreen):
         click=ColorPair(background_color=(0xFF, 0xFF, 0xFF), foreground_color=(0, 0, 0)),
     )
 
-    def __init__(self, settings: GUISettings | None = None) -> None:
+    def __init__(self, settings: Settings | None = None) -> None:
         """Initialize the default screen.
 
         Args:
-            settings (GUISettings | None, optional): GUI settings. Defaults to None.
+            settings (Settings | None, optional): GUI settings. Defaults to None.
         """
         super().__init__(colors=self.DEFAULT_COLORS, settings=settings)
         self.is_active = True

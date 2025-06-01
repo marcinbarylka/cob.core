@@ -51,7 +51,7 @@ class WidgetError(Exception):
         "asset_not_found": "Asset not found: {error}",
     }
 
-    def __init__(self, error_type: str, error: Exception) -> None:
+    def __init__(self, error_type: str, error: Exception | str) -> None:
         """Initialize the WidgetError class."""
         message = self.ERROR_MESSAGES[error_type].format(error=error)
         super().__init__(message)

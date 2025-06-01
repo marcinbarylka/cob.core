@@ -1,5 +1,6 @@
 """Helper functions for the GUI module."""
 
+from pathlib import Path
 from typing import TypeVar
 
 import pygame
@@ -13,7 +14,7 @@ SF = TypeVar("SF", bound="SerializableFont")
 class SerializableFont:
     """Serialized font class."""
 
-    def __init__(self, font_path: str, size: int, bold: bool = False, italic: bool = False):
+    def __init__(self, font_path: str | Path, size: int, bold: bool = False, italic: bool = False):
         """Initialize the SerializedFont class."""
         self.font_path = font_path
         self.size = size
@@ -47,7 +48,7 @@ class SerializableFont:
         }
 
     @classmethod
-    def deserialize(cls, data: dict) -> SF:
+    def deserialize(cls: type[SF], data: dict) -> SF:
         """Deserialize the font."""
         return cls(
             font_path=data["font_path"],

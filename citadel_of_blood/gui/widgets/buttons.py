@@ -48,10 +48,12 @@ class Button(BaseWidget, ClickableMixin):
         self.caption: str = caption
         try:
             self.font: SerializableFont = (
-                font if font else SerializableFont(font_path=PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf", size=16)
+                font
+                if font
+                else SerializableFont(font_path=str(PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf"), size=16)
             )
         except Exception as e:
-            raise WidgetError("font_initialization_failed", str(e)) from e
+            raise WidgetError("font_initialization_failed", e) from e
 
     @staticmethod
     def _raise_missing_asset(path: Path) -> None:
@@ -64,7 +66,7 @@ class Button(BaseWidget, ClickableMixin):
             WidgetError: If the asset is missing
 
         """
-        raise WidgetError("missing_asset", f"Required asset not found: {path}")
+        raise WidgetError("missing_asset", str(path))
 
     def set_font(self, font: SerializableFont) -> None:
         """Set the button font.
@@ -150,7 +152,7 @@ class Button(BaseWidget, ClickableMixin):
             obj.caption = data["caption"]
             obj.font = SerializableFont.deserialize(data["font"])
         except Exception as e:
-            raise WidgetError("button_deserialization_failed", str(e)) from e
+            raise WidgetError("button_deserialization_failed", e) from e
         else:
             return obj
 
@@ -165,11 +167,13 @@ class PixelButton(Button):
         "normal_right": PROJECT_ROOT / "assets/gui/button-normal-right.png",
         "hover_left": PROJECT_ROOT / "assets/gui/button-hover-left.png",
         "hover_right": PROJECT_ROOT / "assets/gui/button-hover-right.png",
+        "normal_middle": PROJECT_ROOT / "assets/gui/button-normal-middle.png",
+        "hover_middle": PROJECT_ROOT / "assets/gui/button-hover-middle.png",
     }
     _WIDGET_COLORS = WidgetColors(
-        normal=ColorPair(background_color=ColorsEnum.GOTHIC_BUTTON_INSIDE, foreground_color=ColorsEnum.WHITE),
-        hover=ColorPair(background_color=ColorsEnum.GOTHIC_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
-        click=ColorPair(background_color=ColorsEnum.GOTHIC_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
+        normal=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE, foreground_color=ColorsEnum.WHITE),
+        hover=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
+        click=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
     )
 
     def __init__(
@@ -200,6 +204,7 @@ class PixelButton(Button):
             self._load_assets()
         self.left_image = self._BUTTON_ASSETS["normal_left"]
         self.right_image = self._BUTTON_ASSETS["normal_right"]
+        self.middle_image = self._BUTTON_ASSETS["normal_middle"]
 
     @classmethod
     def _load_assets(cls) -> None:
@@ -223,10 +228,12 @@ class PixelButton(Button):
                 self._render_colors = self.colors.normal
                 self.left_image = self._BUTTON_ASSETS["normal_left"]
                 self.right_image = self._BUTTON_ASSETS["normal_right"]
+                self.middle_image = self._BUTTON_ASSETS["normal_middle"]
             case WidgetStateEnum.HOVER:
                 self._render_colors = self.colors.hover
                 self.left_image = self._BUTTON_ASSETS["hover_left"]
                 self.right_image = self._BUTTON_ASSETS["hover_right"]
+                self.middle_image = self._BUTTON_ASSETS["hover_middle"]
             case WidgetStateEnum.MOUSE_DOWN:
                 self._render_colors = self.colors.click or self.colors.hover
             case WidgetStateEnum.MOUSE_UP:
@@ -234,11 +241,15 @@ class PixelButton(Button):
 
     def draw(self) -> None:
         """Draw the gothic button with its current state."""
-        self.surface.fill((0, 0, 0, 0))  # Clear with transparency
+        # fill with background color
+        self.surface.fill(self._render_colors.background_color)
 
         # Draw button parts
         self.surface.blit(self.left_image, (0, 0))
         self.surface.blit(self.right_image, (self.rect.width - self.right_image.get_width(), 0))
+
+        for i in range(self.rect.width - self.left_image.get_width() - self.right_image.get_width()):
+            self.surface.blit(self.middle_image, (self.left_image.get_width() + i, 0))
 
         # Draw text
         try:
@@ -246,4 +257,4 @@ class PixelButton(Button):
             text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
             self.surface.blit(text, text_rect)
         except Exception as e:
-            raise WidgetError("text_rendering_failed", str(e)) from e
+            raise WidgetError("text_rendering_failed", e) from e
