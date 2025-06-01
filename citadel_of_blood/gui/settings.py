@@ -38,6 +38,8 @@ class GUISettings(BaseModel):
     fps: int = 60
     colors: GUIColors
     basic_font: Path = Path("assets/fonts/Roboto-Regular.ttf")
+    sfx_enabled: bool = True
+    music_enabled: bool = True
 
     @field_validator("width", "height")
     @classmethod

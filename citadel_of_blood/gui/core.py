@@ -7,6 +7,7 @@ from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
 from citadel_of_blood.gui.screens import GameScreen
 from citadel_of_blood.gui.settings import GUIColors, GUISettings, Settings
+from citadel_of_blood.gui.sfx import init_sfx
 
 
 class Game:
@@ -20,7 +21,7 @@ class Game:
           settings (Settings): The settings.
           clock (pygame.time.Clock): The clock.
           running (bool): Whether the game is running.
-          is_soundcard (bool): Whether the sound card is available.
+          soundcard_enabled (bool): Whether the sound card is available.
           active_game_screen (GameScreen | None): The active screen.
           events_handler (EventsHandler): The events handler.
           frame (int): The frame counter.
@@ -39,7 +40,7 @@ class Game:
         self.settings: Settings = Settings(gui=GUISettings(colors=GUIColors()))
         self.clock: pygame.time.Clock = pygame.time.Clock()
         self.running: bool = True
-        self.is_soundcard: bool = True
+        self.soundcard_enabled: bool = True
 
         self.active_game_screen: GameScreen | None = active_game_screen
         self.events_handler: EventsHandler = EventsHandler()
@@ -74,11 +75,11 @@ class Game:
 
         # check if sound card is available
         try:
-            pygame.mixer.init()
+            init_sfx()
         except pygame.error:
-            self.is_soundcard = False
-        if self.is_soundcard:
-            pygame.mixer.set_num_channels(8)
+            self.soundcard_enabled = False
+            self.settings.sfx_enabled = False
+            self.settings.music_enabled = False
 
         print(f"Initializing screen with width: {self.width}, height: {self.height}, fullscreen: {self.fullscreen}")
         self.screen = (
@@ -100,6 +101,7 @@ class Game:
         """Add a screen."""
         screen.settings = self.settings
         self.active_game_screen = screen
+        self.active_game_screen.apply_settings(self.settings)
 
     def run(self) -> None:
         """Run the GUI."""

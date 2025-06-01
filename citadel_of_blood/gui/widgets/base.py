@@ -13,6 +13,7 @@ from pygame.surface import Surface
 from citadel_of_blood.errors.gui_errors import WidgetError
 from citadel_of_blood.gui.colors import ColorPair, WidgetColors
 from citadel_of_blood.gui.serialization import deserialize_surface, serialize_surface
+from citadel_of_blood.gui.settings import Settings
 
 T = TypeVar("T", bound="BaseWidget")
 
@@ -84,6 +85,8 @@ class BaseWidget(abc.ABC):
         self.is_visible: bool = True
         self.surface: Surface = Surface((width, height), pygame.SRCALPHA)
         self.state: WidgetStateEnum = WidgetStateEnum.NORMAL
+
+        self.settings: Settings | None = None
 
     def create_id(self) -> str:
         """Create a unique ID for the widget."""
@@ -168,3 +171,11 @@ class BaseWidget(abc.ABC):
     def rect(self):
         """Get the rectangle of the widget."""
         return Rect(self.x, self.y, self.width, self.height)
+
+    @rect.setter
+    def rect(self, value: Rect) -> None:
+        """Set the rectangle of the widget."""
+        self.x = value.x
+        self.y = value.y
+        self.width = value.width
+        self.height = value.height

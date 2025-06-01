@@ -52,7 +52,20 @@ class GameScreen:
         Args:
             widget (BaseWidget): The widget to add
         """
+        if self.settings:
+            widget.settings = self.settings
         self.widgets.append(widget)
+
+    def apply_settings(self, settings: Settings) -> None:
+        """Apply settings to the screen and its widgets.
+
+        Args:
+            settings (Settings): The settings to apply
+        """
+        self.settings = settings
+        for widget in self.widgets:
+            widget.settings = settings
+        self.surface = pygame.Surface((settings.gui.width, settings.gui.height))
 
     def draw(self) -> None:
         """Draw the screen and all its widgets.
@@ -72,7 +85,10 @@ class GameScreen:
         This method should be overridden by subclasses to implement
         screen-specific update logic.
         """
-        pass
+        for widget in self.widgets:
+            if self.settings:
+                widget.settings = self.settings
+            widget.update()
 
     def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event] | None:
         """Handle pygame events for the screen and its widgets.
@@ -123,7 +139,7 @@ class DefaultScreen(GameScreen):
         try:
             font = SerializableFont(
                 font_path=PROJECT_ROOT / "assets/fonts/alagard.ttf",
-                size=16,
+                size=20,
             )
             self.add_widget(
                 PixelButton(

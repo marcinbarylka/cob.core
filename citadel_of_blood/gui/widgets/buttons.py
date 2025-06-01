@@ -1,5 +1,6 @@
 """The button class."""
 
+from contextlib import suppress
 from pathlib import Path
 from typing import Any, ClassVar
 
@@ -11,9 +12,12 @@ from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.errors.gui_errors import WidgetError
 from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
+from citadel_of_blood.gui.sfx import play_sfx
 from citadel_of_blood.gui.widgets import WidgetStateEnum
 from citadel_of_blood.gui.widgets.base import BaseWidget
 from citadel_of_blood.gui.widgets.mixins import ClickableMixin
+
+CLICK_SOUND = str(PROJECT_ROOT / "assets/sfx/click.ogg")
 
 
 class Button(BaseWidget, ClickableMixin):
@@ -117,6 +121,9 @@ class Button(BaseWidget, ClickableMixin):
     def on_click(self) -> None:
         """Handle click event."""
         print(f"Button {self.id} clicked.")
+        if hasattr(self, "settings") and self.settings and self.settings.gui.sfx_enabled:
+            with suppress(Exception):
+                play_sfx(CLICK_SOUND)
 
     def on_hover_in(self) -> None:
         """Handle hover in event."""
