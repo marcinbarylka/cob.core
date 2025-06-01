@@ -158,7 +158,7 @@ def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
     """
     validate_color(color)
     validate_ratio(shadow_ratio)
-    return tuple(int(c * shadow_ratio) for c in color)  # type: ignore
+    return tuple(int(c * shadow_ratio) for c in color)
 
 
 def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
@@ -173,7 +173,7 @@ def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
     """
     validate_color(color)
     validate_ratio(shadow_ratio)
-    return tuple(int(c + (255 - c) * shadow_ratio) for c in color)  # type: ignore
+    return tuple(int(c + (255 - c) * shadow_ratio) for c in color)
 
 
 class ColorsEnum:

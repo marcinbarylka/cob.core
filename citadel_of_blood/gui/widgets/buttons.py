@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any, ClassVar
 
 import pygame
+from pygame.event import Event
 from pygame.surface import Surface
 
 from citadel_of_blood.constants import PROJECT_ROOT
@@ -98,7 +99,7 @@ class Button(BaseWidget, ClickableMixin):
             case WidgetStateEnum.MOUSE_UP:
                 self._render_colors = self.colors.hover
 
-    def handle_events(self, events: list[pygame.event.Event]) -> None:
+    def handle_events(self, events: list[Event]) -> None:
         """Handle an event."""
         if not self.is_active or not self.is_visible:
             return

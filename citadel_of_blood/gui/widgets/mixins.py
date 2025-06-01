@@ -1,7 +1,7 @@
 """Mixins for the GUI widgets."""
 
 import abc
-from typing import Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 import pygame
 from pygame import Rect
@@ -40,7 +40,7 @@ class ClickableMixin(abc.ABC):
         - on_mouse_down(), on_mouse_up(), on_click() methods
     """
 
-    def handle_click_events(self: Clickable, events: list[Event]) -> None:
+    def handle_click_events(self: Any, events: list[Event]) -> None:
         """Process mouse click events.
 
         Args:
