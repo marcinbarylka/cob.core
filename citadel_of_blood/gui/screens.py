@@ -148,6 +148,7 @@ class DefaultScreen(GameScreen):
                     width=200,
                     caption="Click me",
                     font=font,
+                    play_sfx=True,
                 )
             )
         except (FileNotFoundError, pygame.error) as e:

@@ -31,6 +31,7 @@ class Button(BaseWidget, ClickableMixin):
         height: int,
         colors: WidgetColors,
         caption: str = "Click me",
+        play_sfx: bool = True,
         font: SerializableFont | None = None,
         id: str = "",
     ) -> None:
@@ -43,6 +44,7 @@ class Button(BaseWidget, ClickableMixin):
             height: The height of the button
             colors: The color scheme for the button
             caption: The button text
+            play_sfx: Whether to play sound effects on click
             font: Custom font for the button text
             id: Unique identifier for the button
 
@@ -51,6 +53,7 @@ class Button(BaseWidget, ClickableMixin):
         """
         super().__init__(x, y, width, height, colors, id)
         self.caption: str = caption
+        self.play_sfx: bool = play_sfx  # Whether to play sound effects on click
         try:
             self.font: SerializableFont = (
                 font
@@ -121,7 +124,7 @@ class Button(BaseWidget, ClickableMixin):
     def on_click(self) -> None:
         """Handle click event."""
         print(f"Button {self.id} clicked.")
-        if hasattr(self, "settings") and self.settings and self.settings.gui.sfx_enabled:
+        if hasattr(self, "settings") and self.settings and self.settings.gui.sfx_enabled and self.play_sfx:
             with suppress(Exception):
                 play_sfx(CLICK_SOUND)
 
@@ -190,6 +193,7 @@ class PixelButton(Button):
         y: int,
         width: int,
         caption: str = "Click me",
+        play_sfx: bool = True,
         font: SerializableFont | None = None,
         id: str = "",
     ) -> None:
@@ -205,6 +209,7 @@ class PixelButton(Button):
             height=56,  # Fixed height for pixel buttons
             colors=self._WIDGET_COLORS,
             caption=caption,
+            play_sfx=play_sfx,
             font=font,
             id=id,
         )
