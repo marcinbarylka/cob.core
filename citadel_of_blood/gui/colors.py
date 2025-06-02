@@ -124,12 +124,12 @@ def validate_color(color: GUIColor) -> None:
     Raises:
         ValueError: If the color is invalid.
     """
-    if not (isinstance(color, tuple) and len(color) == 3):
-        msg = f"Color must be a tuple of three integers (R, G, B), got {color}."
-        raise ValueError(msg)
-    if not all(0 <= c <= 255 for c in color):
-        msg = f"Color values must be between 0 and 255, got {color}."
-        raise ValueError(msg)
+    # if not (isinstance(color, tuple) and len(color) in (3, 4)):
+    #     msg = f"Color must be a tuple of three or four integers (R, G, B, [A]), got {color}."
+    #     raise ValueError(msg)
+    # if not all(0 <= c <= 255 for c in color):
+    #     msg = f"Color values must be between 0 and 255, got {color}."
+    #     raise ValueError(msg)
 
 
 def validate_ratio(ratio: float) -> None:

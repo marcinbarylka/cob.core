@@ -2,4 +2,4 @@
 
 import pygame
 
-GUIColor = tuple[int, int, int] | pygame.Color | str
+GUIColor = tuple[int, int, int] | tuple[int, int, int, int] | pygame.Color | str

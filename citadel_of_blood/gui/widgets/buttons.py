@@ -10,7 +10,7 @@ from pygame.surface import Surface
 
 from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.errors.gui_errors import WidgetError
-from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors
+from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors, dim
 from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.sfx import play_sfx
 from citadel_of_blood.gui.widgets import WidgetStateEnum
@@ -33,6 +33,7 @@ class Button(BaseWidget, ClickableMixin):
         caption: str = "Click me",
         play_sfx: bool = True,
         font: SerializableFont | None = None,
+        enabled: bool = True,
         id: str = "",
     ) -> None:
         """Initialize the Button class.
@@ -46,6 +47,7 @@ class Button(BaseWidget, ClickableMixin):
             caption: The button text
             play_sfx: Whether to play sound effects on click
             font: Custom font for the button text
+            enabled: Whether the button is enabled
             id: Unique identifier for the button
 
         Raises:
@@ -54,6 +56,7 @@ class Button(BaseWidget, ClickableMixin):
         super().__init__(x, y, width, height, colors, id)
         self.caption: str = caption
         self.play_sfx: bool = play_sfx  # Whether to play sound effects on click
+        self.enabled: bool = enabled
         try:
             self.font: SerializableFont = (
                 font
@@ -108,7 +111,7 @@ class Button(BaseWidget, ClickableMixin):
 
     def handle_events(self, events: list[Event]) -> None:
         """Handle an event."""
-        if not self.is_active or not self.is_visible:
+        if not self.is_active or not self.is_visible or not self.enabled:
             return
 
         # Delegate click events to mixin method
@@ -195,6 +198,7 @@ class PixelButton(Button):
         caption: str = "Click me",
         play_sfx: bool = True,
         font: SerializableFont | None = None,
+        enabled: bool = True,
         id: str = "",
     ) -> None:
         """Initialize the pixel button.
@@ -211,6 +215,7 @@ class PixelButton(Button):
             caption=caption,
             play_sfx=play_sfx,
             font=font,
+            enabled=enabled,
             id=id,
         )
         if not self._BUTTON_ASSETS:
@@ -236,6 +241,12 @@ class PixelButton(Button):
 
     def update(self) -> None:
         """Update the button's appearance based on its state."""
+        if not self.enabled:
+            self._render_colors = ColorPair(
+                background_color=dim(self._WIDGET_COLORS.normal.background_color, 0.5),
+                foreground_color=dim(self._WIDGET_COLORS.normal.foreground_color, 0.5),
+            )
+            return
         match self.state:
             case WidgetStateEnum.NORMAL:
                 self._render_colors = self.colors.normal

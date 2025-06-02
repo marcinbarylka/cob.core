@@ -146,6 +146,17 @@ class DefaultScreen(GameScreen):
                     x=100,
                     y=100,
                     width=200,
+                    caption="Disabled",
+                    font=font,
+                    play_sfx=True,
+                    enabled=False,
+                )
+            )
+            self.add_widget(
+                PixelButton(
+                    x=350,
+                    y=100,
+                    width=200,
                     caption="Click me",
                     font=font,
                     play_sfx=True,
