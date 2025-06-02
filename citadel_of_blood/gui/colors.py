@@ -1,6 +1,7 @@
 """Color configurations for widgets."""
 
 from dataclasses import dataclass
+from typing import Any
 
 import pygame
 
@@ -115,21 +116,27 @@ DEFAULT_WIDGET_COLORS = WidgetColors(
 )
 
 
-def validate_color(color: GUIColor) -> None:
-    """Validate that the color is a valid RGB tuple.
+def validate_color(value: Any) -> tuple[int, ...]:
+    """Validate that the value is a valid color.
 
     Args:
-        color (GUIColor): The color to validate.
+        value (Any): The value to validate.
+
+    Returns:
+        tuple[int, ...]: A tuple representing the color in RGBA format.
 
     Raises:
-        ValueError: If the color is invalid.
+        ValueError: If the value is not a valid color.
     """
-    # if not (isinstance(color, tuple) and len(color) in (3, 4)):
-    #     msg = f"Color must be a tuple of three or four integers (R, G, B, [A]), got {color}."
-    #     raise ValueError(msg)
-    # if not all(0 <= c <= 255 for c in color):
-    #     msg = f"Color values must be between 0 and 255, got {color}."
-    #     raise ValueError(msg)
+    if isinstance(value, pygame.Color):
+        return value.r, value.g, value.b, value.a
+    if isinstance(value, tuple) and len(value) in (3, 4) and all(isinstance(c, int) and 0 <= c <= 255 for c in value):
+        return value
+    msg = (
+        f"Invalid color value: {value!r}. Must be a tuple of 3 or 4 integers (0-255) "
+        f"or pygame.Color, got {type(value).__name__}."
+    )
+    raise ValueError(msg)
 
 
 def validate_ratio(ratio: float) -> None:
