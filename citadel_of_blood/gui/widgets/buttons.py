@@ -185,9 +185,9 @@ class PixelButton(Button):
         "hover_middle": PROJECT_ROOT / "assets/gui/button-hover-middle.png",
     }
     _WIDGET_COLORS = WidgetColors(
-        normal=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE, foreground_color=ColorsEnum.WHITE),
-        hover=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
-        click=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.WHITE),
+        normal=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE, foreground_color=ColorsEnum.BUTTON_TEXT),
+        hover=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.BUTTON_TEXT),
+        click=ColorPair(background_color=ColorsEnum.PIXEL_BUTTON_INSIDE_HOVER, foreground_color=ColorsEnum.BUTTON_TEXT),
     )
 
     def __init__(

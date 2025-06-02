@@ -186,6 +186,7 @@ class ColorsEnum:
     PIXEL_BUTTON_INSIDE_HOVER: pygame.Color = pygame.Color(0xD6, 0x9D, 0x67, 0x40)
     SEGMENT_BLUE: pygame.Color = pygame.Color(0x60, 0x90, 0xCA, 0xFF)
     MONSTER_RED: pygame.Color = pygame.Color(0xFA, 0x5A, 0x38, 0xFF)
+    BUTTON_TEXT: pygame.Color = pygame.Color(0xFB, 0xE2, 0xBB, 0xFF)
 
     @classmethod
     def get_color(cls, name: str) -> GUIColor:
