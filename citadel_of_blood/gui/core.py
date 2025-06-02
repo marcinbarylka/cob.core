@@ -1,7 +1,9 @@
 """Core module."""
 
 import pygame
+from pygame import Surface
 
+from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.errors.engine_errors import GameScreenError
 from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
@@ -25,6 +27,7 @@ class Game:
           active_game_screen (GameScreen | None): The active screen.
           events_handler (EventsHandler): The events handler.
           frame (int): The frame counter.
+          custom_cursor (pygame.cursors.Cursor | None): Custom cursor object.
 
     """
 
@@ -41,10 +44,12 @@ class Game:
         self.clock: pygame.time.Clock = pygame.time.Clock()
         self.running: bool = True
         self.soundcard_enabled: bool = True
+        self.custom_cursor: pygame.cursors.Cursor | None = None
 
         self.active_game_screen: GameScreen | None = active_game_screen
         self.events_handler: EventsHandler = EventsHandler()
         self.frame: int = 0  # frame counter
+        self.cursor: Surface | None = None  # Cursor surface for custom cursor
 
     def load_settings(self, toml_file: str) -> None:
         """Load the settings.
@@ -78,8 +83,11 @@ class Game:
             init_sfx()
         except pygame.error:
             self.soundcard_enabled = False
-            self.settings.sfx_enabled = False
-            self.settings.music_enabled = False
+            # We set the attributes only if they exist
+            if hasattr(self.settings, "sfx_enabled"):
+                self.settings.sfx_enabled = False
+            if hasattr(self.settings, "music_enabled"):
+                self.settings.music_enabled = False
 
         print(f"Initializing screen with width: {self.width}, height: {self.height}, fullscreen: {self.fullscreen}")
         self.screen = (
@@ -89,13 +97,22 @@ class Game:
         )
         pygame.display.set_caption(self.settings.gui.caption)
         print(f"Caption set to: {self.settings.gui.caption}")
+        cursor_path = PROJECT_ROOT / "assets/gui/cursor.png"
+        try:
+            self.cursor = pygame.image.load(cursor_path).convert_alpha()
+            pygame.mouse.set_visible(False)
+        except Exception as e:
+            print(f"Failed to load cursor image: {e}")
+            self.cursor = None
+
         print("Screen initialized.")
 
     def update(self) -> None:
         """Check the state."""
         if not self.events_handler.running:
             self.running = False
-        self.screen.blit(self.active_game_screen.surface, (0, 0))
+        if self.screen and self.active_game_screen:
+            self.screen.blit(self.active_game_screen.surface, (0, 0))
 
     def open_screen(self, screen: GameScreen) -> None:
         """Add a screen."""
@@ -122,6 +139,12 @@ class Game:
             self.active_game_screen.update()
             self.active_game_screen.draw()
             self.update()
+
+            # Draw the cursor if it exists
+            if hasattr(self, "cursor") and self.cursor:
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                self.screen.blit(self.cursor, (mouse_x, mouse_y))
+
             pygame.display.update()
             self.clock.tick(self.settings.gui.fps)
             self.frame += 1

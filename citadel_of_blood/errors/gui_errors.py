@@ -55,3 +55,21 @@ class WidgetError(Exception):
         """Initialize the WidgetError class."""
         message = self.ERROR_MESSAGES[error_type].format(error=error)
         super().__init__(message)
+
+
+class ColorError(Exception):
+    """Base class for color-related errors."""
+
+    ERROR_MESSAGES = {
+        "invalid_color": "Invalid color: {error}",
+        "color_not_found": "Color not found: {error}",
+        "color_serialization_failed": "Failed to serialize color: {error}",
+        "color_deserialization_failed": "Failed to deserialize color: {error}",
+        "invalid_color_pair": "Invalid color pair: {error}",
+        "color_depth_mismatch": "Color depth mismatch: {error}",
+    }
+
+    def __init__(self, error_type: str, error: Exception | str) -> None:
+        """Initialize the ColorError class."""
+        message = self.ERROR_MESSAGES[error_type].format(error=error)
+        super().__init__(message)
