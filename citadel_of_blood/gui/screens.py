@@ -13,6 +13,7 @@ from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.settings import Settings
 from citadel_of_blood.gui.widgets import BaseWidget
 from citadel_of_blood.gui.widgets.buttons import PixelButton
+from citadel_of_blood.gui.widgets.panels import Panel
 
 
 class GameScreen:
@@ -142,6 +143,14 @@ class DefaultScreen(GameScreen):
                 size=20,
             )
             self.add_widget(
+                Panel(
+                    x=10,
+                    y=10,
+                    width=600,
+                    height=400,
+                )
+            )
+            self.add_widget(
                 PixelButton(
                     x=100,
                     y=100,
@@ -158,6 +167,16 @@ class DefaultScreen(GameScreen):
                     y=100,
                     width=200,
                     caption="Click me",
+                    font=font,
+                    play_sfx=True,
+                )
+            )
+            self.add_widget(
+                PixelButton(
+                    x=100,
+                    y=200,
+                    width=56,
+                    caption="\u274c",
                     font=font,
                     play_sfx=True,
                 )
