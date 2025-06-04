@@ -70,15 +70,15 @@ class Panel(BaseWidget):
         pygame.draw.rect(self.surface, self.colors.normal.background_color, self.rect)
 
         # draw the panel pattern at the top-center of the panel
-        pattern_width = self.width
-        pattern_height = self.height // 3
+        pattern_surface = pygame.image.load(self._ASSET_PATHS[self.pattern]).convert_alpha()
+        pattern_width, pattern_height = pattern_surface.get_size()
         pattern_x = self.x + (self.width - pattern_width) // 2
-        pattern_y = self.y
-        pattern_surface = pygame.Surface((pattern_width, pattern_height), pygame.SRCALPHA)
+        pattern_y = 0
+        if pattern_surface.get_alpha() is None:
+            pattern_surface.set_alpha(255)
 
-        pattern_surface.fill(self.colors.normal.background_color)
-        pattern_image = pygame.image.load(self._ASSET_PATHS[self.pattern]).convert_alpha()
-        pattern_surface.blit(pattern_image, (0, 0))
+
+
         self.surface.blit(pattern_surface, (pattern_x, pattern_y))
 
     def on_hover_in(self) -> None:
