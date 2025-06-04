@@ -8,41 +8,25 @@
 
 # **LABIRYNT ŚMIERCI**
 
-SPIS TREŚCI
+### SPIS TREŚCI
 
-1.0 KILKA SŁÓW WSTĘPU
-
-2.0 REKWIZYTY
-
-3.0 RZUTY KOSTKĄ
-
-4.0 PRZYGOTOWANIE DO GRY
-
-5.0 PRZEBIEG GRY
-
-6.0 PORUSZANIE SIĘ PO LABIRYNCIE
-
-7.0 PUŁAPKI I ICH UNIESZKODLIWIANIE
-
-8.0 POTWORY, NEGOCJACJE I WYKUP
-
-9.0 WALKA
-
-10.0 CZARY
-
-11.0 ODPIERANIE CZARÓW
-
-12.0 ZDOBYWANIE DOŚWIADCZENIA
-
-13.0 ZNALEZISKA
-
-14.0 SKARBY
-
-15.0 SPECJALNE MOŻLIWOŚCI POTWORÓW
-
-16.0 CZARNE WROTA
-
-17.0 WARUNKI ZWYCIĘSTWA
+1. [KILKA SŁÓW WSTĘPU](#10-kilka-słów-wstępu)
+2. [REKWIZYTY](#20-rekwizyty)
+3. [RZUTY KOSTKĄ](#30-rzuty-kostką)
+4. [PRZYGOTOWANIE DO GRY](#40-przygotowanie-do-gry)
+5. [PRZEBIEG GRY](#50-przebieg-gry)
+6. [PORUSZANIE SIĘ PO LABIRYNCIE](#60-poruszanie-się-po-labiryncie)
+7. [PUŁAPKI I ICH UNIESZKODLIWIANIE](#70-pułapki-i-ich-unieszkodliwianie)
+8. [POTWORY, NEGOCJACJE I WYKUP](#80-potworynegocjacje-i-wykup)
+9. [WALKA](#90-walka)
+10. [CZARY](#100-czary)
+11. [ODPIERANIE CZARÓW](#110-odpieranie-czarów)
+12. [ZDOBYWANIE DOŚWIADCZENIA](#120-zdobywanie-doświadczenia)
+13. [ZNALEZISKA](#130-znaleziska)
+14. [SKARBY](#140-skarby)
+15. [SPECJALNE MOŻLIWOŚCI POTWORÓW](#150-specjalne-możliwości-niektórych-potworów)
+16. [CZARNE WROTA](#160-czarne-wrota)
+17. [WARUNKI ZWYCIĘSTWA](#170-warunki-zwycięstwa)
 
 ## **1.0 KILKA SŁÓW WSTĘPU**
 
