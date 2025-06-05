@@ -3,10 +3,11 @@
 import abc
 import dataclasses
 import enum
-import uuid
+import string
 from typing import Any, TypeVar, cast
 
 import pygame
+from nanoid import generate
 from pygame import Rect
 from pygame.surface import Surface
 
@@ -90,7 +91,8 @@ class BaseWidget(abc.ABC):
 
     def create_id(self) -> str:
         """Create a unique ID for the widget."""
-        return f"{self.__class__.__name__}_{uuid.uuid4()}"
+        alpha = string.ascii_letters + string.digits
+        return f"{self.__class__.__name__}_{generate(alpha, 8)}"
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
         """Handle pygame events for the widget.

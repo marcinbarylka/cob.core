@@ -27,6 +27,7 @@ pygame = "^2.6.1"
 pydantic = "^2.10.6"
 toml = "^0.10.2"
 platformdirs = "^4.3.6"
+nanoid = "^2.0.0"
 
 [tool.ruff]
 line-length = 120

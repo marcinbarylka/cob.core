@@ -67,17 +67,16 @@ class Panel(BaseWidget):
         Args:
             surface (pygame.Surface): The surface to draw the panel on.
         """
-        pygame.draw.rect(self.surface, self.colors.normal.background_color, self.rect)
-
-        # draw the panel pattern at the top-center of the panel
         pattern_surface = pygame.image.load(self._ASSET_PATHS[self.pattern]).convert_alpha()
         pattern_width, pattern_height = pattern_surface.get_size()
+        color_rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        pygame.draw.rect(self.surface, self.colors.normal.background_color, color_rect)
+
+        # draw the panel pattern at the top-center of the panel
         pattern_x = self.x + (self.width - pattern_width) // 2
         pattern_y = 0
         if pattern_surface.get_alpha() is None:
             pattern_surface.set_alpha(255)
-
-
 
         self.surface.blit(pattern_surface, (pattern_x, pattern_y))
 
