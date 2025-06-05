@@ -28,6 +28,7 @@ pydantic = "^2.10.6"
 toml = "^0.10.2"
 platformdirs = "^4.3.6"
 nanoid = "^2.0.0"
+pillow = "^11.2.1"
 
 [tool.ruff]
 line-length = 120

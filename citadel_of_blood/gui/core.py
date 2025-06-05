@@ -51,6 +51,8 @@ class Game:
         self.frame: int = 0  # frame counter
         self.cursor: Surface | None = None  # Cursor surface for custom cursor
 
+        self.cache_folder: str = ""
+
     def load_settings(self, toml_file: str) -> None:
         """Load the settings.
 
@@ -65,6 +67,7 @@ class Game:
         self.fullscreen = self.settings.gui.fullscreen
         self.width = self.settings.gui.width
         self.height = self.settings.gui.height
+        self.cache_folder = self.settings.gui.cache_folder
 
     def init_gui(self, toml_file: str = "") -> None:
         """Initialize the GUI.
@@ -77,6 +80,12 @@ class Game:
             toml_file = SETTINGS_FILENAME
         self.load_settings(toml_file)
         pygame.init()
+
+        # ensure the cache folder exists
+        if not self.settings.gui.cache_folder.exists():
+            self.settings.create_cache_folder()
+        # Set the cache folder for the settings
+        self.settings.gui.cache_folder = self.cache_folder
 
         # check if sound card is available
         try:

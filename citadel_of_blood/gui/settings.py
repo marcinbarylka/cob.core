@@ -40,6 +40,7 @@ class GUISettings(BaseModel):
     basic_font: Path = Path("assets/fonts/Roboto-Regular.ttf")
     sfx_enabled: bool = True
     music_enabled: bool = True
+    cache_folder: Path | str = Field(default_factory=lambda: Path(platformdirs.user_cache_path(PROJECT_NAME)))
 
     @field_validator("width", "height")
     @classmethod
@@ -103,3 +104,23 @@ class Settings(BaseModel):
         with Path(config_path / toml_file).open("w") as f:
             toml.dump(settings.model_dump(), f)
         return settings
+
+    @staticmethod
+    def create_cache_folder() -> Path:
+        """Create the cache folder."""
+        cache_path = Path(platformdirs.user_cache_path(PROJECT_NAME))
+        cache_path.mkdir(parents=True, exist_ok=True)
+        if not cache_path.exists():
+            msg = f"Cache folder {cache_path} could not be created."
+            raise FileNotFoundError(msg)
+        # Ensure the cache folder is a Path object
+        if isinstance(cache_path, str):
+            cache_path = Path(cache_path)
+        # save a placeholder file to ensure the folder is created
+        placeholder_file = cache_path / "placeholder.txt"
+        if not placeholder_file.exists():
+            with placeholder_file.open("w") as f:
+                f.write("This is a placeholder file to ensure the cache folder exists.")
+        else:
+            print(f"Cache folder already exists at {cache_path}.")
+        return cache_path

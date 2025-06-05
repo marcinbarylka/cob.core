@@ -42,7 +42,7 @@ class Panel(BaseWidget):
         y: int,
         width: int,
         height: int,
-        pattern: int = 0,
+        pattern: int = 2,
         *args,
         **kwargs,
     ) -> None:
