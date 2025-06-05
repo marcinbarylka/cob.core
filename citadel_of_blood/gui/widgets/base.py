@@ -169,6 +169,17 @@ class BaseWidget(abc.ABC):
         except Exception as e:
             raise WidgetError("deserialization_failed", str(e)) from e
 
+    def __repr__(self) -> str:
+        """Return a string representation of the widget."""
+        return (
+            f"{self.__class__.__name__}(id={self.id}, x={self.x}, y={self.y}, "
+            f"width={self.width}, height={self.height})"
+        )
+
+    def __str__(self) -> str:
+        """Return a string representation of the widget."""
+        return self.id
+
     @property
     def rect(self):
         """Get the rectangle of the widget."""

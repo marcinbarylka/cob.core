@@ -32,7 +32,7 @@ class ScreenError(Exception):
         "widget_initialization_failed": "Failed to initialize widgets: {error}",
     }
 
-    def __init__(self, error_type: str, error: Exception) -> None:
+    def __init__(self, error_type: str, error: Exception | str) -> None:
         """Initialize the ScreenError class."""
         message = self.ERROR_MESSAGES[error_type].format(error=error)
         super().__init__(message)

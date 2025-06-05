@@ -109,6 +109,43 @@ class GameScreen:
             widget.handle_events(events)
         return events
 
+    def find_widget_by_id(self, widget_id: str) -> BaseWidget | None:
+        """Find a widget by its ID.
+
+        Args:
+            widget_id (str): The ID of the widget to find
+
+        Returns:
+            BaseWidget | None: The found widget or None if not found
+        """
+        for widget in self.widgets:
+            if widget.id == widget_id:
+                return widget
+        return None
+
+    def find_widgets_by_type(self, widget_type: type[BaseWidget]) -> list[BaseWidget]:
+        """Find all widgets of a specific type.
+
+        Args:
+            widget_type (type[BaseWidget]): The type of widgets to find
+
+        Returns:
+            list[BaseWidget]: List of widgets of the specified type
+        """
+        return [widget for widget in self.widgets if isinstance(widget, widget_type)]
+
+    def remove_widget(self, widget: BaseWidget) -> None:
+        """Remove a widget from the screen.
+
+        Args:
+            widget (BaseWidget): The widget to remove
+        """
+        if widget in self.widgets:
+            self.widgets.remove(widget)
+        else:
+            msg = f"Widget with ID {widget.id} not found in screen."
+            raise ScreenError("widget_not_found", msg)
+
 
 class DefaultScreen(GameScreen):
     """Default implementation of a game screen.
