@@ -12,7 +12,7 @@ from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors
 from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.settings import Settings
 from citadel_of_blood.gui.widgets import BaseWidget
-from citadel_of_blood.gui.widgets.buttons import PixelButton
+from citadel_of_blood.gui.widgets.buttons import ExitButton, PixelButton
 from citadel_of_blood.gui.widgets.panels import Panel
 
 
@@ -209,11 +209,9 @@ class DefaultScreen(GameScreen):
                 )
             )
             self.add_widget(
-                PixelButton(
+                ExitButton(
                     x=100,
                     y=200,
-                    width=56,
-                    caption="\u274c",
                     font=font,
                     play_sfx=True,
                 )

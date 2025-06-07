@@ -179,10 +179,10 @@ class PixelButton(Button):
     _ASSET_PATHS: ClassVar[dict[str, Path]] = {
         "normal_left": PROJECT_ROOT / "assets/gui/button-normal-left-32.png",
         "normal_right": PROJECT_ROOT / "assets/gui/button-normal-right-32.png",
-        "hover_left": PROJECT_ROOT / "assets/gui/button-hover-left.png",
+        "hover_left": PROJECT_ROOT / "assets/gui/button-hover-left-32.png",
         "hover_right": PROJECT_ROOT / "assets/gui/button-hover-right-32.png",
-        "normal_middle": PROJECT_ROOT / "assets/gui/button-normal-middle.png",
-        "hover_middle": PROJECT_ROOT / "assets/gui/button-hover-middle.png",
+        "normal_middle": PROJECT_ROOT / "assets/gui/button-normal-middle-32.png",
+        "hover_middle": PROJECT_ROOT / "assets/gui/button-hover-middle-32.png",
     }
     _WIDGET_COLORS = WidgetColors(
         normal=ColorPair(
@@ -291,3 +291,25 @@ class PixelButton(Button):
             self.surface.blit(text, text_rect)
         except Exception as e:
             raise WidgetError("text_rendering_failed", e) from e
+
+
+class ExitButton(PixelButton):
+    """A button to exit the game."""
+
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int = 100,
+        caption: str = "Exit",
+        font: SerializableFont | None = None,
+        play_sfx: bool = True,
+    ) -> None:
+        """Initialize the exit button."""
+        super().__init__(x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx)
+
+    def on_click(self) -> None:
+        """Handle click event to exit the game."""
+        print("Exit button clicked. Exiting game...")
+        pygame.quit()
+        exit(0)
