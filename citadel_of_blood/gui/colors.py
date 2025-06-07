@@ -194,6 +194,7 @@ class ColorsEnum:
     PIXEL_BUTTON_INSIDE_HOVER: pygame.Color = pygame.Color(0xD6, 0x9D, 0x67, 0x40)
     PANEL_BACKGROUND: pygame.Color = pygame.Color(0x34, 0x2A, 0x25, 0xFF)
     PANEL_FOREGROUND: pygame.Color = pygame.Color(0xFB, 0xE2, 0xBB, 0xFF)
+    FADING_BAR: pygame.Color = pygame.Color(0x56, 0x32, 0x26, 0xFF)
     SEGMENT_BLUE: pygame.Color = pygame.Color(0x60, 0x90, 0xCA, 0xFF)
     MONSTER_RED: pygame.Color = pygame.Color(0xFA, 0x5A, 0x38, 0xFF)
 

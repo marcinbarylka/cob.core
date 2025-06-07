@@ -1,5 +1,6 @@
 """Module for image processing utilities."""
 
+import pygame
 from PIL import Image
 
 
@@ -20,3 +21,20 @@ def pixel_upscale(image: Image.Image, factor: int) -> Image.Image:
     width, height = image.size
     new_size = (width * factor, height * factor)
     return image.resize(new_size, resample=Image.NEAREST)
+
+
+def load_pygame_image(path: str) -> pygame.Surface:
+    """Load an image using Pygame.
+    Args:
+        path (str): Path to the image file.
+
+    Returns:
+        pygame.Surface: The loaded image surface.
+
+    Raises:
+        pygame.error: If the image cannot be loaded.
+    """
+    img = pygame.image.load(path).convert_alpha()
+    if img.get_alpha() is None:
+        img.set_alpha(255)
+    return img
