@@ -188,6 +188,7 @@ class ColorsEnum:
 
     BLACK: pygame.Color = pygame.Color(0, 0, 0, 0xFF)
     WHITE: pygame.Color = pygame.Color(0xFF, 0xFF, 0xFF, 0xFF)
+    GRAY: pygame.Color = pygame.Color(0x55, 0x55, 0x55, 0xFF)
     DEFAULT_BACKGROUND: pygame.Color = pygame.Color(0x20, 0x20, 0x20, 0xFF)
     PIXEL_BUTTON_INSIDE: pygame.Color = pygame.Color(0x34, 0x2A, 0x25, 0xFF)
     PIXEL_BUTTON_TEXT: pygame.Color = pygame.Color(0xFB, 0xE2, 0xBB, 0xFF)

@@ -157,9 +157,9 @@ class DefaultScreen(GameScreen):
     DEFAULT_COLORS = ColorPair(background_color=ColorsEnum.DEFAULT_BACKGROUND, foreground_color=ColorsEnum.WHITE)
 
     DEFAULT_WIDGET_COLORS = WidgetColors(
-        normal=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
-        hover=ColorPair(background_color=(0x11, 0x11, 0x11), foreground_color=(0xFF, 0xFF, 0xFF)),
-        click=ColorPair(background_color=(0xFF, 0xFF, 0xFF), foreground_color=(0, 0, 0)),
+        normal=ColorPair(background_color=ColorsEnum.GRAY, foreground_color=ColorsEnum.WHITE),
+        hover=ColorPair(background_color=(0x11, 0x11, 0x11, 0xFF), foreground_color=ColorsEnum.WHITE),
+        click=ColorPair(background_color=ColorsEnum.WHITE, foreground_color=ColorsEnum.BLACK),
     )
 
     def __init__(self, settings: Settings | None = None) -> None:
