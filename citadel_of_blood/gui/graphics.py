@@ -4,8 +4,7 @@ from PIL import Image
 
 
 def pixel_upscale(image: Image.Image, factor: int) -> Image.Image:
-    """
-    Upscale image by an integer factor without smoothing (nearest neighbor).
+    """Upscale image by an integer factor without smoothing (nearest neighbor).
 
     Args:
         image: Source PIL image.

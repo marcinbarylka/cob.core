@@ -177,10 +177,10 @@ class PixelButton(Button):
     # Cache for button graphics
     _BUTTON_ASSETS: ClassVar[dict[str, Surface]] = {}
     _ASSET_PATHS: ClassVar[dict[str, Path]] = {
-        "normal_left": PROJECT_ROOT / "assets/gui/button-normal-left.png",
-        "normal_right": PROJECT_ROOT / "assets/gui/button-normal-right.png",
+        "normal_left": PROJECT_ROOT / "assets/gui/button-normal-left-32.png",
+        "normal_right": PROJECT_ROOT / "assets/gui/button-normal-right-32.png",
         "hover_left": PROJECT_ROOT / "assets/gui/button-hover-left.png",
-        "hover_right": PROJECT_ROOT / "assets/gui/button-hover-right.png",
+        "hover_right": PROJECT_ROOT / "assets/gui/button-hover-right-32.png",
         "normal_middle": PROJECT_ROOT / "assets/gui/button-normal-middle.png",
         "hover_middle": PROJECT_ROOT / "assets/gui/button-hover-middle.png",
     }
@@ -219,7 +219,7 @@ class PixelButton(Button):
             x=x,
             y=y,
             width=width,
-            height=56,  # Fixed height for pixel buttons
+            height=32,  # Fixed height for pixel buttons
             colors=self._WIDGET_COLORS,
             caption=caption,
             play_sfx=play_sfx,
