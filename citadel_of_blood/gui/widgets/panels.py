@@ -4,8 +4,8 @@ import pygame
 
 from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.gui.colors import ColorPair, ColorsEnum, WidgetColors
-from citadel_of_blood.gui.widgets import BaseWidget
 from citadel_of_blood.gui.graphics import load_pygame_image
+from citadel_of_blood.gui.widgets import BaseWidget
 
 
 class Panel(BaseWidget):
@@ -85,12 +85,7 @@ class Panel(BaseWidget):
         self._line_right_width = self._line_right_img.get_width()
 
         # Precalculate some positions
-        self._panel_rect = pygame.Rect(
-            self.x,
-            self.y,
-            self.width,
-            self.height - self._pattern_height // 2
-        )
+        self._panel_rect = pygame.Rect(self.x, self.y, self.width, self.height - self._pattern_height // 2)
         self._pattern_x = self.x + (self.width - self._pattern_width) // 2
         self._pattern_y = 0
 

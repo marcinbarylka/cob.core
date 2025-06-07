@@ -25,6 +25,7 @@ def pixel_upscale(image: Image.Image, factor: int) -> Image.Image:
 
 def load_pygame_image(path: str) -> pygame.Surface:
     """Load an image using Pygame.
+
     Args:
         path (str): Path to the image file.
 
