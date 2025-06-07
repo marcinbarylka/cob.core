@@ -133,7 +133,7 @@ Każdy z graczy powinien zaopatrzyć się w ołówek oraz jedną kartę cech dla
 
 3. Gracze mogą dowolnie zmieniać szyk marszowy do chwili rozpoczęcia walki. W jej trakcie szyk może zostać zmieniony tylko podczas fazy „reorganizacja oddziału” (patrz 9.8).
 
-#### **D. Ustalenie dominującego słońca.**
+#### **D. USTALENIE DOMINUJĄCEGO SŁOŃCA.**
 
 Jeden z graczy rzuca 1K6 w celu ustalenia, które z trzech słońc jest dominujące czyli pod wpływem którego słońca oddział się znajduje.
 
