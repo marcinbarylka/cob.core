@@ -1,10 +1,11 @@
 """Module for testing the serialization module."""
 
 import pygame
+import pytest
 
+from citadel_of_blood.errors.engine_errors import ColorError
 from citadel_of_blood.gui.colors import ColorPair, WidgetColors
-from citadel_of_blood.gui.serialization import (deserialize_color,
-                                                serialize_color)
+from citadel_of_blood.gui.serialization import deserialize_color, serialize_color
 
 # --- Tests for serialize_color and deserialize_color functions ---
 
@@ -39,6 +40,16 @@ def test_deserialize_color_with_hex_str():
     result = deserialize_color(data)
     expected = pygame.Color("#0000ff")
     assert (result.r, result.g, result.b) == (expected.r, expected.g, expected.b)
+
+
+def test_serialize_color_invalid_type():
+    with pytest.raises(ColorError):
+        serialize_color(123)
+
+
+def test_deserialize_color_invalid_type():
+    with pytest.raises(ColorError):
+        deserialize_color(123)
 
 
 # --- Tests for ColorPair ---
