@@ -66,7 +66,7 @@ class AlcoholFountain(Fountain):
     """AlcoholFountain class."""
 
 
-class JewelFouintain(Fountain):
+class JewelFountain(Fountain):
     """JewelFountain class."""
 
 
