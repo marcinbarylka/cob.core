@@ -311,5 +311,17 @@ class ExitButton(PixelButton):
     def on_click(self) -> None:
         """Handle click event to exit the game."""
         print("Exit button clicked. Exiting game...")
+        if (
+            hasattr(self, "settings")
+            and self.settings
+            and self.settings.gui.sfx_enabled
+            and self.play_sfx
+        ):
+            with suppress(Exception):
+                sound = pygame.mixer.Sound(CLICK_SOUND)
+                channel = sound.play()
+                if channel:
+                    while channel.get_busy():
+                        pygame.time.wait(10)
         pygame.quit()
         exit(0)
