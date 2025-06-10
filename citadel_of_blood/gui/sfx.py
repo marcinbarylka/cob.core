@@ -8,7 +8,7 @@ def init_sfx() -> None:
     pygame.mixer.init()
     pygame.mixer.set_num_channels(8)  # Set the number of channels for sound effects
     pygame.mixer.music.set_volume(0.5)  # Set the volume for background music
-    pygame.mixer.set_reserved(1)  # Reserve a channel for music playback
+    pygame.mixer.set_reserved(1)  # Reserve a channel for sound effects or special use
 
 
 def play_sfx(sfx: str) -> None:
