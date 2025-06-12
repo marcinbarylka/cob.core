@@ -13,6 +13,7 @@ from citadel_of_blood.gui.serialization import SerializableFont
 from citadel_of_blood.gui.settings import Settings
 from citadel_of_blood.gui.widgets import BaseWidget
 from citadel_of_blood.gui.widgets.buttons import ExitButton, PixelButton
+from citadel_of_blood.gui.widgets.modal import Modal
 from citadel_of_blood.gui.widgets.panels import Panel
 
 
@@ -214,6 +215,14 @@ class DefaultScreen(GameScreen):
                     y=200,
                     font=font,
                     play_sfx=True,
+                )
+            )
+            self.add_widget(
+                Modal(
+                    title="Welcome to the Game",
+                    message="This is a sample modal dialog.",
+                    width=400,
+                    height=200,
                 )
             )
         except (FileNotFoundError, pygame.error) as e:

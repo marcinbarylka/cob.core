@@ -8,7 +8,7 @@ import platformdirs
 import toml
 from pydantic import BaseModel, Field, field_validator
 
-from citadel_of_blood.constants import PROJECT_NAME
+from citadel_of_blood.constants import PROJECT_NAME, PROJECT_ROOT
 from citadel_of_blood.errors.gui_errors import InvalidHexColorError, NonPositiveDimensionError, NonPositiveFPSError
 
 S = TypeVar("S", bound="Settings")
@@ -41,6 +41,7 @@ class GUISettings(BaseModel):
     sfx_enabled: bool = True
     music_enabled: bool = True
     cache_folder: Path | str = Field(default_factory=lambda: Path(platformdirs.user_cache_path(PROJECT_NAME)))
+    default_font_path: Path = Field(default_factory=lambda: Path(PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf"))
 
     @field_validator("width", "height")
     @classmethod
