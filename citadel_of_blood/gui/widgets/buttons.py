@@ -59,9 +59,7 @@ class Button(BaseWidget, ClickableMixin):
         self.enabled: bool = enabled
         try:
             self.font: SerializableFont = (
-                font
-                if font
-                else SerializableFont(font_path=str(PROJECT_ROOT / "assets/fonts/Roboto-Regular.ttf"), size=16)
+                font if font else SerializableFont(font_path=str(self.settings.gui.default_font_path), size=16)
             )
         except Exception as e:
             raise WidgetError("font_initialization_failed", e) from e
@@ -311,12 +309,7 @@ class ExitButton(PixelButton):
     def on_click(self) -> None:
         """Handle click event to exit the game."""
         print("Exit button clicked. Exiting game...")
-        if (
-            hasattr(self, "settings")
-            and self.settings
-            and self.settings.gui.sfx_enabled
-            and self.play_sfx
-        ):
+        if hasattr(self, "settings") and self.settings and self.settings.gui.sfx_enabled and self.play_sfx:
             with suppress(Exception):
                 sound = pygame.mixer.Sound(CLICK_SOUND)
                 channel = sound.play()

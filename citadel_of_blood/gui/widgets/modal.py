@@ -38,7 +38,7 @@ class Modal(BaseWidget):
         # Draw the modal border
         pygame.draw.rect(self.surface, (255, 255, 255), (self.x, self.y, self.width, self.height), 2)
         # Draw the title
-        title_surface = self.settings.font.render(self.title, True, (255, 255, 255))
+        title_surface = self.settings.gui.default_font_path.render(self.title, True, (255, 255, 255))
         self.surface.blit(title_surface, (self.x + 10, self.y + 10))
         # Draw the message
         message_surface = self.settings.font.render(self.message, True, (255, 255, 255))
