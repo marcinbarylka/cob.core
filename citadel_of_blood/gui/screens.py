@@ -42,6 +42,7 @@ class GameScreen:
         self.widgets: list[BaseWidget] = []
         self.is_active: bool = False
         self.settings: Settings | None = Settings.instance()
+        self.modal: Modal | None = None
 
         if settings:
             self.surface = pygame.Surface((settings.gui.width, settings.gui.height))
