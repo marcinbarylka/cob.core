@@ -41,7 +41,7 @@ class GameScreen:
         self.colors: ColorPair = colors
         self.widgets: list[BaseWidget] = []
         self.is_active: bool = False
-        self.settings: Settings | None = settings
+        self.settings: Settings | None = Settings.instance()
 
         if settings:
             self.surface = pygame.Surface((settings.gui.width, settings.gui.height))
@@ -54,20 +54,7 @@ class GameScreen:
         Args:
             widget (BaseWidget): The widget to add
         """
-        if self.settings:
-            widget.settings = self.settings
         self.widgets.append(widget)
-
-    def apply_settings(self, settings: Settings) -> None:
-        """Apply settings to the screen and its widgets.
-
-        Args:
-            settings (Settings): The settings to apply
-        """
-        self.settings = settings
-        for widget in self.widgets:
-            widget.settings = settings
-        self.surface = pygame.Surface((settings.gui.width, settings.gui.height))
 
     def draw(self) -> None:
         """Draw the screen and all its widgets.

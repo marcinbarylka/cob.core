@@ -87,7 +87,7 @@ class BaseWidget(abc.ABC):
         self.surface: Surface = Surface((width, height), pygame.SRCALPHA)
         self.state: WidgetStateEnum = WidgetStateEnum.NORMAL
 
-        self.settings: Settings | None = None
+        self.settings: Settings = Settings.instance()
 
     def create_id(self) -> str:
         """Create a unique ID for the widget."""

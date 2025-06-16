@@ -2,7 +2,7 @@
 
 import re
 from pathlib import Path
-from typing import Annotated, TypeVar
+from typing import ClassVar, TypeVar
 
 import platformdirs
 import toml
@@ -15,17 +15,38 @@ S = TypeVar("S", bound="Settings")
 
 
 def validate_hex_color(v: str) -> str:
-    """Validate hex color format."""
+    """Validate hex color format.
+
+    Args:
+        v (str): Color string in hex format '#rrggbb'.
+
+    Returns:
+        str: The validated color string.
+
+    Raises:
+        InvalidHexColorError: If the string is not a valid hex color.
+    """
     if not re.match(r"^#[0-9a-fA-F]{6}$", v):
         raise InvalidHexColorError()
     return v
 
 
 class GUIColors(BaseModel):
-    """The colors for the GUI."""
+    """The colors for the GUI.
 
-    background: Annotated[str, Field(default="#000000", validator=validate_hex_color)]
-    foreground: Annotated[str, Field(default="#ffffff", validator=validate_hex_color)]
+    Attributes:
+        background (str): Hex color for background, e.g. '#rrggbb'.
+        foreground (str): Hex color for foreground, e.g. '#rrggbb'.
+    """
+
+    background: str = "#000000"
+    foreground: str = "#ffffff"
+
+    @field_validator("background", "foreground")
+    @classmethod
+    def validate_colors(cls, v: str) -> str:
+        """Validate hex color format for background and foreground."""
+        return validate_hex_color(v)
 
 
 class GUISettings(BaseModel):
@@ -46,7 +67,17 @@ class GUISettings(BaseModel):
     @field_validator("width", "height")
     @classmethod
     def validate_dimensions(cls, v: int) -> int:
-        """Validate screen dimensions."""
+        """Validate that a screen dimension is a positive integer.
+
+        Args:
+            v (int): Width or height value.
+
+        Returns:
+            int: The original value if valid.
+
+        Raises:
+            NonPositiveDimensionError: If v is not positive.
+        """
         if v <= 0:
             raise NonPositiveDimensionError()
         return v
@@ -54,9 +85,34 @@ class GUISettings(BaseModel):
     @field_validator("fps")
     @classmethod
     def validate_fps(cls, v: int) -> int:
-        """Validate FPS value."""
+        """Validate frames per second (FPS) setting.
+
+        Args:
+            v (int): Frames per second.
+
+        Returns:
+            int: The original value if valid.
+
+        Raises:
+            NonPositiveFPSError: If v is not positive.
+        """
         if v <= 0:
             raise NonPositiveFPSError()
+        return v
+
+    @field_validator("basic_font", "cache_folder", "default_font_path", mode="before")
+    @classmethod
+    def ensure_path(cls, v: Path | str) -> Path:
+        """Convert string paths to Path objects before validation.
+
+        Args:
+            v (str or Path): Input path to convert.
+
+        Returns:
+            Path: Converted Path object.
+        """
+        if isinstance(v, str):
+            return Path(v)
         return v
 
 
@@ -64,6 +120,7 @@ class Settings(BaseModel):
     """The settings."""
 
     gui: GUISettings
+    _instance: ClassVar["Settings"] = None
 
     @staticmethod
     def load(toml_file: str) -> "Settings":
@@ -108,7 +165,14 @@ class Settings(BaseModel):
 
     @staticmethod
     def create_cache_folder() -> Path:
-        """Create the cache folder."""
+        """Create and ensure the application cache folder exists.
+
+        Returns:
+            Path: Path to the cache folder.
+
+        Raises:
+            FileNotFoundError: If the folder could not be created.
+        """
         cache_path = Path(platformdirs.user_cache_path(PROJECT_NAME))
         cache_path.mkdir(parents=True, exist_ok=True)
         if not cache_path.exists():
@@ -125,3 +189,17 @@ class Settings(BaseModel):
         else:
             print(f"Cache folder already exists at {cache_path}.")
         return cache_path
+
+    @classmethod
+    def instance(cls, toml_file: str = "settings.toml") -> "Settings":
+        """Return singleton Settings instance, loading from toml_file if necessary.
+
+        Args:
+            toml_file (str): Name of the TOML file to load or create.
+
+        Returns:
+            Settings: The singleton settings object.
+        """
+        if cls._instance is None:
+            cls._instance = cls.load(toml_file)
+        return cls._instance

@@ -5,10 +5,9 @@ from pygame import Surface
 
 from citadel_of_blood.constants import PROJECT_ROOT
 from citadel_of_blood.errors.engine_errors import GameScreenError
-from citadel_of_blood.gui.constants import SETTINGS_FILENAME
 from citadel_of_blood.gui.events import EventsHandler
 from citadel_of_blood.gui.screens import GameScreen
-from citadel_of_blood.gui.settings import GUIColors, GUISettings, Settings
+from citadel_of_blood.gui.settings import Settings
 from citadel_of_blood.gui.sfx import init_sfx
 
 
@@ -40,7 +39,7 @@ class Game:
         self.fullscreen: bool = True
         self.width: int = 0
         self.height: int = 0
-        self.settings: Settings = Settings(gui=GUISettings(colors=GUIColors()))
+        self.settings: Settings = Settings.instance()
         self.clock: pygame.time.Clock = pygame.time.Clock()
         self.running: bool = True
         self.soundcard_enabled: bool = True
@@ -76,9 +75,6 @@ class Game:
             toml_file (str): The TOML file to load.
 
         """
-        if not toml_file:
-            toml_file = SETTINGS_FILENAME
-        self.load_settings(toml_file)
         pygame.init()
 
         # ensure the cache folder exists
@@ -127,7 +123,6 @@ class Game:
         """Add a screen."""
         screen.settings = self.settings
         self.active_game_screen = screen
-        self.active_game_screen.apply_settings(self.settings)
 
     def run(self) -> None:
         """Run the GUI."""

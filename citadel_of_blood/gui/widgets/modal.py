@@ -19,6 +19,9 @@ class Modal(BaseWidget):
         self.title = title
         self.message = message
         self.is_visible = True
+        # Initialize the surface for the modal dialog
+        # We need to create a surface that matches the GUI dimensions, because modals typically cover the entire screen
+        self.surface = pygame.Surface((self.settings.gui.width, self.settings.gui.height), pygame.SRCALPHA)
 
     def show(self) -> None:
         """Display the modal dialog."""
@@ -33,21 +36,21 @@ class Modal(BaseWidget):
         if not self.is_visible:
             return
         # Draw the modal background
-        pygame.draw.rect(self.surface, (0, 0, 0, 128), (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(self.surface, (0, 0, 0, 128), (0, 0, self.settings.gui.width, self.settings.gui.height))
 
         # Draw the modal border
-        pygame.draw.rect(self.surface, (255, 255, 255), (self.x, self.y, self.width, self.height), 2)
+        # pygame.draw.rect(self.surface, (255, 255, 255), (self.x, self.y, self.width, self.height), 2)
         # Draw the title
-        title_surface = self.settings.gui.default_font_path.render(self.title, True, (255, 255, 255))
-        self.surface.blit(title_surface, (self.x + 10, self.y + 10))
+        # title_surface = self.settings.gui.default_font_path.render(self.title, True, (255, 255, 255))
+        # self.surface.blit(title_surface, (self.x + 10, self.y + 10))
         # Draw the message
-        message_surface = self.settings.font.render(self.message, True, (255, 255, 255))
-        self.surface.blit(message_surface, (self.x + 10, self.y + 40))
+        # message_surface = self.settings.font.render(self.message, True, (255, 255, 255))
+        # self.surface.blit(message_surface, (self.x + 10, self.y + 40))
         # Draw the modal content
         # This can be extended to include buttons or other interactive elements
         # For now, we just draw a simple message
-        pygame.draw.rect(self.surface, (50, 50, 50), (self.x + 10, self.y + 70, self.width - 20, self.height - 90))
-        self.surface.blit(message_surface, (self.x + 10, self.y + 70))
+        # pygame.draw.rect(self.surface, (50, 50, 50), (self.x + 10, self.y + 70, self.width - 20, self.height - 90))
+        # self.surface.blit(message_surface, (self.x + 10, self.y + 70))
 
     def on_hover_out(self) -> None:
         """Handle hover out event."""

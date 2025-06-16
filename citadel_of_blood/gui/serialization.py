@@ -98,7 +98,7 @@ def serialize_color(color: GUIColor) -> tuple[int, int, int] | str:
             color.g,
             color.b,
         )
-    elif isinstance(color, (tuple, str)):
+    elif isinstance(color, tuple | str):
         return color
     else:
         msg = f"Unsupported color type: {type(color)}"
@@ -110,7 +110,7 @@ def deserialize_color(data: tuple[int, int, int] | str) -> pygame.Color:
     If 'data' is a tuple, creates a pygame.Color with that tuple.
     If 'data' is a hex string, creates a pygame.Color from the string.
     """
-    if isinstance(data, (tuple, list)):
+    if isinstance(data, tuple | list):
         return pygame.Color(*data)
     elif isinstance(data, str):
         return pygame.Color(data)
