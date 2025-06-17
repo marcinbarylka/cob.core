@@ -1,6 +1,7 @@
 """Settings for the GUI."""
 
 import re
+import shutil
 from pathlib import Path
 from typing import ClassVar, TypeVar
 
@@ -58,10 +59,10 @@ class GUISettings(BaseModel):
     caption: str = "Citadel of Blood"
     fps: int = 60
     colors: GUIColors
-    basic_font: Path = Path("assets/fonts/Roboto-Regular.ttf")
+    basic_font: str = "assets/fonts/Roboto-Regular.ttf"
     sfx_enabled: bool = True
     music_enabled: bool = True
-    cache_folder: Path | str = Field(default_factory=lambda: Path(platformdirs.user_cache_path(PROJECT_NAME)))
+    cache_folder: str = Field(default_factory=lambda: str(Path(platformdirs.user_cache_path(PROJECT_NAME))))
 
     @field_validator("width", "height")
     @classmethod
@@ -97,21 +98,6 @@ class GUISettings(BaseModel):
         """
         if v <= 0:
             raise NonPositiveFPSError()
-        return v
-
-    @field_validator("basic_font", "cache_folder", mode="before")
-    @classmethod
-    def ensure_path(cls, v: Path | str) -> Path:
-        """Convert string paths to Path objects before validation.
-
-        Args:
-            v (str or Path): Input path to convert.
-
-        Returns:
-            Path: Converted Path object.
-        """
-        if isinstance(v, str):
-            return Path(v)
         return v
 
 
@@ -177,14 +163,27 @@ class Settings(BaseModel):
         if not cache_path.exists():
             msg = f"Cache folder {cache_path} could not be created."
             raise FileNotFoundError(msg)
+
         # Ensure the cache folder is a Path object
         if isinstance(cache_path, str):
             cache_path = Path(cache_path)
-        # save a placeholder file to ensure the folder is created
-        placeholder_file = cache_path / "placeholder.txt"
-        if not placeholder_file.exists():
-            with placeholder_file.open("w") as f:
-                f.write("This is a placeholder file to ensure the cache folder exists.")
+
+        # copy assets to the cache folder
+        assets_path = Path(__file__).parent.parent / "assets"
+        if assets_path.exists():
+            for item in assets_path.rglob("*"):
+                relative = item.relative_to(assets_path)
+                target = cache_path / relative
+                if item.is_dir():
+                    target.mkdir(parents=True, exist_ok=True)
+                else:
+                    shutil.copy2(item, target)
+
+        # # save a placeholder file to ensure the folder is created
+        # placeholder_file = cache_path / "placeholder.txt"
+        # if not placeholder_file.exists():
+        #     with placeholder_file.open("w") as f:
+        #         f.write("This is a placeholder file to ensure the cache folder exists.")
         else:
             print(f"Cache folder already exists at {cache_path}.")
         return cache_path

@@ -59,7 +59,11 @@ class Button(BaseWidget, ClickableMixin):
         self.enabled: bool = enabled
         try:
             self.font: SerializableFont = (
-                font if font else SerializableFont(font_path=str(self.settings.gui.default_font_path), size=16)
+                font
+                if font
+                else SerializableFont(
+                    font_path=Path(self.settings.gui.cache_folder) / self.settings.gui.basic_font, size=16
+                )
             )
         except Exception as e:
             raise WidgetError("font_initialization_failed", e) from e

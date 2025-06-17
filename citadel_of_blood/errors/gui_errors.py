@@ -49,6 +49,7 @@ class WidgetError(Exception):
         "surface_deserialization_failed": "Failed to deserialize surface: {error}",
         "asset_loading_failed": "Failed to load asset: {error}",
         "asset_not_found": "Asset not found: {error}",
+        "font_initialization_failed": "Failed to initialize font: {error}",
     }
 
     def __init__(self, error_type: str, error: Exception | str) -> None:

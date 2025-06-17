@@ -1,7 +1,11 @@
 """Module for image processing utilities."""
 
+from pathlib import Path
+
 import pygame
 from PIL import Image
+
+from citadel_of_blood.gui.settings import Settings
 
 
 def pixel_upscale(image: Image.Image, factor: int) -> Image.Image:
@@ -35,6 +39,9 @@ def load_pygame_image(path: str) -> pygame.Surface:
     Raises:
         pygame.error: If the image cannot be loaded.
     """
+    settings = Settings.instance()
+    cache_folder = settings.gui.cache_folder
+    path = Path(cache_folder) / path
     img = pygame.image.load(path).convert_alpha()
     if img.get_alpha() is None:
         img.set_alpha(255)

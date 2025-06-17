@@ -95,8 +95,3 @@ class Modal(BaseWidget):
         """Handle hover in event."""
         # No specific action needed for modal, but can be overridden if needed
         pass
-
-    def on_click(self) -> None:
-        """Handle click event."""
-        # No specific action needed for modal, but can be overridden if needed
-        pass

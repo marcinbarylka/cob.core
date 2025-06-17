@@ -1,5 +1,7 @@
 """Core module."""
 
+from pathlib import Path
+
 import pygame
 from pygame import Surface
 
@@ -78,7 +80,7 @@ class Game:
         pygame.init()
 
         # ensure the cache folder exists
-        if not self.settings.gui.cache_folder.exists():
+        if not Path(self.settings.gui.cache_folder).exists():
             self.settings.create_cache_folder()
         # Set the cache folder for the settings
         self.settings.gui.cache_folder = self.cache_folder
