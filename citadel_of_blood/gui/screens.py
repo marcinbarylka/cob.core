@@ -205,13 +205,13 @@ class DefaultScreen(GameScreen):
                     play_sfx=True,
                 )
             )
-            self.add_widget(
-                Modal(
-                    title="Welcome to the Game",
-                    message="This is a sample modal dialog.",
-                    width=400,
-                    height=200,
-                )
-            )
+            # self.add_widget(
+            #     Modal(
+            #         title="Welcome to the Game",
+            #         message="This is a sample modal dialog.",
+            #         width=400,
+            #         height=200,
+            #     )
+            # )
         except (FileNotFoundError, pygame.error) as e:
             raise ScreenError("widget_initialization_failed", e) from e
