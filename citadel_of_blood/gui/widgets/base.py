@@ -69,6 +69,7 @@ class BaseWidget(abc.ABC):
 
         Raises:
             WidgetError: If width or height is invalid, or if colors are invalid.
+
         """
         self.id: str = id or self.create_id()
 
@@ -99,6 +100,7 @@ class BaseWidget(abc.ABC):
 
         Args:
             events: The list of Pygame events to handle.
+
         """
         if not self.is_active or not self.is_visible:
             return
@@ -119,6 +121,7 @@ class BaseWidget(abc.ABC):
 
         Returns:
             The widget as a dictionary.
+
         """
         data = self.__dict__.copy()
         data["colors"] = dataclasses.asdict(data["colors"])
@@ -139,6 +142,7 @@ class BaseWidget(abc.ABC):
 
         Raises:
             WidgetError: If deserialization fails.
+
         """
         try:
             obj = cls(
@@ -172,8 +176,7 @@ class BaseWidget(abc.ABC):
     def __repr__(self) -> str:
         """Return a string representation of the widget."""
         return (
-            f"{self.__class__.__name__}(id={self.id}, x={self.x}, y={self.y}, "
-            f"width={self.width}, height={self.height})"
+            f"{self.__class__.__name__}(id={self.id}, x={self.x}, y={self.y}, width={self.width}, height={self.height})"
         )
 
     def __str__(self) -> str:

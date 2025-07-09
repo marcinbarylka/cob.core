@@ -16,6 +16,7 @@ def play_sfx(sfx: str) -> None:
 
     Args:
         sfx: The path to the sound effect file
+
     """
     pygame.mixer.Sound(sfx).play()
 
@@ -25,6 +26,7 @@ def play_music(music: str) -> None:
 
     Args:
         music: The path to the music file
+
     """
     pygame.mixer.music.load(music)
     pygame.mixer.music.play(-1)

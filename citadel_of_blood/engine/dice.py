@@ -32,6 +32,7 @@ class Dice:
         >>> dice = Dice("2d6+3")  # roll 2 six-sided dice and add 3
         >>> dice = Dice("d20")    # roll 1 twenty-sided die
         >>> dice = Dice("3d8*2")  # roll 3 eight-sided dice and multiply by 2
+
     """
 
     DICE_PATTERN: Final = r"^(\d*)[dD](\d+)([\+\-\*]?)(\d*)$"
@@ -44,6 +45,7 @@ class Dice:
 
         Raises:
             InvalidDiceCodeError: If the dice code format is invalid
+
         """
         self._components = DiceComponents()
         self.code = dice_code
@@ -58,6 +60,7 @@ class Dice:
 
         Returns:
             tuple[int, int]: (modifier, multiplier)
+
         """
         if not value:
             return 0, 1
@@ -77,6 +80,7 @@ class Dice:
 
         Raises:
             InvalidDiceCodeError: If the dice code format is invalid
+
         """
         match = re.match(self.DICE_PATTERN, dice_code)
         if not match:
@@ -99,6 +103,7 @@ class Dice:
 
         Raises:
             InvalidDiceCodeError: If the new dice code format is invalid
+
         """
         if dice_code:
             self.parse(dice_code)
@@ -112,6 +117,7 @@ class Dice:
 
         Returns:
             The maximum possible roll value
+
         """
         return self._components.type * self._components.number * self._components.multiplier + self._components.modifier
 
@@ -121,6 +127,7 @@ class Dice:
 
         Returns:
             The minimum possible roll value
+
         """
         return self._components.number * self._components.multiplier + self._components.modifier
 
@@ -143,5 +150,6 @@ def roll(dice_code: str) -> int:
         >>> roll("2d6+3")  # roll 2 six-sided dice and add 3
         >>> roll("d20")    # roll 1 twenty-sided die
         >>> roll("3d8*2")  # roll 3 eight-sided dice and multiply by 2
+
     """
     return Dice().roll(dice_code)

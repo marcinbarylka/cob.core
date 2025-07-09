@@ -14,6 +14,7 @@ class InvalidPartyPositionError(PartyError):
         Args:
             x_pos: The invalid x position
             y_pos: The invalid y position
+
         """
         super().__init__(f"Invalid party position: ({x_pos}, {y_pos})")
 
@@ -26,6 +27,7 @@ class InvalidPartyRankError(PartyError):
 
         Args:
             rank: The invalid rank number
+
         """
         super().__init__(f"Invalid rank number: {rank}")
 

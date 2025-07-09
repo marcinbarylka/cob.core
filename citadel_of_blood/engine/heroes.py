@@ -42,6 +42,7 @@ class Hero:
         jewels: List of collected jewels
         gold_marks: Amount of gold owned
         XP: Experience points
+
     """
 
     name: str
@@ -73,6 +74,7 @@ class Hero:
 
         Returns:
             The maximum number of wound points the hero can have
+
         """
         return self._wound_points
 
@@ -82,6 +84,7 @@ class Hero:
 
         Returns:
             True if the hero has more than 0 wound points
+
         """
         return self.wound_points > 0
 
@@ -99,6 +102,7 @@ class Hero:
 
         Raises:
             WeaponNotFoundError: If the hero doesn't have the specified weapon
+
         """
         if weapon not in self.weapons:
             raise WeaponNotFoundError(self.name)
@@ -133,6 +137,7 @@ class Initiate(Hero):
 
         Raises:
             MaxWeaponsReachedError: If the initiate already has the maximum number of weapons
+
         """
         if len(self.weapons) >= self.MAX_WEAPONS:
             raise MaxWeaponsReachedError()
@@ -148,6 +153,7 @@ def random_heroes(how_many: PositiveInt = 3) -> list[Hero]:
 
     Returns:
         List of randomly selected heroes
+
     """
     return random.sample(HeroesEnum.to_list(), how_many)
 

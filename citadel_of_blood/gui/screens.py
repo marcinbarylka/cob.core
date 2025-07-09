@@ -29,6 +29,7 @@ class GameScreen:
         surface (pygame.Surface): The screen's drawing surface
         is_active (bool): Whether the screen is currently active
         settings (Settings | None): GUI settings for the screen
+
     """
 
     def __init__(self, colors: ColorPair, settings: Settings | None = None) -> None:
@@ -37,6 +38,7 @@ class GameScreen:
         Args:
             colors (ColorPair): The color scheme for the screen
             settings (Settings | None, optional): GUI settings. Defaults to None.
+
         """
         self.colors: ColorPair = colors
         self.widgets: list[BaseWidget] = []
@@ -54,6 +56,7 @@ class GameScreen:
 
         Args:
             widget (BaseWidget): The widget to add
+
         """
         self.widgets.append(widget)
 
@@ -89,6 +92,7 @@ class GameScreen:
 
         Returns:
             list[pygame.event.Event] | None: The processed events
+
         """
         if not events:
             events = pygame.event.get()
@@ -106,6 +110,7 @@ class GameScreen:
 
         Returns:
             BaseWidget | None: The found widget or None if not found
+
         """
         for widget in self.widgets:
             if widget.id == widget_id:
@@ -120,6 +125,7 @@ class GameScreen:
 
         Returns:
             list[BaseWidget]: List of widgets of the specified type
+
         """
         return [widget for widget in self.widgets if isinstance(widget, widget_type)]
 
@@ -128,6 +134,7 @@ class GameScreen:
 
         Args:
             widget (BaseWidget): The widget to remove
+
         """
         if widget in self.widgets:
             self.widgets.remove(widget)
@@ -156,6 +163,7 @@ class DefaultScreen(GameScreen):
 
         Args:
             settings (Settings | None, optional): GUI settings. Defaults to None.
+
         """
         super().__init__(colors=self.DEFAULT_COLORS, settings=settings)
         self.is_active = True

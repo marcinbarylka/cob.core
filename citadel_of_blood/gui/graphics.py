@@ -17,6 +17,7 @@ def pixel_upscale(image: Image.Image, factor: int) -> Image.Image:
 
     Returns:
         A new PIL image upscaled by the given factor.
+
     """
     if factor < 1 or factor & (factor - 1) != 0:
         msg = f"Invalid upscale factor: {factor}. Must be a power of 2."
@@ -38,6 +39,7 @@ def load_pygame_image(path: str) -> pygame.Surface:
 
     Raises:
         pygame.error: If the image cannot be loaded.
+
     """
     settings = Settings.instance()
     cache_folder = settings.gui.cache_folder

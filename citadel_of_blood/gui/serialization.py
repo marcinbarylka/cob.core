@@ -66,6 +66,7 @@ def serialize_surface(surface: pygame.Surface) -> dict:
 
     Returns:
         dict: The serialized surface.
+
     """
     return {
         "size": surface.get_size(),

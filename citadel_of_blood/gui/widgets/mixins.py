@@ -48,6 +48,7 @@ class ClickableMixin(abc.ABC):
 
         Args:
             events: List of pygame events to process
+
         """
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:

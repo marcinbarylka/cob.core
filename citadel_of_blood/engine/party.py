@@ -30,6 +30,7 @@ class Party(list):
 
         Args:
             characters: Optional list of characters to add to the party initially
+
         """
         super().__init__()
         if characters:
@@ -43,6 +44,7 @@ class Party(list):
         Returns:
             Tuple of (width, height) where width is always MAX_CHARACTERS_IN_RANK
             and height is at least 1
+
         """
         return MAX_CHARACTERS_IN_RANK, max(1, len(self) // MAX_CHARACTERS_IN_RANK)
 
@@ -55,6 +57,7 @@ class Party(list):
 
         Raises:
             InvalidPartyPositionError: If the position is out of bounds
+
         """
         width, height = self.get_size_xy()
         if not (0 <= x_pos < width and 0 <= y_pos < height):
@@ -68,6 +71,7 @@ class Party(list):
 
         Raises:
             InvalidPartyCharacterError: If the character is not of a valid type
+
         """
         if character is not None and not isinstance(character, Hero | Initiate | Monster):
             raise InvalidPartyCharacterError()
@@ -81,6 +85,7 @@ class Party(list):
 
         Returns:
             Linear index in the party list
+
         """
         return x_pos + y_pos * MAX_CHARACTERS_IN_RANK
 
@@ -92,6 +97,7 @@ class Party(list):
 
         Returns:
             Tuple of (x_pos, y_pos) coordinates
+
         """
         return linear_index % MAX_CHARACTERS_IN_RANK, linear_index // MAX_CHARACTERS_IN_RANK
 
@@ -104,6 +110,7 @@ class Party(list):
         Raises:
             InvalidPartyCharacterError: If the character is not of a valid type
             CharacterAlreadyInPartyError: If the character is already in the party
+
         """
         self._validate_character(character)
         if character in self:
@@ -118,6 +125,7 @@ class Party(list):
 
         Raises:
             CharacterNotInPartyError: If the character is not in the party
+
         """
         if character not in self:
             raise CharacterNotInPartyError()
@@ -133,6 +141,7 @@ class Party(list):
 
         Raises:
             InvalidPartyPositionError: If the position is out of bounds
+
         """
         self._validate_position(x_pos, y_pos)
         self.add_character_at(None, x_pos, y_pos)
@@ -149,6 +158,7 @@ class Party(list):
         Raises:
             InvalidPartyCharacterError: If the character is not of a valid type
             CharacterNotInPartyError: If the character is not in the party
+
         """
         self._validate_character(character)
         if character not in self:
@@ -168,6 +178,7 @@ class Party(list):
 
         Raises:
             InvalidPartyCharacterError: If the character is not of a valid type
+
         """
         self._validate_character(character)
         linear_index = self.calculate_linear_index(x_pos, y_pos)
@@ -188,6 +199,7 @@ class Party(list):
         Returns:
             The character at the position, or None if the position is empty
             or out of bounds
+
         """
         linear_index = self.calculate_linear_index(x_pos, y_pos)
         return self[linear_index] if linear_index < len(self) else None
@@ -203,6 +215,7 @@ class Party(list):
 
         Raises:
             InvalidPartyRankError: If the rank number is invalid
+
         """
         if rank_no < MIN_RANK or rank_no * MAX_CHARACTERS_IN_RANK >= len(self):
             raise InvalidPartyRankError(rank_no)
@@ -216,6 +229,7 @@ class Party(list):
 
         Returns:
             List of ranks, where each rank is a list of characters
+
         """
         num_full_ranks = len(self) // MAX_CHARACTERS_IN_RANK
         ranks = [self.get_rank(rank_no) for rank_no in range(num_full_ranks)]

@@ -63,6 +63,7 @@ class Panel(BaseWidget):
                 Defaults to 0, which corresponds to the first pattern.
             *args: Additional positional arguments.
             **kwargs: Additional keyword arguments.
+
         """
         super().__init__(x, y, width, height, colors=self._WIDGET_COLORS, *args, **kwargs)
         if pattern not in (0, 1, 2):

@@ -6,96 +6,44 @@ authors = [
     {name = "Marcin Baryłka", email = "marcin.barylka@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "pygame>=2.6.1,<3.0.0",
+    "pydantic>=2.10.6,<3.0.0",
+    "toml>=0.10.2,<1.0.0",
+    "platformdirs>=4.3.6,<5.0.0",
+    "nanoid>=2.0.0,<3.0.0",
+    "pillow>=11.2.1,<12.0.0"
+]
 
-[tool.poetry]
-packages = [{include = "citadel_of_blood"}]
+[dependency-groups]
+dev = [
+    "isort>=5.13.2,<6.0.0",
+    "ruff>=0.5.3,<1.0.0",
+    "pytest>=8.3.2,<9.0.0",
+    "ipython>=9.0.1,<10.0.0",
+    "pre-commit>=4.1.0,<5.0.0",
+    "pyment>=0.3.3,<1.0.0",
+    "mypy>=1.16.0,<2.0.0"
+]
 
-
-[tool.poetry.group.dev.dependencies]
-isort = "^5.13.2"
-ruff = "^0.5.3"
-pytest = "^8.3.2"
-ipython = "^9.0.1"
-pre-commit = "^4.1.0"
-pyment = "^0.3.3"
-mypy = "^1.16.0"
-
-
-[tool.poetry.dependencies]
-pygame = "^2.6.1"
-pydantic = "^2.10.6"
-toml = "^0.10.2"
-platformdirs = "^4.3.6"
-nanoid = "^2.0.0"
-pillow = "^11.2.1"
+[tool.uv]
+default-groups = []
 
 [tool.ruff]
 line-length = 120
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".ipynb_checkpoints",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pyenv",
-    ".pytest_cache",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    ".vscode",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "site-packages",
-    "venv",
-    "migrations",
-    "static",
-    "templates",
-    "media",
-    "logs",
-    "tmp",
-    "var",
-    "manage.py",
-    "tests",
-    "tests.py",
+    ".bzr", ".direnv", ".eggs", ".git", ".git-rewrite", ".hg", ".ipynb_checkpoints", ".mypy_cache", ".nox", ".pants.d",
+    ".pyenv", ".pytest_cache", ".pytype", ".ruff_cache", ".svn", ".tox", ".venv", ".vscode", "__pypackages__", "_build",
+    "buck-out", "build", "dist", "node_modules", "site-packages", "venv", "migrations", "static", "templates", "media",
+    "logs", "tmp", "var", "manage.py", "tests", "tests.py"
 ]
 
 [tool.ruff.format]
 docstring-code-format = false
-quote-style="double"
+quote-style = "double"
 
 [tool.ruff.lint]
 select = [
-    "C4", # flake8-comprehensions
-    "D",  # pydocstyle
-    "E",  # Error
-    "F",  # pyflakes
-    "I",  # isort
-    "N",  # pep8-naming
-    "PGH",  # pygrep-hooks
-    "PTH", # flake8-use-pathlib
-    "Q",  # flake8-quotes
-    "S",  # bandit
-    "SIM",  # flake8-simplify
-    "TRY",  # tryceratops
-    "UP",  # pyupgrade
-    "W",  # Warning
-    "YTT", # flake8-2020
+    "C4", "D", "E", "F", "I", "N", "PGH", "PTH", "Q", "S", "SIM"
 ]
-ignore = ["D203", "D213", "D205", "S311"]
-pydocstyle = { convention = "google" }
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

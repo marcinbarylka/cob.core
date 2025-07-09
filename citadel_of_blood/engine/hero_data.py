@@ -326,6 +326,7 @@ class HeroesEnum(enum.Enum):
 
         Returns:
             List of all heroes in the game
+
         """
         return list(HeroesEnum.__members__.values())
 
@@ -457,5 +458,6 @@ class InitiatesEnum(enum.Enum):
 
         Returns:
             List of all initiates in the game
+
         """
         return list(InitiatesEnum.__members__.values())

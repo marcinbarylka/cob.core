@@ -26,6 +26,7 @@ def validate_hex_color(v: str) -> str:
 
     Raises:
         InvalidHexColorError: If the string is not a valid hex color.
+
     """
     if not re.match(r"^#[0-9a-fA-F]{6}$", v):
         raise InvalidHexColorError()
@@ -38,6 +39,7 @@ class GUIColors(BaseModel):
     Attributes:
         background (str): Hex color for background, e.g. '#rrggbb'.
         foreground (str): Hex color for foreground, e.g. '#rrggbb'.
+
     """
 
     background: str = "#000000"
@@ -77,6 +79,7 @@ class GUISettings(BaseModel):
 
         Raises:
             NonPositiveDimensionError: If v is not positive.
+
         """
         if v <= 0:
             raise NonPositiveDimensionError()
@@ -95,6 +98,7 @@ class GUISettings(BaseModel):
 
         Raises:
             NonPositiveFPSError: If v is not positive.
+
         """
         if v <= 0:
             raise NonPositiveFPSError()
@@ -120,6 +124,7 @@ class Settings(BaseModel):
         Raises:
             toml.TomlDecodeError: If the TOML file is invalid.
             pydantic.ValidationError: If the settings are invalid.
+
         """
         config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
         try:
@@ -139,6 +144,7 @@ class Settings(BaseModel):
 
         Returns:
             Settings: The default settings.
+
         """
         settings = Settings(gui=GUISettings(colors=GUIColors()))
         config_path = Path(platformdirs.user_config_path(PROJECT_NAME))
@@ -157,6 +163,7 @@ class Settings(BaseModel):
 
         Raises:
             FileNotFoundError: If the folder could not be created.
+
         """
         cache_path = Path(platformdirs.user_cache_path(PROJECT_NAME))
         cache_path.mkdir(parents=True, exist_ok=True)
@@ -197,6 +204,7 @@ class Settings(BaseModel):
 
         Returns:
             Settings: The singleton settings object.
+
         """
         if cls._instance is None:
             cls._instance = cls.load(toml_file)

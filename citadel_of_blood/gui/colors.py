@@ -16,6 +16,7 @@ class ColorPair:
     Attributes:
         background_color (GUIColor): The background color.
         foreground_color (GUIColor): The foreground color.
+
     """
 
     background_color: GUIColor
@@ -26,6 +27,7 @@ class ColorPair:
 
         Returns:
             str: The string representation of the ColorPair instance
+
         """
         return f"ColorPair(bg={self.background_color}, fg={self.foreground_color})"
 
@@ -34,6 +36,7 @@ class ColorPair:
 
         Returns:
             dict: The serialized dictionary
+
         """
         return {
             "background_color": serialize_color(self.background_color),
@@ -65,6 +68,7 @@ class WidgetColors:
         normal (ColorPair): Colors for the normal state.
         hover (ColorPair): Colors for the hover state.
         click (ColorPair | None): Colors for the click state (optional).
+
     """
 
     normal: ColorPair
@@ -76,6 +80,7 @@ class WidgetColors:
 
         Returns:
             str: The string representation of the WidgetColors instance
+
         """
         return f"WidgetColors(normal={self.normal}, hover={self.hover}, click={self.click})"
 
@@ -84,6 +89,7 @@ class WidgetColors:
 
         Returns:
             dict: The serialized dictionary
+
         """
         return {
             "normal": self.normal.serialize(),
@@ -127,6 +133,7 @@ def validate_color(value: Any) -> tuple[int, ...]:
 
     Raises:
         ValueError: If the value is not a valid color.
+
     """
     if isinstance(value, pygame.Color):
         return value.r, value.g, value.b, value.a
@@ -147,6 +154,7 @@ def validate_ratio(ratio: float) -> None:
 
     Raises:
         ValueError: If the ratio is invalid.
+
     """
     if not 0 <= ratio <= 1:
         msg = f"Ratio must be between 0 and 1, got {ratio}."
@@ -162,6 +170,7 @@ def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
 
     Returns:
         GUIColor: The dimmed color.
+
     """
     validate_color(color)
     validate_ratio(shadow_ratio)
@@ -177,6 +186,7 @@ def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
 
     Returns:
         GUIColor: The tinted color.
+
     """
     validate_color(color)
     validate_ratio(shadow_ratio)
@@ -209,5 +219,6 @@ class ColorsEnum:
 
         Returns:
             GUIColor: The corresponding color tuple.
+
         """
         return getattr(cls, name.upper(), cls.BLACK)

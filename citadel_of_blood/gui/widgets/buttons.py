@@ -52,6 +52,7 @@ class Button(BaseWidget, ClickableMixin):
 
         Raises:
             WidgetError: If font initialization fails
+
         """
         super().__init__(x, y, width, height, colors, id)
         self.caption: str = caption
@@ -86,6 +87,7 @@ class Button(BaseWidget, ClickableMixin):
 
         Args:
             font: The new font to use
+
         """
         self.font = font
 
@@ -144,6 +146,7 @@ class Button(BaseWidget, ClickableMixin):
 
         Returns:
             The serialized button data
+
         """
         data = super().serialize()
         data["caption"] = self.caption
@@ -162,6 +165,7 @@ class Button(BaseWidget, ClickableMixin):
 
         Raises:
             WidgetError: If deserialization fails
+
         """
         try:
             obj = super().deserialize(data)
@@ -216,6 +220,7 @@ class PixelButton(Button):
 
         Raises:
             WidgetError: If button assets cannot be loaded
+
         """
         super().__init__(
             x=x,
@@ -241,6 +246,7 @@ class PixelButton(Button):
 
         Raises:
             WidgetError: If any asset fails to load
+
         """
         try:
             for name, path in cls._ASSET_PATHS.items():
