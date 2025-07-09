@@ -45,5 +45,9 @@ quote-style = "double"
 
 [tool.ruff.lint]
 select = [
-    "C4", "D", "E", "F", "I", "N", "PGH", "PTH", "Q", "S", "SIM"
+    "C4", "D", "E", "F", "I", "N", "PGH", "PTH", "Q", "SIM"
+]
+ignore = [
+    "D203",  # incorrect-blank-line-before-class
+    "D213"   # multi-line-summary-second-line
 ]

@@ -23,21 +23,11 @@ class ColorPair:
     foreground_color: GUIColor
 
     def __repr__(self) -> str:
-        """Represents the ColorPair instance as a string.
-
-        Returns:
-            str: The string representation of the ColorPair instance
-
-        """
+        """Return the string representation of the ColorPair instance."""
         return f"ColorPair(bg={self.background_color}, fg={self.foreground_color})"
 
     def serialize(self) -> dict:
-        """Serializes the ColorPair into a dictionary.
-
-        Returns:
-            dict: The serialized dictionary
-
-        """
+        """Convert the ColorPair into a dictionary."""
         return {
             "background_color": serialize_color(self.background_color),
             "foreground_color": serialize_color(self.foreground_color),
@@ -45,15 +35,7 @@ class ColorPair:
 
     @classmethod
     def deserialize(cls, data: dict) -> "ColorPair":
-        """Creates a ColorPair instance from a serialized dictionary.
-
-        Args:
-            data (dict): The serialized dictionary
-
-        Returns:
-            ColorPair: The deserialized ColorPair instance
-
-        """
+        """Create a ColorPair instance from a serialized dictionary."""
         return cls(
             background_color=deserialize_color(data["background_color"]),
             foreground_color=deserialize_color(data["foreground_color"]),
@@ -76,21 +58,11 @@ class WidgetColors:
     click: ColorPair | None = None
 
     def __repr__(self) -> str:
-        """Represents the WidgetColors instance as a string.
-
-        Returns:
-            str: The string representation of the WidgetColors instance
-
-        """
+        """Return the string representation of the WidgetColors instance."""
         return f"WidgetColors(normal={self.normal}, hover={self.hover}, click={self.click})"
 
     def serialize(self) -> dict:
-        """Serializes the WidgetColors into a dictionary.
-
-        Returns:
-            dict: The serialized dictionary
-
-        """
+        """Convert the WidgetColors into a dictionary."""
         return {
             "normal": self.normal.serialize(),
             "hover": self.hover.serialize(),
@@ -99,19 +71,11 @@ class WidgetColors:
 
     @classmethod
     def deserialize(cls, data: dict) -> "WidgetColors":
-        """Creates a WidgetColors instance from a serialized dictionary.
-
-        Args:
-            data (dict): The serialized dictionary
-
-        Returns:
-            WidgetColors: The deserialized WidgetColors instance
-
-        """
+        """Create a WidgetColors instance from a serialized dictionary."""
         return cls(
             normal=ColorPair.deserialize(data["normal"]),
             hover=ColorPair.deserialize(data["hover"]),
-            click=ColorPair.deserialize(data["click"]) if data.get("click") is not None else None,
+            click=(ColorPair.deserialize(data["click"]) if data.get("click") is not None else None),
         )
 
 
@@ -123,7 +87,7 @@ DEFAULT_WIDGET_COLORS = WidgetColors(
 
 
 def validate_color(value: Any) -> tuple[int, ...]:
-    """Validate that the value is a valid color.
+    """Ensure the value is a valid color.
 
     Args:
         value (Any): The value to validate.
@@ -147,7 +111,7 @@ def validate_color(value: Any) -> tuple[int, ...]:
 
 
 def validate_ratio(ratio: float) -> None:
-    """Validate that the ratio is between 0 and 1.
+    """Ensure the ratio is between 0 and 1.
 
     Args:
         ratio (float): The ratio to validate.
@@ -162,7 +126,7 @@ def validate_ratio(ratio: float) -> None:
 
 
 def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
-    """Dim a color by a factor.
+    """Reduce the brightness of a color by a factor.
 
     Args:
         color (GUIColor): The color to dim.
@@ -178,7 +142,7 @@ def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
 
 
 def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
-    """Tint a color by a factor.
+    """Increase the brightness of a color by a factor.
 
     Args:
         color (GUIColor): The color to tint.
@@ -212,7 +176,7 @@ class ColorsEnum:
 
     @classmethod
     def get_color(cls, name: str) -> GUIColor:
-        """Get a color by its name.
+        """Retrieve a color by its name.
 
         Args:
             name (str): The name of the color.

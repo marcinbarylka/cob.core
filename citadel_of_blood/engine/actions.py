@@ -24,19 +24,26 @@ class Action(abc.ABC):
 
     @abc.abstractmethod
     def before_action(self) -> None:
-        """Execute the method before the action is executed. For example, to check if the action can be executed or if
+        """Execute the method before the action is executed.
+
+        For example, to check if the action can be executed or if
         the character has enough resources, etc.
         """
 
     @abc.abstractmethod
     def after_action(self) -> None:
-        """Execute the method after the action is executed. For example, to update character state,
+        """Execute the method after the action is executed.
+
+        For example, to update character state,
         apply post-action effects, or clean up resources.
         """
 
     @abc.abstractmethod
     def execute(self) -> None:
-        """Execute the action. This is the main method that implements the specific behavior of the action."""
+        """Execute the action.
+
+        This is the main method that implements the specific behavior of the action.
+        """
 
     def __str__(self) -> str:
         """Return the string representation of the action.

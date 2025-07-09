@@ -21,15 +21,15 @@ class Clickable(Protocol):
     state: WidgetStateEnum
 
     def on_mouse_down(self) -> None:
-        """Called when the mouse button is pressed over the widget."""
+        """Handle mouse button press over the widget."""
         ...
 
     def on_mouse_up(self) -> None:
-        """Called when the mouse button is released."""
+        """Handle mouse button release."""
         ...
 
     def on_click(self) -> None:
-        """Called when a valid click (down+up) is detected."""
+        """Call when a valid click (down+up) is detected."""
         ...
 
 
@@ -63,15 +63,15 @@ class ClickableMixin(abc.ABC):
 
     @abc.abstractmethod
     def on_mouse_down(self) -> None:
-        """Called when the mouse button is pressed over the widget."""
+        """Handle mouse button press over the widget."""
 
     @abc.abstractmethod
     def on_mouse_up(self) -> None:
-        """Called when the mouse button is released."""
+        """Handle mouse button release."""
 
     @abc.abstractmethod
     def on_click(self) -> None:
-        """Called when a valid click (down+up) is detected."""
+        """Handle valid click (down+up) detection."""
 
 
 class PanelRendererMixin:
@@ -169,7 +169,7 @@ class PanelRendererMixin:
         self.surface.blit(self._pattern_surface, (self._pattern_x, self._pattern_y))
 
     def _draw_horizontal_border(self: Any, y_pos: int, left_x: int, right_x: int) -> None:
-        """Helper to draw horizontal border segments."""
+        """Draw horizontal border segments."""
         # Draw corners
         self.surface.blit(self._line_left_img, (left_x, y_pos))
         self.surface.blit(self._line_right_img, (right_x, y_pos))

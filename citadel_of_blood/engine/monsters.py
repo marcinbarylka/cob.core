@@ -385,7 +385,9 @@ class Troll(Monster):
 
 
 class Vampire(Monster):
-    """Vampire - a powerful undead monster with a high resistance value and a high combat bonus.
+    """Vampire.
+
+    A powerful undead monster with a high resistance value and a high combat bonus.
     Very rich. Has a charm special skill.
     """
 
@@ -448,7 +450,9 @@ class Wraith(Monster):
 
 
 class XTheUnknown(Monster):
-    """X The Unknown - a final boss monster with a high resistance value and a high combat bonus. A companion
+    """X The Unknown.
+
+    A final boss monster with a high resistance value and a high combat bonus. A companion
     of the bunch of demons.
     """
 

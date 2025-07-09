@@ -34,19 +34,19 @@ class BaseWidget(abc.ABC):
 
     @abc.abstractmethod
     def draw(self) -> None:
-        """Draw the widget. This method should be implemented by the subclass."""
+        """Draw the widget."""
 
     @abc.abstractmethod
     def update(self) -> None:
-        """Update the widget. This method should be implemented by the subclass."""
+        """Update the widget."""
 
     @abc.abstractmethod
     def on_hover_in(self) -> None:
-        """The on hover in event."""
+        """Handle hover in event."""
 
     @abc.abstractmethod
     def on_hover_out(self) -> None:
-        """The on hover out event."""
+        """Handle hover out event."""
 
     def __init__(
         self,
@@ -76,7 +76,10 @@ class BaseWidget(abc.ABC):
         self.x: int = x
         self.y: int = y
         if width <= 0 or height <= 0:
-            raise WidgetError("invalid_dimensions", f"Width and height must be greater than 0, got {width}x{height}")
+            raise WidgetError(
+                "invalid_dimensions",
+                f"Width and height must be greater than 0, got {width}x{height}",
+            )
         self.width: int = width
         self.height: int = height
 
@@ -91,12 +94,12 @@ class BaseWidget(abc.ABC):
         self.settings: Settings = Settings.instance()
 
     def create_id(self) -> str:
-        """Create a unique ID for the widget."""
+        """Generate a unique ID for the widget."""
         alpha = string.ascii_letters + string.digits
         return f"{self.__class__.__name__}_{generate(alpha, 8)}"
 
     def handle_events(self, events: list[pygame.event.Event]) -> None:
-        """Handle pygame events for the widget.
+        """Process pygame events for the widget.
 
         Args:
             events: The list of Pygame events to handle.
@@ -180,12 +183,12 @@ class BaseWidget(abc.ABC):
         )
 
     def __str__(self) -> str:
-        """Return a string representation of the widget."""
+        """Return the widget's ID as a string."""
         return self.id
 
     @property
     def rect(self):
-        """Get the rectangle of the widget."""
+        """Retrieve the rectangle of the widget."""
         return Rect(self.x, self.y, self.width, self.height)
 
     @rect.setter

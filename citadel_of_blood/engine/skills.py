@@ -20,9 +20,10 @@ class Skill(ABC):
 
     @abstractmethod
     def run(self, *args, **kwargs):
-        """Run skill. This method should be implemented in child classes. It should contain all the logic
-        of the skill.
+        """Run skill.
 
+        This method should be implemented in child classes. It should contain all the logic
+        of the skill.
         """
 
     def __str__(self):

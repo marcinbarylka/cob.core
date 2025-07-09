@@ -7,7 +7,9 @@ from citadel_of_blood.engine.segment import GatewayOfEvil, Room, Segment
 
 
 class Board:
-    """Board class. It is responsible for rendering the board and moving the party counter. It also stores the map and
+    """Board class.
+
+    It is responsible for rendering the board and moving the party counter. It also stores the map and
     monsters.
     """
 
