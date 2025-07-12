@@ -3,7 +3,7 @@
 import re
 import shutil
 from pathlib import Path
-from typing import ClassVar, TypeVar
+from typing import ClassVar, Optional, TypeVar
 
 import platformdirs
 import toml
@@ -109,7 +109,7 @@ class Settings(BaseModel):
     """The settings."""
 
     gui: GUISettings
-    _instance: ClassVar["Settings"] = None
+    _instance: ClassVar[Optional["Settings"]] = None
 
     @staticmethod
     def load(toml_file: str) -> "Settings":

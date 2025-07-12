@@ -98,7 +98,7 @@ class Game:
 
         print(f"Initializing screen with width: {self.width}, height: {self.height}, fullscreen: {self.fullscreen}")
         self.screen = (
-            pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+            pygame.display.set_mode((self.width, self.height))
             if self.fullscreen
             else pygame.display.set_mode((self.width, self.height))
         )

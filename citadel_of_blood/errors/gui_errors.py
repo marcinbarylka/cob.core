@@ -50,6 +50,7 @@ class WidgetError(Exception):
         "asset_loading_failed": "Failed to load asset: {error}",
         "asset_not_found": "Asset not found: {error}",
         "font_initialization_failed": "Failed to initialize font: {error}",
+        "text_rendering_failed": "Failed to render text: {error}",
     }
 
     def __init__(self, error_type: str, error: Exception | str) -> None:
