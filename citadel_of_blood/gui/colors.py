@@ -54,7 +54,7 @@ class WidgetColors:
     """
 
     normal: ColorPair
-    hover: ColorPair
+    hover: ColorPair | None = None
     click: ColorPair | None = None
 
     def __repr__(self) -> str:

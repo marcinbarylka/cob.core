@@ -8,7 +8,8 @@ from pygame import Rect
 from pygame.event import Event
 
 from citadel_of_blood.constants import PROJECT_ROOT
-from citadel_of_blood.gui.colors import ColorsEnum
+from citadel_of_blood.errors.gui_errors import PanelRendererError
+from citadel_of_blood.gui.colors import ColorsEnum, WidgetColors
 from citadel_of_blood.gui.graphics import load_pygame_image
 from citadel_of_blood.gui.widgets import WidgetStateEnum
 
@@ -83,7 +84,8 @@ class PanelRendererMixin:
     width: int
     height: int
     surface: pygame.Surface
-    colors: Any  # WidgetColors provided by BaseWidget
+    colors: WidgetColors  # WidgetColors provided by BaseWidget
+
     # Panel rendering attributes
     _panel_rect: Rect
     _pattern_surface: pygame.Surface
@@ -110,8 +112,7 @@ class PanelRendererMixin:
     def init_panel_renderer(self: Any, pattern: int) -> None:
         """Initialize panel rendering assets and calculate layout based on size and pattern."""
         if pattern not in (0, 1, 2):
-            msg = f"Pattern {pattern} is not supported. Supported patterns are 0, 1, or 2."
-            raise ValueError(msg)
+            raise PanelRendererError("invalid_pattern", f"Pattern {pattern} is not supported.")
         self.pattern = f"p{pattern}"
 
         # Load assets only once
@@ -127,11 +128,6 @@ class PanelRendererMixin:
         self._line_left_width = self._line_left_img.get_width()
         self._line_left_height = self._line_left_img.get_height()
         self._line_right_width = self._line_right_img.get_width()
-
-        # Calculate panel rectangle and pattern position
-        self._panel_rect = pygame.Rect(self.x, self.y, self.width, self.height - self._pattern_height // 2)
-        self._pattern_x = self.x + (self.width - self._pattern_width) // 2
-        self._pattern_y = self.y
 
     def render_panel(self: Any) -> None:
         """Render the panel onto its surface."""
