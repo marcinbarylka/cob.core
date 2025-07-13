@@ -70,13 +70,15 @@ class Game:
         self.height = self.settings.gui.height
         self.cache_folder = self.settings.gui.cache_folder
 
-    def init_gui(self, toml_file: str = "") -> None:
+    def init_gui(self, toml_file: str = "settings.toml") -> None:
         """Initialize the GUI.
 
         Args:
             toml_file (str): The TOML file to load.
 
         """
+        self.load_settings(toml_file)
+
         pygame.init()
 
         # ensure the cache folder exists
@@ -98,10 +100,11 @@ class Game:
 
         print(f"Initializing screen with width: {self.width}, height: {self.height}, fullscreen: {self.fullscreen}")
         self.screen = (
-            pygame.display.set_mode((self.width, self.height))
+            pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
             if self.fullscreen
             else pygame.display.set_mode((self.width, self.height))
         )
+        print(f"Screen initialize with size: {self.screen.get_size()}")
         pygame.display.set_caption(self.settings.gui.caption)
         print(f"Caption set to: {self.settings.gui.caption}")
         cursor_path = PROJECT_ROOT / "assets/gui/cursor.png"
