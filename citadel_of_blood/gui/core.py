@@ -64,7 +64,7 @@ class Game:
             Settings: The settings object.
 
         """
-        self.settings = Settings.load(toml_file)
+        self.settings = Settings.instance()
         self.fullscreen = self.settings.gui.fullscreen
         self.width = self.settings.gui.width
         self.height = self.settings.gui.height
