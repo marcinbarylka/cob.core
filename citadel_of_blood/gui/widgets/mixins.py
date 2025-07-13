@@ -129,7 +129,7 @@ class PanelRendererMixin:
         self._line_left_height = self._line_left_img.get_height()
         self._line_right_width = self._line_right_img.get_width()
 
-    def render_panel(self: Any) -> None:
+    def render_panel(self) -> None:
         """Render the panel onto its surface."""
         # Calculate panel rectangle and pattern position for current size
         self._panel_rect = pygame.Rect(self.x, self.y, self.width, self.height - self._pattern_height // 2)
@@ -164,8 +164,18 @@ class PanelRendererMixin:
         # Draw panel pattern at top-center
         self.surface.blit(self._pattern_surface, (self._pattern_x, self._pattern_y))
 
-    def _draw_horizontal_border(self: Any, y_pos: int, left_x: int, right_x: int) -> None:
-        """Draw horizontal border segments."""
+    def _draw_horizontal_border(self, y_pos: int, left_x: int, right_x: int) -> None:
+        """Draw horizontal border segments.
+
+        Args:
+            y_pos (int): The vertical position to draw the border.
+            left_x (int): The x-coordinate for the left border segment.
+            right_x (int): The x-coordinate for the right border segment.
+
+        Raises:
+            PanelRendererError: If the left or right x-coordinates are invalid.
+
+        """
         # Draw corners
         self.surface.blit(self._line_left_img, (left_x, y_pos))
         self.surface.blit(self._line_right_img, (right_x, y_pos))
