@@ -75,3 +75,18 @@ class ColorError(Exception):
         """Initialize the ColorError class."""
         message = self.ERROR_MESSAGES[error_type].format(error=error)
         super().__init__(message)
+
+
+class PanelRendererError(Exception):
+    """Base class for panel renderer-related errors."""
+
+    ERROR_MESSAGES = {
+        "invalid_pattern": "Invalid pattern: {error}",
+        "asset_loading_failed": "Failed to load panel asset: {error}",
+        "rendering_failed": "Panel rendering failed: {error}",
+    }
+
+    def __init__(self, error_type: str, error: Exception | str) -> None:
+        """Initialize the PanelRendererError class."""
+        message = self.ERROR_MESSAGES[error_type].format(error=error)
+        super().__init__(message)
