@@ -196,11 +196,11 @@ class DefaultScreen(GameScreen):
                 )
             )
             self.add_widget(
-                PixelButton(
+                OpenModalButton(
                     x=350,
                     y=100,
                     width=200,
-                    caption="Click me",
+                    caption="Open modal",
                     font=font,
                     play_sfx=True,
                 )
@@ -213,13 +213,20 @@ class DefaultScreen(GameScreen):
                     play_sfx=True,
                 )
             )
-            # self.add_widget(
-            #     Modal(
-            #         title="Welcome to the Game",
-            #         message="This is a sample modal dialog.",
-            #         width=400,
-            #         height=200,
-            #     )
-            # )
         except (FileNotFoundError, pygame.error) as e:
             raise ScreenError("widget_initialization_failed", e) from e
+
+
+class OpenModalButton(PixelButton):
+    """A button that opens a modal dialog when clicked."""
+
+    def __init__(self, x: int, y: int, width: int, caption: str, font: SerializableFont, play_sfx: bool = True) -> None:
+        """Initialize the OpenModalButton."""
+        super().__init__(x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx)
+
+    def on_click(self) -> None:
+        """Open a modal dialog when the button is clicked."""
+        print("Opening modal dialog...")
+        modal = Modal(title="Modal Title", message="This is a modal dialog.")
+        modal.draw()
+        modal.show()

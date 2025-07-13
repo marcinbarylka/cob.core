@@ -5,9 +5,10 @@ import pygame
 from citadel_of_blood.gui.colors import DEFAULT_WIDGET_COLORS, ColorsEnum
 from citadel_of_blood.gui.widgets import BaseWidget
 from citadel_of_blood.gui.widgets.buttons import Button
+from citadel_of_blood.gui.widgets.mixins import PanelRendererMixin
 
 
-class Modal(BaseWidget):
+class Modal(PanelRendererMixin, BaseWidget):
     """A modal dialog widget that can be used to display messages or prompts.
 
     This widget is typically used to interrupt the normal flow of the application
@@ -27,6 +28,11 @@ class Modal(BaseWidget):
         self.button_widgets: list[Button] = []
         self._init_buttons()
 
+    def initialize_surface(self) -> None:
+        """Initialize the surface for the modal dialog."""
+        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        self.surface.fill(ColorsEnum.MODAL_BACKGROUND)
+
     def show(self) -> None:
         """Display the modal dialog."""
         self.is_visible = True
@@ -39,19 +45,12 @@ class Modal(BaseWidget):
         """Draw the modal dialog if it is visible."""
         if not self.is_visible:
             return
-        # Draw the modal background overlay
-        pygame.draw.rect(
-            self.surface, ColorsEnum.MODAL_BACKGROUND, (0, 0, self.settings.gui.width, self.settings.gui.height)
-        )
 
-        # Draw the modal border
-        # pygame.draw.rect(self.surface, (255, 255, 255), (self.x, self.y, self.width, self.height), 2)
-        # Draw the title and message (omitted for brevity)
-        # Draw buttons
-        for btn in self.button_widgets:
-            btn.update()
-            btn.draw()
-            self.surface.blit(btn.surface, (btn.x, btn.y))
+        # draw the panel background
+        self.initialize_surface()
+
+        # Draw the panel background
+        self.render_panel()
 
     def on_hover_out(self) -> None:
         """Handle hover out event."""
