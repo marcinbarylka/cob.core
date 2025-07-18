@@ -20,12 +20,12 @@ class Modal(PanelRendererMixin, BaseWidget):
         super().__init__(x=0, y=0, width=width, height=height, colors=DEFAULT_WIDGET_COLORS)
         self.title = title
         self.message = message
-        self.is_visible = True
-        # Initialize the surface for the modal dialog
-        self.surface = pygame.Surface((self.settings.gui.width, self.settings.gui.height), pygame.SRCALPHA)
+        self.is_visible = False
+        self.init_panel_renderer(pattern=2)  # Use pattern 2 for modal background
         # Setup buttons
         self.button_labels = buttons or ["OK"]
         self.button_widgets: list[Button] = []
+        self.initialize_surface()
         self._init_buttons()
 
     def initialize_surface(self) -> None:

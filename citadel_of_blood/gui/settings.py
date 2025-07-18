@@ -110,6 +110,7 @@ class Settings(BaseModel):
 
     gui: GUISettings
     _instance: ClassVar[Optional["Settings"]] = None
+    _active_screen: "GameScreen | None" = None  # noqa: F821
 
     @staticmethod
     def load(toml_file: str) -> "Settings":
@@ -209,3 +210,16 @@ class Settings(BaseModel):
         if cls._instance is None:
             cls._instance = cls.load(toml_file)
         return cls._instance
+
+    @classmethod
+    def set_active_screen(cls, screen: "GameScreen") -> None:  # noqa: F821
+        """Set the active screen."""
+        from citadel_of_blood.gui.screens import GameScreen  # Delayed import
+
+        if isinstance(screen, GameScreen):
+            cls._active_screen = screen
+
+    @classmethod
+    def get_active_screen(cls) -> "GameScreen | None":  # noqa: F821
+        """Get the active screen."""
+        return cls._active_screen

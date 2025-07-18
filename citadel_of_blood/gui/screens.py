@@ -51,6 +51,8 @@ class GameScreen:
         else:
             self.surface = pygame.Surface((1920, 1080))
 
+        Settings.set_active_screen(self)  # Set the active screen
+
     def add_widget(self, widget: BaseWidget) -> None:
         """Add a widget to the screen.
 
@@ -176,6 +178,13 @@ class DefaultScreen(GameScreen):
                 font_path=PROJECT_ROOT / "assets/fonts/alagard.ttf",
                 size=20,
             )
+            modal = Modal(
+                title="Welcome",
+                message="This is a sample modal dialog.",
+                width=400,
+                height=200,
+                buttons=["OK", "Cancel"],
+            )
             self.add_widget(
                 Panel(
                     x=10,
@@ -203,6 +212,7 @@ class DefaultScreen(GameScreen):
                     caption="Open modal",
                     font=font,
                     play_sfx=True,
+                    modal=modal,
                 )
             )
             self.add_widget(
@@ -213,6 +223,7 @@ class DefaultScreen(GameScreen):
                     play_sfx=True,
                 )
             )
+
         except (FileNotFoundError, pygame.error) as e:
             raise ScreenError("widget_initialization_failed", e) from e
 
@@ -220,13 +231,26 @@ class DefaultScreen(GameScreen):
 class OpenModalButton(PixelButton):
     """A button that opens a modal dialog when clicked."""
 
-    def __init__(self, x: int, y: int, width: int, caption: str, font: SerializableFont, play_sfx: bool = True) -> None:
+    def __init__(
+        self,
+        modal: Modal,
+        x: int,
+        y: int,
+        width: int,
+        caption: str,
+        font: SerializableFont,
+        play_sfx: bool = True,
+    ) -> None:
         """Initialize the OpenModalButton."""
         super().__init__(x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx)
+        self.modal = modal
 
     def on_click(self) -> None:
         """Open a modal dialog when the button is clicked."""
         print("Opening modal dialog...")
-        modal = Modal(title="Modal Title", message="This is a modal dialog.")
-        modal.draw()
-        modal.show()
+        active_screen = Settings.get_active_screen()  # Get the active screen
+        if active_screen:
+            active_screen.add_widget(self.modal)  # Add modal to the active screen
+            self.modal.show()
+        else:
+            print("No active screen found.")
