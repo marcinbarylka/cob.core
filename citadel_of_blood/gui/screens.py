@@ -100,6 +100,19 @@ class GameScreen:
             events = pygame.event.get()
         if not self.is_active:
             return events
+
+        # If a modal is visible, let only the topmost modal handle events
+        top_modal: Modal | None = None
+        for widget in reversed(self.widgets):
+            if isinstance(widget, Modal) and widget.is_visible:
+                top_modal = widget
+                break
+
+        if top_modal is not None:
+            top_modal.handle_events(events)
+            return events
+
+        # Otherwise, dispatch to all widgets as usual
         for widget in self.widgets:
             widget.handle_events(events)
         return events
@@ -143,6 +156,26 @@ class GameScreen:
         else:
             msg = f"Widget with ID {widget.id} not found in screen."
             raise ScreenError("widget_not_found", msg)
+
+    def show_modal(self, modal: Modal) -> None:
+        """Show the given modal and ensure it's the only visible modal.
+
+        This removes any other Modal instances from the widget list,
+        assigns self.modal, and moves the shown modal to the top.
+        """
+        # Hide and remove any other modals
+        for w in list(self.widgets):
+            if isinstance(w, Modal) and w is not modal:
+                w.hide()
+                self.widgets.remove(w)
+
+        # Ensure the modal is in widgets and on top
+        if modal in self.widgets:
+            self.widgets.remove(modal)
+        self.widgets.append(modal)
+
+        self.modal = modal
+        modal.show()
 
 
 class DefaultScreen(GameScreen):
@@ -250,7 +283,6 @@ class OpenModalButton(PixelButton):
         print("Opening modal dialog...")
         active_screen = Settings.get_active_screen()  # Get the active screen
         if active_screen:
-            active_screen.add_widget(self.modal)  # Add modal to the active screen
-            self.modal.show()
+            active_screen.show_modal(self.modal)
         else:
             print("No active screen found.")

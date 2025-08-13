@@ -118,7 +118,7 @@ class PanelRendererMixin:
         # Load assets only once
         if not PanelRendererMixin._ASSETS:
             for key, path in PanelRendererMixin._ASSET_PATHS.items():
-                PanelRendererMixin._ASSETS[key] = load_pygame_image(path).convert_alpha()
+                PanelRendererMixin._ASSETS[key] = load_pygame_image(str(path)).convert_alpha()
 
         # Cache surfaces and dimensions
         self._pattern_surface = PanelRendererMixin._ASSETS[self.pattern]
