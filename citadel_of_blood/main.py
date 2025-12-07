@@ -1,7 +1,8 @@
 """Main module for the game."""
 
+from tileconsole.manager import ConsoleManager
+
 from citadel_of_blood.gui import Game
-from citadel_of_blood.gui.screens import DefaultScreen
 
 
 def run():

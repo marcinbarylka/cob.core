@@ -11,7 +11,7 @@ class Game:
     def __init__(self) -> None:
         """Initialize the game core."""
         self.settings = Settings()
-        self.surface: pygame.Surface
+        self.surface: pygame.Surface | None = None
         self.clock = pygame.time.Clock()
         self.running = True
 
