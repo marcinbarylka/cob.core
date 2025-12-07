@@ -7,6 +7,7 @@ from citadel_of_blood.gui.screens import DefaultScreen
 def run():
     """Run the GUI."""
     g = Game()
+    g.init_gui()
     g.run()
 
 
