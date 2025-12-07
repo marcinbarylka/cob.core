@@ -15,6 +15,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
+        self.console_manager = None  # Placeholder for ConsoleManager
+
     def init_gui(self) -> None:
         """Initialize the GUI."""
         pygame.init()

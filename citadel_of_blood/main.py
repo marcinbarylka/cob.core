@@ -8,6 +8,9 @@ def run():
     """Run the GUI."""
     g = Game()
     g.init_gui()
+
+    cm = ConsoleManager()
+
     g.run()
 
 
