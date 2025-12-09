@@ -823,7 +823,7 @@ wheels = [
 
 [[package]]
 name = "tileconsole"
-version = "0.1.10"
+version = "0.1.12a1"
 source = { directory = "../tileconsole" }
 dependencies = [
     { name = "bdfparser" },

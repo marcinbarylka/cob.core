@@ -1,34 +1,37 @@
 """Main module for the game."""
 
-import random
-from tileconsole import BDF_FOLDER
-from tileconsole.console import FramedConsole
+from tileconsole.console import BDFConsole
 from tileconsole.manager import ConsoleManager
 
 from citadel_of_blood.gui import Game
+from citadel_of_blood.gui.settings import Settings
 
 
 def run():
     """Run the GUI."""
     game = Game()
     game.init_gui()
-    fonts = FramedConsole.list_default_fonts()
-    random_font = fonts[random.randint(0, len(fonts) - 1)]
-    font_path = f"{BDF_FOLDER}/{random_font}"
-    font_measurements = FramedConsole.measure_bdf(font_path)
+
+    font_path = BDFConsole.get_default_font_path()
+    settings = Settings()
+    font_file = f"{font_path}/{settings.font}"
+    print(f"Using font file: {font_file}")
+    font_measure = BDFConsole.measure_bdf(font_file)
     manager = ConsoleManager()
-    console1 = manager.create_console(
-        type=FramedConsole,
-        font=font_path,
-        width=1024 // font_measurements[0],
-        height=768 // font_measurements[1],
+    console = manager.create_console(
+        BDFConsole,
         x=0,
         y=0,
-        background=(0xA0, 0xA0, 0xA0),
-        foreground=(0x00, 0x00, 0x00),
+        width=settings.width // font_measure[0],
+        height=settings.height // font_measure[1],
+        font=font_file,
+        background=(0, 89, 129),
+        foreground=(96, 183, 231),
     )
-    console1.print(1, 1, f"Hello, Citadel of Blood! Using font: {random_font}")
+    console.print(1, 1, "READY")
+    console.print(1, 2, " ", background=(96, 183, 231))
     manager.render_all(game.surface)
+
     game.run()
 
 
