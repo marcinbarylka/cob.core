@@ -3,6 +3,7 @@
 import pygame
 
 from citadel_of_blood.engine.segment import Segment
+from citadel_of_blood.gui.settings import Settings
 
 
 class SegmentGUI(Segment):
@@ -16,6 +17,10 @@ class SegmentGUI(Segment):
 
         """
         super().__init__(exits)
+        self.settings = Settings()
+        if not surface:
+            self.surface = pygame.Surface(self.settings.segment_size)
+    # Default size
 
     def render(self):
         """Render the segment for GUI display.

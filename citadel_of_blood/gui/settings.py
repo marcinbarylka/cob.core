@@ -10,3 +10,5 @@ class Settings:
         self.height: int = 768
         self.fps: int = 60
         self.font: str = "AtaristMedium-16.bdf"
+
+        self.segment_size: int = 100
