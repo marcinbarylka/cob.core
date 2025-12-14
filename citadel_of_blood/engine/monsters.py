@@ -471,7 +471,9 @@ class XTheUnknown(Monster):
         )
 
 
-def spawn_monster(monster_class: type[Monster], level: int = 1, is_wandering: bool = False) -> list[Monster]:
+def spawn_monster(
+    monster_class: type[Monster], level: int = 1, is_wandering: bool = False
+) -> list[Monster]:
     """Spawn a monster of the given class and level.
 
     Args:
@@ -493,7 +495,11 @@ def spawn_monster(monster_class: type[Monster], level: int = 1, is_wandering: bo
     modifiers = LEVEL_CHART[level - 1]
     monsters = []
 
-    range_modifier = 1 if monster_class.__name__ == "XTheUnknown" else int(modifiers["number_of_monsters"][1:])
+    range_modifier = (
+        1
+        if monster_class.__name__ == "XTheUnknown"
+        else int(modifiers["number_of_monsters"][1:])
+    )
 
     for _ in range(range_modifier):
         monster = monster_class()
@@ -505,7 +511,9 @@ def spawn_monster(monster_class: type[Monster], level: int = 1, is_wandering: bo
         monster.treasure = (
             monster.treasure[0].add(int(modifiers["treasure_type"][1:])),
             (
-                monster.treasure[1].add(int(modifiers["treasure_type"][1:] if monster.treasure[1] else 0))
+                monster.treasure[1].add(
+                    int(modifiers["treasure_type"][1:] if monster.treasure[1] else 0)
+                )
                 if monster.treasure[1]
                 else None
             ),

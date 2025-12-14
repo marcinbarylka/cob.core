@@ -136,7 +136,11 @@ class Treasure(enum.Enum):
         has_jewelery = roll("d6") <= probability if probability else False
         if not has_jewelery:
             return []
-        return [JEWELERY[roll("2d6") - 2] for _ in range(roll(dice_code))] if dice_code else []
+        return (
+            [JEWELERY[roll("2d6") - 2] for _ in range(roll(dice_code))]
+            if dice_code
+            else []
+        )
 
     def roll_magic_items(self) -> dict[str, list[Any]]:
         """Roll for magic items.

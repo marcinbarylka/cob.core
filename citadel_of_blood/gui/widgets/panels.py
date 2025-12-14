@@ -55,7 +55,9 @@ class Panel(PanelRendererMixin, BaseWidget):
             **kwargs: Additional keyword arguments.
 
         """
-        super().__init__(x, y, width, height, colors=self._WIDGET_COLORS, *args, **kwargs)
+        super().__init__(
+            x, y, width, height, colors=self._WIDGET_COLORS, *args, **kwargs
+        )
         self.init_panel_renderer(pattern)
 
     def draw(self):

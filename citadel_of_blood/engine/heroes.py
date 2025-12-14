@@ -15,7 +15,10 @@ from citadel_of_blood.engine.skills import (
 from citadel_of_blood.engine.spells import MAGIC_POTENTIAL_TABLE, Spell
 from citadel_of_blood.engine.types import MagicPotential, Race
 from citadel_of_blood.engine.weapons import Weapon
-from citadel_of_blood.errors.engine_errors import MaxWeaponsReachedError, WeaponNotFoundError
+from citadel_of_blood.errors.engine_errors import (
+    MaxWeaponsReachedError,
+    WeaponNotFoundError,
+)
 
 
 @dataclass

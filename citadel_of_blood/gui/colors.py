@@ -75,14 +75,24 @@ class WidgetColors:
         return cls(
             normal=ColorPair.deserialize(data["normal"]),
             hover=ColorPair.deserialize(data["hover"]),
-            click=(ColorPair.deserialize(data["click"]) if data.get("click") is not None else None),
+            click=(
+                ColorPair.deserialize(data["click"])
+                if data.get("click") is not None
+                else None
+            ),
         )
 
 
 DEFAULT_WIDGET_COLORS = WidgetColors(
-    normal=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
-    hover=ColorPair(background_color=(0x11, 0x11, 0x11), foreground_color=(0xFF, 0xFF, 0xFF)),
-    click=ColorPair(background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)),
+    normal=ColorPair(
+        background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)
+    ),
+    hover=ColorPair(
+        background_color=(0x11, 0x11, 0x11), foreground_color=(0xFF, 0xFF, 0xFF)
+    ),
+    click=ColorPair(
+        background_color=(0x55, 0x55, 0x55), foreground_color=(0xFF, 0xFF, 0xFF)
+    ),
 )
 
 
@@ -101,7 +111,11 @@ def validate_color(value: Any) -> tuple[int, ...]:
     """
     if isinstance(value, pygame.Color):
         return value.r, value.g, value.b, value.a
-    if isinstance(value, tuple) and len(value) in (3, 4) and all(isinstance(c, int) and 0 <= c <= 255 for c in value):
+    if (
+        isinstance(value, tuple)
+        and len(value) in (3, 4)
+        and all(isinstance(c, int) and 0 <= c <= 255 for c in value)
+    ):
         return value
     msg = (
         f"Invalid color value: {value!r}. Must be a tuple of 3 or 4 integers (0-255) "
@@ -171,7 +185,9 @@ class ColorsEnum:
     PANEL_FOREGROUND: pygame.Color = pygame.Color(0xFB, 0xE2, 0xBB, 0xFF)
     FADING_BAR: pygame.Color = pygame.Color(0x56, 0x32, 0x26, 0xFF)
     # MODAL_BACKGROUND: pygame.Color = pygame.Color(0x34, 0x2A, 0x25, 0xF0)
-    MODAL_BACKGROUND: pygame.Color = pygame.Color(0x00, 0x00, 0x00, 0xA0)  # Semi-transparent black
+    MODAL_BACKGROUND: pygame.Color = pygame.Color(
+        0x00, 0x00, 0x00, 0xA0
+    )  # Semi-transparent black
     SEGMENT_BLUE: pygame.Color = pygame.Color(0x60, 0x90, 0xCA, 0xFF)
     MONSTER_RED: pygame.Color = pygame.Color(0xFA, 0x5A, 0x38, 0xFF)
 

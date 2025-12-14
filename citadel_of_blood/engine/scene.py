@@ -11,7 +11,9 @@ from citadel_of_blood.engine.weapons import Weapon
 class Scene:
     """Scene class for the engine package."""
 
-    def __init__(self, party: Party, monsters: Party | list[Monster], segment: Segment) -> None:
+    def __init__(
+        self, party: Party, monsters: Party | list[Monster], segment: Segment
+    ) -> None:
         """Initialize the Scene class."""
         self.party: Party = party
 
@@ -39,5 +41,7 @@ class Scene:
         if hasattr(target, "armor"):
             armor = target.armor.defense if target.armor else 0
         target.wound_points -= (
-            d6 + weapon.attack_bonus if weapon else 0 + attacker.combat_bonus + weapon.damage_table[d6] - armor
+            d6 + weapon.attack_bonus
+            if weapon
+            else 0 + attacker.combat_bonus + weapon.damage_table[d6] - armor
         )

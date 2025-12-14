@@ -63,7 +63,9 @@ class Button(BaseWidget, ClickableMixin):
                 font
                 if font
                 else SerializableFont(
-                    font_path=Path(self.settings.gui.cache_folder) / self.settings.gui.basic_font, size=16
+                    font_path=Path(self.settings.gui.cache_folder)
+                    / self.settings.gui.basic_font,
+                    size=16,
                 )
             )
         except Exception as e:
@@ -95,8 +97,12 @@ class Button(BaseWidget, ClickableMixin):
         """Draw the button with its current state."""
         self.surface.fill(self._render_colors.background_color)
         try:
-            text = self.font.render(caption=self.caption, color=self._render_colors.foreground_color)
-            text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
+            text = self.font.render(
+                caption=self.caption, color=self._render_colors.foreground_color
+            )
+            text_rect = text.get_rect(
+                center=(self.rect.width // 2, self.rect.height // 2)
+            )
             self.surface.blit(text, text_rect)
         except Exception as e:
             raise WidgetError("text_rendering_failed", str(e)) from e
@@ -131,7 +137,12 @@ class Button(BaseWidget, ClickableMixin):
     def on_click(self) -> None:
         """Handle click event."""
         print(f"Button {self.id} clicked.")
-        if hasattr(self, "settings") and self.settings and self.settings.gui.sfx_enabled and self.play_sfx:
+        if (
+            hasattr(self, "settings")
+            and self.settings
+            and self.settings.gui.sfx_enabled
+            and self.play_sfx
+        ):
             with suppress(Exception):
                 play_sfx(CLICK_SOUND)
 
@@ -287,15 +298,23 @@ class PixelButton(Button):
 
         # Draw button parts
         self.surface.blit(self.left_image, (0, 0))
-        self.surface.blit(self.right_image, (self.rect.width - self.right_image.get_width(), 0))
+        self.surface.blit(
+            self.right_image, (self.rect.width - self.right_image.get_width(), 0)
+        )
 
-        for i in range(self.rect.width - self.left_image.get_width() - self.right_image.get_width()):
+        for i in range(
+            self.rect.width - self.left_image.get_width() - self.right_image.get_width()
+        ):
             self.surface.blit(self.middle_image, (self.left_image.get_width() + i, 0))
 
         # Draw text
         try:
-            text = self.font.render(caption=self.caption, color=self._render_colors.foreground_color)
-            text_rect = text.get_rect(center=(self.rect.width // 2, self.rect.height // 2))
+            text = self.font.render(
+                caption=self.caption, color=self._render_colors.foreground_color
+            )
+            text_rect = text.get_rect(
+                center=(self.rect.width // 2, self.rect.height // 2)
+            )
             self.surface.blit(text, text_rect)
         except Exception as e:
             raise WidgetError("text_rendering_failed", e) from e
@@ -314,12 +333,19 @@ class ExitButton(PixelButton):
         play_sfx: bool = True,
     ) -> None:
         """Initialize the exit button."""
-        super().__init__(x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx)
+        super().__init__(
+            x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx
+        )
 
     def on_click(self) -> None:
         """Handle click event to exit the game."""
         print("Exit button clicked. Exiting game...")
-        if hasattr(self, "settings") and self.settings and self.settings.gui.sfx_enabled and self.play_sfx:
+        if (
+            hasattr(self, "settings")
+            and self.settings
+            and self.settings.gui.sfx_enabled
+            and self.play_sfx
+        ):
             with suppress(Exception):
                 sound = pygame.mixer.Sound(CLICK_SOUND)
                 channel = sound.play()

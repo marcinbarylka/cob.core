@@ -178,9 +178,7 @@ class BaseWidget(abc.ABC):
 
     def __repr__(self) -> str:
         """Return a string representation of the widget."""
-        return (
-            f"{self.__class__.__name__}(id={self.id}, x={self.x}, y={self.y}, width={self.width}, height={self.height})"
-        )
+        return f"{self.__class__.__name__}(id={self.id}, x={self.x}, y={self.y}, width={self.width}, height={self.height})"
 
     def __str__(self) -> str:
         """Return the widget's ID as a string."""

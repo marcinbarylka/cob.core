@@ -85,7 +85,9 @@ class GameScreen:
                 widget.settings = self.settings
             widget.update()
 
-    def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event] | None:
+    def handle_events(
+        self, events: list[pygame.event.Event] | None = None
+    ) -> list[pygame.event.Event] | None:
         """Handle pygame events for the screen and its widgets.
 
         Args:
@@ -185,12 +187,21 @@ class DefaultScreen(GameScreen):
     It serves as an example of how to create custom screen classes.
     """
 
-    DEFAULT_COLORS = ColorPair(background_color=ColorsEnum.DEFAULT_BACKGROUND, foreground_color=ColorsEnum.WHITE)
+    DEFAULT_COLORS = ColorPair(
+        background_color=ColorsEnum.DEFAULT_BACKGROUND,
+        foreground_color=ColorsEnum.WHITE,
+    )
 
     DEFAULT_WIDGET_COLORS = WidgetColors(
-        normal=ColorPair(background_color=ColorsEnum.GRAY, foreground_color=ColorsEnum.WHITE),
-        hover=ColorPair(background_color=(0x11, 0x11, 0x11, 0xFF), foreground_color=ColorsEnum.WHITE),
-        click=ColorPair(background_color=ColorsEnum.WHITE, foreground_color=ColorsEnum.BLACK),
+        normal=ColorPair(
+            background_color=ColorsEnum.GRAY, foreground_color=ColorsEnum.WHITE
+        ),
+        hover=ColorPair(
+            background_color=(0x11, 0x11, 0x11, 0xFF), foreground_color=ColorsEnum.WHITE
+        ),
+        click=ColorPair(
+            background_color=ColorsEnum.WHITE, foreground_color=ColorsEnum.BLACK
+        ),
     )
 
     def __init__(self, settings: Settings | None = None) -> None:
@@ -275,7 +286,9 @@ class OpenModalButton(PixelButton):
         play_sfx: bool = True,
     ) -> None:
         """Initialize the OpenModalButton."""
-        super().__init__(x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx)
+        super().__init__(
+            x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx
+        )
         self.modal = modal
 
     def on_click(self) -> None:

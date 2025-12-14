@@ -48,7 +48,11 @@ class Spell(abc.ABC):
         spell_classes = []
         for _, obj in globals().items():
             try:
-                if issubclass(obj, Spell) and obj is not Spell and obj().type == spell_type:
+                if (
+                    issubclass(obj, Spell)
+                    and obj is not Spell
+                    and obj().type == spell_type
+                ):
                     spell_classes.append(obj())
             except TypeError:
                 continue

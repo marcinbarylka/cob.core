@@ -21,10 +21,10 @@ class Segment:
             exits
             if exits is not None
             else [
-                Exit.undefined,
-                Exit.undefined,
-                Exit.undefined,
-                Exit.undefined,
+                Exit.UNDEFINED,
+                Exit.UNDEFINED,
+                Exit.UNDEFINED,
+                Exit.UNDEFINED,
             ]
         )
 
@@ -34,22 +34,24 @@ class Segment:
         If there are less than 2 corridors, add corridors until there are 2.
         If there are more than 2 corridors, remove corridors until there are 2.
         """
-        corridor_exits = self.exits.count(Exit.corridor)
-        undefined_exits_indices = [i for i, e in enumerate(self.exits) if e == Exit.undefined]
+        corridor_exits = self.exits.count(Exit.CORRIDOR)
+        undefined_exits_indices = [
+            i for i, e in enumerate(self.exits) if e == Exit.UNDEFINED
+        ]
 
         # Add corridors if there are less than 2
         while corridor_exits < 2 and undefined_exits_indices:
             new_corridor_index = random.choice(undefined_exits_indices)  # noqa: S311 [this is not a crypto function]
-            self.exits[new_corridor_index] = Exit.corridor
+            self.exits[new_corridor_index] = Exit.CORRIDOR
             undefined_exits_indices.remove(new_corridor_index)
             corridor_exits += 1
 
         # Decide for each undefined exit whether it becomes a room or a wall
         for i in undefined_exits_indices:
-            self.exits[i] = Exit.room if dice.roll("d100") > 50 else Exit.wall
+            self.exits[i] = Exit.ROOM if dice.roll("d100") > 50 else Exit.WALL
 
         # Ensure all undefined exits are now walls if they weren't turned into rooms
-        self.exits = [Exit.wall if e == Exit.undefined else e for e in self.exits]
+        self.exits = [Exit.WALL if e == Exit.UNDEFINED else e for e in self.exits]
 
     def _exits_to_str(self) -> tuple[str, ...]:
         """Return the exits as a tuple of strings.
@@ -94,13 +96,15 @@ class Room(Segment):
         If there are less than 2 corridors, add corridors until there are 2.
         If there are more than 2 corridors, remove corridors until there are 2.
         """
-        possible_exits = [idx for idx, e in enumerate(self.exits) if e == Exit.undefined]
+        possible_exits = [
+            idx for idx, e in enumerate(self.exits) if e == Exit.UNDEFINED
+        ]
         for _exit in possible_exits:
             if dice.roll("d100") > 50:
-                self.exits[_exit] = Exit.room
+                self.exits[_exit] = Exit.ROOM
         for idx, _ in enumerate(self.exits):
-            if self.exits[idx] == Exit.undefined:
-                self.exits[idx] = Exit.wall
+            if self.exits[idx] == Exit.UNDEFINED:
+                self.exits[idx] = Exit.WALL
 
     def random_feature(self) -> None:
         """Add a random feature to the room."""
@@ -120,4 +124,4 @@ class GatewayOfEvil(Segment):
 
     def __init__(self) -> None:
         """Initialize the gateway of evil segment."""
-        super().__init__([Exit.corridor, Exit.wall, Exit.wall, Exit.wall])
+        super().__init__([Exit.CORRIDOR, Exit.WALL, Exit.WALL, Exit.WALL])

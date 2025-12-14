@@ -10,18 +10,34 @@ from citadel_of_blood.gui.widgets.mixins import PanelRendererMixin
 
 # Colors for the panel rendered inside the modal
 PANEL_WIDGET_COLORS = WidgetColors(
-    normal=ColorPair(background_color=ColorsEnum.PANEL_BACKGROUND, foreground_color=ColorsEnum.PANEL_FOREGROUND)
+    normal=ColorPair(
+        background_color=ColorsEnum.PANEL_BACKGROUND,
+        foreground_color=ColorsEnum.PANEL_FOREGROUND,
+    )
 )
 
 
 class Modal(PanelRendererMixin, BaseWidget):
     """A modal dialog widget that can be used to display messages or prompts."""
 
-    def __init__(self, title: str, message: str, width: int = 400, height: int = 200, buttons: list[str] | None = None):
+    def __init__(
+        self,
+        title: str,
+        message: str,
+        width: int = 400,
+        height: int = 200,
+        buttons: list[str] | None = None,
+    ):
         """Initialize the Modal widget."""
         settings = Settings.instance()
         # Full-screen overlay (fills the screen)
-        super().__init__(x=0, y=0, width=settings.gui.width, height=settings.gui.height, colors=PANEL_WIDGET_COLORS)
+        super().__init__(
+            x=0,
+            y=0,
+            width=settings.gui.width,
+            height=settings.gui.height,
+            colors=PANEL_WIDGET_COLORS,
+        )
 
         # Inner panel geometry
         self.panel_width = width
@@ -66,7 +82,9 @@ class Modal(PanelRendererMixin, BaseWidget):
         self.surface.fill(ColorsEnum.MODAL_BACKGROUND)
 
         # Render panel to a temporary surface to avoid clearing the overlay
-        panel_surface = pygame.Surface((self.panel_width, self.panel_height), pygame.SRCALPHA)
+        panel_surface = pygame.Surface(
+            (self.panel_width, self.panel_height), pygame.SRCALPHA
+        )
 
         # Backup geometry and surface
         _backup = (self.surface, self.x, self.y, self.width, self.height)
