@@ -28,6 +28,7 @@ class Game:
     def run(self) -> None:
         """Run the main game loop."""
         if not pygame.get_init():
+            # todo: proper exception handling
             raise RuntimeError("Pygame is not initialized. Call init_gui() first.")
 
         while self.running:

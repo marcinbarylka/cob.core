@@ -25,11 +25,8 @@ def run():
         width=settings.width // font_measure[0],
         height=settings.height // font_measure[1],
         font=font_file,
-        background=(0, 89, 129),
-        foreground=(96, 183, 231),
     )
-    console.print(1, 1, "READY")
-    console.print(1, 2, " ", background=(96, 183, 231))
+    console.print(1, 1, "Starting Citadel of Blood...")
     manager.render_all(game.surface)
 
     game.run()

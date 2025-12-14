@@ -9,4 +9,4 @@ class Settings:
         self.width: int = 1024
         self.height: int = 768
         self.fps: int = 60
-        self.font: str = "atarixl_standard.bdf"
+        self.font: str = "AtaristMedium-16.bdf"

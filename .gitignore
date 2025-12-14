@@ -280,4 +280,10 @@ pyrightconfig.json
 .history
 .ionide
 
+### MacOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # End of https://www.toptal.com/developers/gitignore/api/python,intellij+all,visualstudiocode
