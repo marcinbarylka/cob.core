@@ -24,16 +24,18 @@ def run():
         BDFConsole,
         x=0,
         y=0,
-        width=settings.width // font_measure[0],
-        height=settings.height // font_measure[1],
+        width=font_measure[0] * 5,
+        height=font_measure[1] * 5,
         font=font_file,
     )
     console.print(1, 1, "Starting Citadel of Blood...")
 
-    segment = SegmentConsole(x=10, y=10, font=font_file, segment=GatewayOfEvil())
+    segment = SegmentConsole(x=10, y=48, font=font_file, segment=GatewayOfEvil())
     manager.add_console(segment)
 
     manager.render_all(game.surface)
+
+    print(console.width, console.height)
 
     game.run()
 

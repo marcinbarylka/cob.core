@@ -1,3 +1,5 @@
+"""Specific consoles for the game GUI."""
+
 from tileconsole.console import BDFConsole
 
 from citadel_of_blood.engine.segment import Segment
@@ -44,3 +46,17 @@ class SegmentConsole(BDFConsole):
             margin=(0, 0, 0, 0),
         )
         self.segment = segment
+
+    def render(self) -> None:
+        """Render the segment console."""
+        super().render()
+        if self.segment is None:
+            return
+
+        # Draw segment representation (placeholder)
+        self.clear()
+        for x in range(5):  # type: ignore[union-attr]
+            for y in range(5):  # type: ignore[union-attr]
+                ...
+
+        self._changed = True

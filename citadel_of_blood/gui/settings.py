@@ -9,6 +9,6 @@ class Settings:
         self.width: int = 1024
         self.height: int = 768
         self.fps: int = 60
-        self.font: str = "AtaristMedium-16.bdf"
+        self.font: str = "atarixl_standard.bdf"
 
         self.segment_size: tuple[int, int] = (100, 100)
