@@ -1,4 +1,4 @@
-"""Module for monsters in the game."""
+"""Module for monsters in the game_gui."""
 
 from dataclasses import dataclass
 from typing import Any

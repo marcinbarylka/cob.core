@@ -2,7 +2,7 @@
 
 
 class Settings:
-    """Settings for the game GUI."""
+    """Settings for the game_gui GUI."""
 
     def __init__(self) -> None:
         """Initialize default settings."""
@@ -11,4 +11,4 @@ class Settings:
         self.fps: int = 60
         self.font: str = "AtaristMedium-16.bdf"
 
-        self.segment_size: int = 100
+        self.segment_size: tuple[int, int] = (100, 100)

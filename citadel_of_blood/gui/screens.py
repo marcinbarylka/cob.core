@@ -1,6 +1,6 @@
-"""A module for game screens.
+"""A module for game_gui screens.
 
-This module provides base classes for creating and managing game screens.
+This module provides base classes for creating and managing game_gui screens.
 Each screen can contain multiple widgets and handle their rendering and events.
 """
 
@@ -18,7 +18,7 @@ from citadel_of_blood.gui.widgets.panels import Panel
 
 
 class GameScreen:
-    """Base class for game screens.
+    """Base class for game_gui screens.
 
     This class provides core functionality for creating screens that can contain
     and manage multiple widgets, handle events, and perform rendering.
@@ -33,7 +33,7 @@ class GameScreen:
     """
 
     def __init__(self, colors: ColorPair, settings: Settings | None = None) -> None:
-        """Initialize a new game screen.
+        """Initialize a new game_gui screen.
 
         Args:
             colors (ColorPair): The color scheme for the screen
@@ -181,7 +181,7 @@ class GameScreen:
 
 
 class DefaultScreen(GameScreen):
-    """Default implementation of a game screen.
+    """Default implementation of a game_gui screen.
 
     This screen provides a basic setup with a sample button widget.
     It serves as an example of how to create custom screen classes.

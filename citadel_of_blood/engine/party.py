@@ -1,4 +1,4 @@
-"""Module for managing party of characters in the game."""
+"""Module for managing party of characters in the game_gui."""
 
 from citadel_of_blood.engine.heroes import Hero, Initiate
 from citadel_of_blood.engine.monsters import Monster

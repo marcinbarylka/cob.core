@@ -18,7 +18,7 @@ from citadel_of_blood.engine.weapons import Ax, Bow, Dagger, Hammer, Sword, Thro
 
 
 class HeroesEnum(enum.Enum):
-    """Available heroes in the game."""
+    """Available heroes in the game_gui."""
 
     almuric = Hero(
         "Almuric",
@@ -325,14 +325,14 @@ class HeroesEnum(enum.Enum):
         """Get a list of all available heroes.
 
         Returns:
-            List of all heroes in the game
+            List of all heroes in the game_gui
 
         """
         return list(HeroesEnum.__members__.values())
 
 
 class InitiatesEnum(enum.Enum):
-    """Available initiates in the game."""
+    """Available initiates in the game_gui."""
 
     human_a = Initiate(
         name="",
@@ -457,7 +457,7 @@ class InitiatesEnum(enum.Enum):
         """Get a list of all available initiates.
 
         Returns:
-            List of all initiates in the game
+            List of all initiates in the game_gui
 
         """
         return list(InitiatesEnum.__members__.values())

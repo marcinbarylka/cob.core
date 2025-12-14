@@ -25,7 +25,7 @@ from citadel_of_blood.errors.engine_errors import (
 class Hero:
     """A hero that can be played by a player.
 
-    A hero is a character with various attributes and abilities that can be used in the game.
+    A hero is a character with various attributes and abilities that can be used in the game_gui.
     Heroes can fight using weapons, cast spells, and use skills.
 
     Attributes:

@@ -6,10 +6,10 @@ from citadel_of_blood.gui.settings import Settings
 
 
 class Game:
-    """Core class for the game GUI."""
+    """Core class for the game_gui GUI."""
 
     def __init__(self) -> None:
-        """Initialize the game core."""
+        """Initialize the game_gui core."""
         self.settings = Settings()
         self.surface: pygame.Surface | None = None
         self.clock = pygame.time.Clock()
@@ -26,7 +26,7 @@ class Game:
         pygame.display.set_caption("Citadel of Blood")
 
     def run(self) -> None:
-        """Run the main game loop."""
+        """Run the main game_gui loop."""
         if not pygame.get_init():
             # todo: proper exception handling
             raise RuntimeError("Pygame is not initialized. Call init_gui() first.")

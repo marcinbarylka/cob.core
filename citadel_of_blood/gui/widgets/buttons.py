@@ -321,7 +321,7 @@ class PixelButton(Button):
 
 
 class ExitButton(PixelButton):
-    """A button to exit the game."""
+    """A button to exit the game_gui."""
 
     def __init__(
         self,
@@ -338,8 +338,8 @@ class ExitButton(PixelButton):
         )
 
     def on_click(self) -> None:
-        """Handle click event to exit the game."""
-        print("Exit button clicked. Exiting game...")
+        """Handle click event to exit the game_gui."""
+        print("Exit button clicked. Exiting game_gui...")
         if (
             hasattr(self, "settings")
             and self.settings

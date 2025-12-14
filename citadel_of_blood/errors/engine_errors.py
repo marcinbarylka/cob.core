@@ -57,7 +57,7 @@ class CharacterAlreadyInPartyError(PartyError):
 
 
 class GameScreenError(Exception):
-    """Error raised when there is an issue with the game screen."""
+    """Error raised when there is an issue with the game_gui screen."""
 
 
 class ColorError(Exception):
