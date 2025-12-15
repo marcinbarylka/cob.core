@@ -41,7 +41,7 @@ class FontMap(enum.StrEnum):
     STAIRCASE = "s"
     MIRROR = "M"
     ARTWORK = "a"
-    ALTAIR = "A"
+    ALTAR = "A"
 
     PARTY = "@"
     ENTRANCE = "E"

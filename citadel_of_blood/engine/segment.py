@@ -106,7 +106,7 @@ class Room(Segment):
             if self.exits[idx] == Exit.UNDEFINED:
                 self.exits[idx] = Exit.WALL
 
-    def random_feature(self) -> None:
+    def randomize_feature(self) -> None:
         """Add a random feature to the room."""
         self.feature = FeatureFactory.random_feature()
 

@@ -3,6 +3,8 @@
 import random
 from typing import TypeVar
 
+from citadel_of_blood import FontMap
+
 F = TypeVar("F", bound="Feature")
 
 
@@ -29,9 +31,7 @@ class FeatureFactory:
 
         """
         # todo: refactor me
-        if (
-            random.randint(1, 80) > 50
-        ):  # 62.5% chance to have a feature in theory, but we use 50% for simplicity
+        if random.randint(1, 100) > 50:
             return None
 
         total_variants = sum(
@@ -52,10 +52,14 @@ class FeatureFactory:
 class Feature:
     """Feature class."""
 
+    symbol: str = "?"
+
 
 ### Fountains ###
 class Fountain(Feature):
     """Fountain class."""
+
+    symbol = FontMap.FOUNTAIN
 
 
 class PoisonFountain(Fountain):
@@ -86,6 +90,8 @@ class BloodFountain(Fountain):
 class Altar(Feature):
     """Altar class."""
 
+    symbol = FontMap.ALTAR
+
 
 class AllocesAltar(Altar):
     """AllocesAltar class."""
@@ -115,6 +121,8 @@ class AsmodayAltar(Altar):
 class TrapDoor(Feature):
     """TrapDoor class."""
 
+    symbol = FontMap.TRAP_DOOR
+
 
 class TrapTrapDoor(TrapDoor):
     """TrapTrapDoor class."""
@@ -136,10 +144,14 @@ class HellgateTrapDoor(TrapDoor):
 class Staircase(Feature):
     """Staircase class."""
 
+    symbol = FontMap.STAIRCASE
+
 
 ### Furnitures ###
 class Furniture(Feature):
     """Furniture class."""
+
+    symbol = FontMap.FURNITURE
 
 
 class CoffinFurniture(Furniture):
@@ -165,10 +177,14 @@ class ClavicordFurniture(Furniture):
 class MirrorFurniture(Furniture):
     """MirrorFurniture class."""
 
+    symbol = FontMap.FURNITURE
+
 
 ### Artworks ###
 class Artwork(Feature):
     """Artwork class."""
+
+    symbol = FontMap.ARTWORK
 
 
 class TapestryArtwork(Artwork):
@@ -199,6 +215,8 @@ class ManuscriptArtwork(Artwork):
 class Statue(Feature):
     """Statue class."""
 
+    symbol = FontMap.STATUE
+
 
 class MedusaStatue(Statue):
     """MedusaStatue class."""
@@ -227,3 +245,5 @@ class XStatue(Statue):
 ### Mirrors ###
 class Mirror(Feature):
     """Mirror class."""
+
+    symbol = FontMap.MIRROR

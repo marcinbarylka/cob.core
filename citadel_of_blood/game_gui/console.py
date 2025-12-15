@@ -10,30 +10,50 @@ from citadel_of_blood.gui.colors import ColorsEnum
 from citadel_of_blood.gui.settings import Settings
 
 
-class SegmentConsole(BDFConsole):
-    """Segment of the board."""
+class FontInitMixin:
+    """Mixin for consoles that represent map segments."""
 
-    def __init__(
-            self,
-            x: int,
-            y: int,
-            font: str | None = None,
-            segment: Segment | None = None,
-    ) -> None:
-        """Initialize the segment console.
+    def _init_font(self, font: str | None) -> str:
+        """Initialize the font for the console.
 
         Args:
-            **kwargs: Additional keyword arguments for BDFConsole.
+            font (str | None): Font file to use. If None, use default font from settings.
 
+        Returns:
+            str: Font file path.
         """
-        settings = Settings()
 
-        # Determine font file to use for measuring character size
+        settings = Settings()
         if font is None:
             default_font_path = BDFConsole.get_default_font_path()
             font_file = f"{default_font_path}/{settings.font}"
         else:
             font_file = font
+
+        return font_file
+
+
+class SegmentConsole(FontInitMixin, BDFConsole):
+    """Segment of the board."""
+
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        font: str | None = None,
+        segment: Segment | None = None,
+    ) -> None:
+        """Initialize the segment console.
+
+        Args:
+            x (int): X position of the console.
+            y (int): Y position of the console.
+            font (str | None): Font file to use. If None, use default font from settings.
+            segment (Segment | None): Segment to represent. If None, no segment is drawn.
+
+        """
+        settings = Settings()
+        font_file = self._init_font(font)
 
         super().__init__(
             x=x,
@@ -95,6 +115,16 @@ class SegmentConsole(BDFConsole):
                 col, row = room_coords[i]
                 self._draw_cell(col, row, ColorsEnum.WHITE)
 
+        feature = self._draw_feature()
+        if feature:
+            self.surface.blit(
+                feature,
+                (
+                    (self.width - feature.get_width()) // 2,
+                    (self.height - feature.get_height()) // 2,
+                ),
+            )
+
         self._changed = True
 
     def _draw_cell(self, col: int, row: int, color: pygame.Color) -> None:
@@ -126,5 +156,59 @@ class SegmentConsole(BDFConsole):
             width=1,
         )
 
-    def _draw_feature(self) -> None:
-        """If the segment has a feature, draw it on the console."""
+    def _draw_feature(self) -> pygame.Surface | None:
+        """If the segment has a feature, draw it on the console.
+
+        Returns:
+            pygame.Surface | None: Surface with the feature drawn, or None if no feature.
+
+        """
+        if self.segment is not None:
+            if hasattr(self.segment, "feature") and self.segment.feature is not None:
+                feature = self.segment.feature
+                if feature is not None:
+                    glyph = self.font.glyph(feature.symbol.value).draw().bindata
+                    char_surface = pygame.Surface((self.char_width, self.char_height))
+                    char_surface.fill(ColorsEnum.WHITE)
+                    for gy in range(self.char_height):
+                        for gx in range(self.char_width):
+                            if glyph[gy][gx] == "1":  # pixel is set
+                                char_surface.set_at((gx, gy), ColorsEnum.BLACK)
+                    return char_surface
+        return
+
+
+class MapConsole(FontInitMixin, BDFConsole):
+    """Map console."""
+
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        font: str | None = None,
+        level: int = 1,
+    ) -> None:
+        """Initialize the map console.
+
+        Args:
+            x (int): X position of the console.
+            y (int): Y position of the console.
+            width (int): Width of the console.
+            height (int): Height of the console.
+            font (str | None): Font file to use. If None, use default font from settings.
+
+        """
+        font_file = self._init_font(font)
+        super().__init__(
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+            font=font_file,
+            foreground=ColorsEnum.WHITE,
+            background=ColorsEnum.GRAY,
+            margin=(0, 0, 0, 0),
+        )
+        self.level = level
