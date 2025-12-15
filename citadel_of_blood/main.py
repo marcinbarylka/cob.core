@@ -3,7 +3,8 @@
 from tileconsole.console import BDFConsole
 from tileconsole.manager import ConsoleManager
 
-from citadel_of_blood.engine.segment import GatewayOfEvil
+from citadel_of_blood import Exit
+from citadel_of_blood.engine.segment import Segment
 from citadel_of_blood.game_gui.console import SegmentConsole
 from citadel_of_blood.gui import Game
 from citadel_of_blood.gui.settings import Settings
@@ -30,7 +31,9 @@ def run():
     )
     console.print(1, 1, "Starting Citadel of Blood...")
 
-    segment = SegmentConsole(x=10, y=48, font=font_file, segment=GatewayOfEvil())
+    segment = Segment(exits=[Exit.CORRIDOR, Exit.CORRIDOR, Exit.WALL, Exit.ROOM])
+
+    segment = SegmentConsole(x=10, y=48, font=font_file, segment=segment)
     manager.add_console(segment)
 
     manager.render_all(game.surface)

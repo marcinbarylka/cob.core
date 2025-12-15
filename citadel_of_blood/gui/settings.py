@@ -11,4 +11,4 @@ class Settings:
         self.fps: int = 60
         self.font: str = "atarixl_standard.bdf"
 
-        self.segment_size: tuple[int, int] = (100, 100)
+        self.segment_size: tuple[int, int] = (75, 75)

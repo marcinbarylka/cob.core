@@ -33,7 +33,7 @@ class Game:
 
         while self.running:
             dt_ms = self.clock.tick(60)
-            dt = dt_ms / 1000.0
+            dt_ms / 1000.0
             events = pygame.event.get()
             # Forward events through the ConsoleManager (it returns the events list)
             # Per-frame update with delta seconds
