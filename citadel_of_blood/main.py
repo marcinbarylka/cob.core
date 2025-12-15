@@ -31,14 +31,10 @@ def run():
     )
     console.print(1, 1, "Starting Citadel of Blood...")
 
-    segment = Segment(exits=[Exit.CORRIDOR, Exit.CORRIDOR, Exit.WALL, Exit.ROOM])
-
-    segment = SegmentConsole(x=10, y=48, font=font_file, segment=segment)
-    manager.add_console(segment)
-
+    segment = Segment(exits=[Exit.CORRIDOR, Exit.ROOM_CLOSED, Exit.CORRIDOR, Exit.ROOM])
+    segment_console = SegmentConsole(x=10, y=48, font=font_file, segment=segment)
+    manager.add_console(segment_console)
     manager.render_all(game.surface)
-
-    print(console.width, console.height)
 
     game.run()
 

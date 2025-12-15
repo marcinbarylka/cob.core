@@ -1,8 +1,18 @@
+from __future__ import annotations
+
 """Settings for the GUI."""
 
 
 class Settings:
     """Settings for the game_gui GUI."""
+
+    _instance: Settings | None = None
+
+    def __new__(cls) -> "Settings":
+        """Create a singleton instance of Settings."""
+        if cls._instance is None:
+            cls._instance = super(Settings, cls).__new__(cls)
+        return cls._instance
 
     def __init__(self) -> None:
         """Initialize default settings."""

@@ -96,30 +96,47 @@ DEFAULT_WIDGET_COLORS = WidgetColors(
 )
 
 
-def validate_color(value: Any) -> tuple[int, ...]:
-    """Ensure the value is a valid color.
+def validate_color(value: Any) -> tuple[int, int, int] | tuple[int, int, int, int]:
+    """Ensure the value is a valid color and return a 3- or 4-tuple of ints.
 
     Args:
         value (Any): The value to validate.
 
     Returns:
-        tuple[int, ...]: A tuple representing the color in RGBA format.
+        tuple[int, int, int] | tuple[int, int, int, int]: A tuple representing the color in RGB(A) format.
 
     Raises:
         ValueError: If the value is not a valid color.
 
     """
+    # pygame.Color -> explicit RGBA tuple
     if isinstance(value, pygame.Color):
-        return value.r, value.g, value.b, value.a
+        return (value.r, value.g, value.b, value.a)
+
+    # named color (string) -> resolve via ColorsEnum or pygame.Color
+    if isinstance(value, str):
+        try:
+            c = ColorsEnum.get_color(value)
+        except Exception:
+            # fallback to pygame parsing (may raise)
+            c = pygame.Color(value)
+        return (c.r, c.g, c.b, c.a)
+
+    # explicit tuple of 3 or 4 ints
     if (
         isinstance(value, tuple)
         and len(value) in (3, 4)
         and all(isinstance(c, int) and 0 <= c <= 255 for c in value)
     ):
-        return value
+        # normalize to explicit typed tuples
+        if len(value) == 3:
+            return (value[0], value[1], value[2])
+        else:
+            return (value[0], value[1], value[2], value[3])
+
     msg = (
-        f"Invalid color value: {value!r}. Must be a tuple of 3 or 4 integers (0-255) "
-        f"or pygame.Color, got {type(value).__name__}."
+        f"Invalid color value: {value!r}. Must be a tuple of 3 or 4 integers (0-255), "
+        f"pygame.Color, or a color name string, got {type(value).__name__}."
     )
     raise ValueError(msg)
 
@@ -150,9 +167,28 @@ def dim(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
         GUIColor: The dimmed color.
 
     """
-    validate_color(color)
+    cols = validate_color(color)
     validate_ratio(shadow_ratio)
-    return tuple(int(c * shadow_ratio) for c in color)
+
+    def _clamp_int(v: float) -> int:
+        iv = int(v)
+        return max(0, min(255, iv))
+
+    if len(cols) == 3:
+        r, g, b = cols
+        return (
+            _clamp_int(r * shadow_ratio),
+            _clamp_int(g * shadow_ratio),
+            _clamp_int(b * shadow_ratio),
+        )
+    else:
+        r, g, b, a = cols
+        return (
+            _clamp_int(r * shadow_ratio),
+            _clamp_int(g * shadow_ratio),
+            _clamp_int(b * shadow_ratio),
+            a,
+        )
 
 
 def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
@@ -166,15 +202,35 @@ def tint(color: GUIColor, shadow_ratio: float = 0.5) -> GUIColor:
         GUIColor: The tinted color.
 
     """
-    validate_color(color)
+    cols = validate_color(color)
     validate_ratio(shadow_ratio)
-    return tuple(int(c + (255 - c) * shadow_ratio) for c in color)
+
+    def _clamp_int(v: float) -> int:
+        iv = int(v)
+        return max(0, min(255, iv))
+
+    if len(cols) == 3:
+        r, g, b = cols
+        return (
+            _clamp_int(r + (255 - r) * shadow_ratio),
+            _clamp_int(g + (255 - g) * shadow_ratio),
+            _clamp_int(b + (255 - b) * shadow_ratio),
+        )
+    else:
+        r, g, b, a = cols
+        return (
+            _clamp_int(r + (255 - r) * shadow_ratio),
+            _clamp_int(g + (255 - g) * shadow_ratio),
+            _clamp_int(b + (255 - b) * shadow_ratio),
+            a,
+        )
 
 
 class ColorsEnum:
     """Enum for predefined colors used in the GUI."""
 
     BLACK: pygame.Color = pygame.Color(0, 0, 0, 0xFF)
+    BLACK_OPACITY_50: pygame.Color = pygame.Color(0, 0, 0, 0x80)
     WHITE: pygame.Color = pygame.Color(0xFF, 0xFF, 0xFF, 0xFF)
     GRAY: pygame.Color = pygame.Color(0x55, 0x55, 0x55, 0xFF)
     DEFAULT_BACKGROUND: pygame.Color = pygame.Color(0x20, 0x20, 0x20, 0xFF)
@@ -184,7 +240,6 @@ class ColorsEnum:
     PANEL_BACKGROUND: pygame.Color = pygame.Color(0x34, 0x2A, 0x25, 0xFF)
     PANEL_FOREGROUND: pygame.Color = pygame.Color(0xFB, 0xE2, 0xBB, 0xFF)
     FADING_BAR: pygame.Color = pygame.Color(0x56, 0x32, 0x26, 0xFF)
-    # MODAL_BACKGROUND: pygame.Color = pygame.Color(0x34, 0x2A, 0x25, 0xF0)
     MODAL_BACKGROUND: pygame.Color = pygame.Color(
         0x00, 0x00, 0x00, 0xA0
     )  # Semi-transparent black

@@ -14,11 +14,11 @@ class SegmentConsole(BDFConsole):
     """Segment of the board."""
 
     def __init__(
-        self,
-        x: int,
-        y: int,
-        font: str | None = None,
-        segment: Segment | None = None,
+            self,
+            x: int,
+            y: int,
+            font: str | None = None,
+            segment: Segment | None = None,
     ) -> None:
         """Initialize the segment console.
 
@@ -34,9 +34,6 @@ class SegmentConsole(BDFConsole):
             font_file = f"{default_font_path}/{settings.font}"
         else:
             font_file = font
-
-        # Measure character size before calling super().__init__ (self.char_width not set yet)
-        char_width, char_height = BDFConsole.measure_bdf(font_file)
 
         super().__init__(
             x=x,
@@ -94,7 +91,7 @@ class SegmentConsole(BDFConsole):
                     col = 4 if i == 1 else 0
                     for row in range(1, 4):
                         self._draw_cell(col, row, ColorsEnum.WHITE)
-            elif ex == Exit.ROOM:
+            elif ex in (Exit.ROOM, Exit.ROOM_CLOSED):
                 col, row = room_coords[i]
                 self._draw_cell(col, row, ColorsEnum.WHITE)
 
@@ -118,3 +115,16 @@ class SegmentConsole(BDFConsole):
             cell_height,
         )
         pygame.draw.rect(self.surface, color, rect)
+        self._draw_frame()
+
+    def _draw_frame(self) -> None:
+        """Draw the console frame."""
+        pygame.draw.rect(
+            self.surface,
+            ColorsEnum.BLACK_OPACITY_50,
+            self.surface.get_rect(),
+            width=1,
+        )
+
+    def _draw_feature(self) -> None:
+        """If the segment has a feature, draw it on the console."""
