@@ -3,10 +3,12 @@
 from tileconsole.console import BDFConsole
 from tileconsole.manager import ConsoleManager
 
+from citadel_of_blood import Exit
 from citadel_of_blood.game_gui.console import BoardConsole
 from citadel_of_blood.gui import Game
 from citadel_of_blood.gui.settings import Settings
 from engine.map import Board
+from engine.segment import Room
 
 
 def run():
@@ -31,13 +33,15 @@ def run():
     console.print(1, 1, "Starting Citadel of Blood...")
 
     # segment = Segment(exits=[Exit.CORRIDOR, Exit.ROOM_CLOSED, Exit.CORRIDOR, Exit.ROOM])
-    # segment = Room(exits=[Exit.WALL, Exit.ROOM_CLOSED, Exit.WALL, Exit.ROOM])
-    # segment.randomize_feature()
+    segment = Room(exits=[Exit.WALL, Exit.ROOM_CLOSED, Exit.WALL, Exit.ROOM])
+    segment.randomize_feature()
     # print(f"Segment: {segment}")
     # segment_console = SegmentConsole(x=10, y=48, font=font_file, segment=segment)
     # manager.add_console(segment_console)
     board = Board()
+    board.map[(0, 1, 0)] = segment
     board_console = BoardConsole(x=0, y=100, width=800, height=400, font=font_file, board=board)
+    print("Board:", board)
     manager.add_console(board_console)
     manager.render_all(game.surface)
 

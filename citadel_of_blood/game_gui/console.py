@@ -146,7 +146,7 @@ class SegmentConsole(FontInitMixin, BDFConsole):
             cell_height,
         )
         pygame.draw.rect(self.surface, color, rect)
-        self._draw_frame()
+        # self._draw_frame()
 
     def _draw_frame(self) -> None:
         """Draw the console frame."""
@@ -189,7 +189,7 @@ class BoardConsole(FontInitMixin, BDFConsole):
             width: int,
             height: int,
             font: str | None = None,
-            level: int = 1,
+            level: int = 0,
             board: Board | None = None,
     ) -> None:
         """Initialize the map console.
@@ -227,12 +227,24 @@ class BoardConsole(FontInitMixin, BDFConsole):
         settings = Settings()
 
         # Placeholder: Draw segments in a grid
-        for position, segment in self.board.map.items():
-            x = (position[0] + 5) * settings.segment_size[0]  # Offset to center
-            y = (position[1] + 5) * settings.segment_size[1]  # Offset to center
+        # get the segments from the board and draw them (but only those on the current level)
+        # the level is represented by the Z coordinate in the position tuple
+
+        level_map = {
+            pos: seg for pos, seg in self.board.map.items() if pos[2] == self.level
+        }
+
+        for position, segment in level_map.items():
+            x = position[0] * settings.segment_size[0]  # Offset to center
+            y = position[1] * settings.segment_size[1]  # Offset to center
 
             # Draw segment representation (simple square)
-            rect = pygame.Rect(x, y, settings.segment_size[0] - 1, settings.segment_size[1] - 1)
-            pygame.draw.rect(self.surface, ColorsEnum.WHITE, rect)
+            segment_console = SegmentConsole(
+                x=0,
+                y=0,
+                segment=segment,
+            )
+            segment_console.render()
+            self.surface.blit(segment_console.surface, (x, y))
 
         self._changed = True

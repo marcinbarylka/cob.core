@@ -59,7 +59,9 @@ class Board:
         return exits
 
     def get_segment(self, position: tuple[int, int, int]) -> Segment:
-        """Get segment at given position. If there is no segment at given position, then it is created.
+        """Get segment at given position.
+
+        If there is no segment at given position, then it is created.
 
         Args:
             position: position of the segment
@@ -84,3 +86,7 @@ class Board:
             return s
 
         return self.map[position]
+
+    def __str__(self) -> str:
+        """Return string representation of the board."""
+        return f"Board: {self.map}"

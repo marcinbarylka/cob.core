@@ -124,4 +124,7 @@ class GatewayOfEvil(Segment):
 
     def __init__(self) -> None:
         """Initialize the gateway of evil segment."""
-        super().__init__([Exit.CORRIDOR, Exit.WALL, Exit.WALL, Exit.WALL])
+        random_direction = random.choice([0, 1, 2, 3])  # noqa: S311 [this is not a crypto function]
+        exits = [Exit.WALL, Exit.WALL, Exit.WALL, Exit.WALL]
+        exits[random_direction] = Exit.CORRIDOR
+        super().__init__(exits)
