@@ -59,7 +59,9 @@ class WidgetColors:
 
     def __repr__(self) -> str:
         """Return the string representation of the WidgetColors instance."""
-        return f"WidgetColors(normal={self.normal}, hover={self.hover}, click={self.click})"
+        return (
+            f"WidgetColors(normal={self.normal}, hover={self.hover}click={self.click})"
+        )
 
     def serialize(self) -> dict:
         """Convert the WidgetColors into a dictionary."""
@@ -103,7 +105,8 @@ def validate_color(value: Any) -> tuple[int, int, int] | tuple[int, int, int, in
         value (Any): The value to validate.
 
     Returns:
-        tuple[int, int, int] | tuple[int, int, int, int]: A tuple representing the color in RGB(A) format.
+        tuple[int, int, int] | tuple[int, int, int, int]: A tuple representing
+            the color in RGB(A) format.
 
     Raises:
         ValueError: If the value is not a valid color.

@@ -2,13 +2,13 @@
 
 import pygame
 from bdfparser import Font
+from engine.map import Board
 from tileconsole.console import BDFConsole
 
 from citadel_of_blood import Exit
 from citadel_of_blood.engine.segment import Segment
 from citadel_of_blood.gui.colors import ColorsEnum
 from citadel_of_blood.gui.settings import Settings
-from engine.map import Board
 
 
 class FontInitMixin:
@@ -18,12 +18,12 @@ class FontInitMixin:
         """Initialize the font for the console.
 
         Args:
-            font (str | None): Font file to use. If None, use default font from settings.
+            font (str | None): Font file to use. If None, use default font from settings
 
         Returns:
             str: Font file path.
-        """
 
+        """
         settings = Settings()
         if font is None:
             default_font_path = BDFConsole.get_default_font_path()
@@ -49,19 +49,19 @@ class SegmentConsole(FontInitMixin, BDFConsole):
     """Segment of the board."""
 
     def __init__(
-            self,
-            x: int,
-            y: int,
-            font: str | None = None,
-            segment: Segment | None = None,
+        self,
+        x: int,
+        y: int,
+        font: str | None = None,
+        segment: Segment | None = None,
     ) -> None:
         """Initialize the segment console.
 
         Args:
             x (int): X position of the console.
             y (int): Y position of the console.
-            font (str | None): Font file to use. If None, use default font from settings.
-            segment (Segment | None): Segment to represent. If None, no segment is drawn.
+            font (str | None): Font file to use. If None, use default font from settings
+            segment (Segment | None): Segment to represent. If None, no segment is drawn
 
         """
         settings = Settings()
@@ -146,7 +146,7 @@ class SegmentConsole(FontInitMixin, BDFConsole):
             cell_height,
         )
         pygame.draw.rect(self.surface, color, rect)
-        # self._draw_frame()
+        self._draw_frame()
 
     def _draw_frame(self) -> None:
         """Draw the console frame."""
@@ -161,36 +161,39 @@ class SegmentConsole(FontInitMixin, BDFConsole):
         """If the segment has a feature, draw it on the console.
 
         Returns:
-            pygame.Surface | None: Surface with the feature drawn, or None if no feature.
+            pygame.Surface | None: Surface with the feature drawn,
+                                   or None if no feature.
 
         """
-        if self.segment is not None:
-            if hasattr(self.segment, "feature") and self.segment.feature is not None:
-                feature = self.segment.feature
-                if feature is not None:
-                    glyph = self.font.glyph(feature.symbol.value).draw().bindata
-                    char_surface = pygame.Surface((self.char_width, self.char_height))
-                    char_surface.fill(ColorsEnum.WHITE)
-                    for gy in range(self.char_height):
-                        for gx in range(self.char_width):
-                            if glyph[gy][gx] == "1":  # pixel is set
-                                char_surface.set_at((gx, gy), ColorsEnum.BLACK)
-                    return char_surface
-        return
+        if (
+            self.segment is not None
+            and hasattr(self.segment, "feature")
+            and self.segment.feature is not None
+        ):
+            feature = self.segment.feature
+            glyph = self.font.glyph(feature.symbol.value).draw().bindata
+            char_surface = pygame.Surface((self.char_width, self.char_height))
+            char_surface.fill(ColorsEnum.WHITE)
+            for gy in range(self.char_height):
+                for gx in range(self.char_width):
+                    if glyph[gy][gx] == "1":  # pixel is set
+                        char_surface.set_at((gx, gy), ColorsEnum.BLACK)
+            return char_surface
+        return None
 
 
 class BoardConsole(FontInitMixin, BDFConsole):
     """Map console."""
 
     def __init__(
-            self,
-            x: int,
-            y: int,
-            width: int,
-            height: int,
-            font: str | None = None,
-            level: int = 0,
-            board: Board | None = None,
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        font: str | None = None,
+        level: int = 0,
+        board: Board | None = None,
     ) -> None:
         """Initialize the map console.
 
@@ -199,7 +202,9 @@ class BoardConsole(FontInitMixin, BDFConsole):
             y (int): Y position of the console.
             width (int): Width of the console.
             height (int): Height of the console.
-            font (str | None): Font file to use. If None, use default font from settings.
+            font (str | None): Font file to use. If None, use default font from settings
+            level (int): Level of the board to display.
+            board (Board | None): Board to represent. If None, no board is drawn.
 
         """
         font_file = self._init_font(font)
@@ -215,6 +220,10 @@ class BoardConsole(FontInitMixin, BDFConsole):
         )
         self.level = level
         self.board = board
+        self.offset = (
+            self.width // 2 - (Settings().segment_size[0] // 2),
+            self.height // 2 - (Settings().segment_size[1] // 2),
+        )
 
     def render(self) -> None:
         """Render the map console."""
@@ -227,7 +236,8 @@ class BoardConsole(FontInitMixin, BDFConsole):
         settings = Settings()
 
         # Placeholder: Draw segments in a grid
-        # get the segments from the board and draw them (but only those on the current level)
+        # get the segments from the board and draw them (but only those on
+        # the current level)
         # the level is represented by the Z coordinate in the position tuple
 
         level_map = {
@@ -235,8 +245,8 @@ class BoardConsole(FontInitMixin, BDFConsole):
         }
 
         for position, segment in level_map.items():
-            x = position[0] * settings.segment_size[0]  # Offset to center
-            y = position[1] * settings.segment_size[1]  # Offset to center
+            x = position[0] * settings.segment_size[0] + self.offset[0]
+            y = position[1] * settings.segment_size[1] + self.offset[1]
 
             # Draw segment representation (simple square)
             segment_console = SegmentConsole(

@@ -181,7 +181,10 @@ class Cronk(Monster):
 
 
 class Demon(Monster):
-    """Demon - a powerful monster with a high resistance value and a demon skill. A companion of the X The Unknown."""
+    """Demon - a powerful monster with a high resistance and a demon skill.
+
+    A companion of the X The Unknown.
+    """
 
     def __init__(self):
         """Initialize the Demon class."""
@@ -212,7 +215,7 @@ class DireWolf(Monster):
 
 
 class EvilHero(Monster):
-    """EvilHero - a powerful hero (but he's evil) with a high negotiation value and a sword skill."""
+    """EvilHero - a powerful hero (but he's evil) with a sword skill."""
 
     def __init__(self):
         """Initialize the EvilHero class."""
@@ -229,7 +232,7 @@ class EvilHero(Monster):
 
 
 class EvilMage(Monster):
-    """EvilMage - a powerful mage (but he's evil) with a high negotiation value and a lightning spell."""
+    """EvilMage - a powerful mage (but he's evil) with a lightning spell."""
 
     def __init__(self):
         """Initialize the EvilMage class."""
@@ -275,7 +278,7 @@ class Harpy(Monster):
 
 
 class Hydra(Monster):
-    """Hydra - a powerful monster with a high negotiation value and the Hail Hydra special skill."""
+    """Hydra - a powerful monster with a high negotiation and the special skill."""
 
     def __init__(self):
         """Initialize the Hydra class."""
@@ -291,7 +294,7 @@ class Hydra(Monster):
 
 
 class Medusa(Monster):
-    """Medusa - a monster with a high negotiation value and the Flesh to Stone special skill."""
+    """Medusa - a monster with a high negotiation and the Flesh to Stone skill."""
 
     def __init__(self):
         """Initialize the Medusa class."""
@@ -307,7 +310,7 @@ class Medusa(Monster):
 
 
 class Minotaur(Monster):
-    """Minotaur - a powerful half human, half bull monster with a high negotiation value and a high combat bonus."""
+    """Minotaur - a powerful half human, half bull monster."""
 
     def __init__(self):
         """Initialize the Minotaur class."""
@@ -322,7 +325,7 @@ class Minotaur(Monster):
 
 
 class Ogre(Monster):
-    """Ogre - a powerful monster with a high resistance value and a high combat bonus."""
+    """Ogre - a powerful monster with a high resistance and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Ogre class."""
@@ -354,7 +357,7 @@ class Orc(Monster):
 
 
 class Skeleton(Monster):
-    """Skeleton - an undead monster with a high negotiation value and a low resistance value."""
+    """Skeleton - an undead monster with a high negotiation and a low resistance."""
 
     def __init__(self):
         """Initialize the Skeleton class."""
@@ -420,7 +423,7 @@ class Warg(Monster):
 
 
 class Wight(Monster):
-    """Wight - an undead monster with a high resistance value and a high combat bonus."""
+    """Wight - an undead monster with a high resistance and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Wight class."""
@@ -435,7 +438,7 @@ class Wight(Monster):
 
 
 class Wraith(Monster):
-    """Wraith - an undead monster with a high negotiation value and a high combat bonus."""
+    """Wraith - an undead monster with a high negotiation and a high combat bonus."""
 
     def __init__(self):
         """Initialize the Wraith class."""
@@ -452,8 +455,9 @@ class Wraith(Monster):
 class XTheUnknown(Monster):
     """X The Unknown.
 
-    A final boss monster with a high resistance value and a high combat bonus. A companion
-    of the bunch of demons.
+    A final boss monster with a high resistance value and a high combat bonus.
+
+    Also a companion of the bunch of demons.
     """
 
     def __init__(self):

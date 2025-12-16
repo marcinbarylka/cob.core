@@ -110,7 +110,10 @@ class Treasure(enum.Enum):
 
     def __str__(self):
         """Return the string representation of the treasure."""
-        return f"Gold: {self.value.gold}, Jewelery: {self.value.jewelery}, Magic items: {self.value.magic_items}"
+        return (
+            f"Gold: {self.value.gold}, Jewelery: {self.value.jewelery},"
+            f" Magic items: {self.value.magic_items}"
+        )
 
     def roll_gold(self) -> int:
         """Roll for gold.

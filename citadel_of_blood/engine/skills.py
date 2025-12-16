@@ -1,4 +1,7 @@
-"""Module with skills classes. It contains all the skills that can be used by characters and monsters."""
+"""Module with skills classes.
+
+It contains all the skills that can be used by characters and monsters.
+"""
 
 from abc import ABC, abstractmethod
 
@@ -6,7 +9,10 @@ from citadel_of_blood.engine.weapons import Ax, Bow, Dagger, Hammer, Sword, Weap
 
 
 class Skill(ABC):
-    """Represent a skill. It is used to represent a skill of a character or a monster."""
+    """Represent a skill.
+
+    It is used to represent a skill of a character or a monster.
+    """
 
     def __init__(self, value: int):
         """Initialize the skill.
@@ -22,8 +28,9 @@ class Skill(ABC):
     def run(self, *args, **kwargs):
         """Run skill.
 
-        This method should be implemented in child classes. It should contain all the logic
-        of the skill.
+        This method should be implemented in child classes.
+
+        It should contain all the logic of the skill.
         """
 
     def __str__(self):
@@ -71,31 +78,46 @@ class WeaponSkill(Skill):
 
 
 class SwordSkill(WeaponSkill):
-    """Represent a sword skill. It is used to represent a skill of a character."""
+    """Represent a sword skill.
+
+    It is used to represent a skill of a character.
+    """
 
     weapon = Sword()
 
 
 class BowSkill(WeaponSkill):
-    """Represent a bow skill. It is used to represent a skill of a character."""
+    """Represent a bow skill.
+
+    It is used to represent a skill of a character.
+    """
 
     weapon = Bow()
 
 
 class HammerSkill(WeaponSkill):
-    """Represent a hammer skill. It is used to represent a skill of a character."""
+    """Represent a hammer skill.
+
+    It is used to represent a skill of a character.
+    """
 
     weapon = Hammer()
 
 
 class AxSkill(WeaponSkill):
-    """Represent an ax skill. It is used to represent a skill of a character."""
+    """Represent an ax skill.
+
+    It is used to represent a skill of a character.
+    """
 
     weapon = Ax()
 
 
 class DaggerSkill(WeaponSkill):
-    """Represent a dagger skill. It is used to represent a skill of a character."""
+    """Represent a dagger skill.
+
+    It is used to represent a skill of a character.
+    """
 
     weapon = Dagger()
 
@@ -104,7 +126,10 @@ class DaggerSkill(WeaponSkill):
 
 
 class MonsterSkill(Skill):
-    """Represent a monster skill. It is used to represent a skill of a monster."""
+    """Represent a monster skill.
+
+    It is used to represent a skill of a monster.
+    """
 
     def __init__(self):
         """Initialize the monster skill."""
@@ -119,35 +144,50 @@ class MonsterSkill(Skill):
 
 
 class FireBreath(MonsterSkill):
-    """Represent a fire breath skill. It is used to represent a skill of a monster."""
+    """Represent a fire breath skill.
+
+    It is used to represent a skill of a monster.
+    """
 
     def run(self):
         """Run fire breath skill."""
 
 
 class Stench(MonsterSkill):
-    """Represent a stench skill. It is used to represent a skill of a monster."""
+    """Represent a stench skill.
+
+    It is used to represent a skill of a monster.
+    """
 
     def run(self):
         """Run stench skill."""
 
 
 class DemonSkill(MonsterSkill):
-    """Represent a demon skill. It is used to represent a skill of a monster."""
+    """Represent a demon skill.
+
+    It is used to represent a skill of a monster.
+    """
 
     def run(self):
         """Run demon skill."""
 
 
 class HailHydra(MonsterSkill):
-    """Represent a hail hydra skill. It is used to represent a skill of a monster."""
+    """Represent a hail hydra skill.
+
+    It is used to represent a skill of a monster.
+    """
 
     def run(self):
         """Run hail hydra skill."""
 
 
 class FleshToStone(MonsterSkill):
-    """Represent a flesh to stone skill. It is used to represent a skill of a monster."""
+    """Represent a flesh to stone skill.
+
+    It is used to represent a skill of a monster.
+    """
 
     def run(self):
         """Run flesh to stone skill."""

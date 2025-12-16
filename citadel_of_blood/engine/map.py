@@ -9,8 +9,9 @@ from citadel_of_blood.engine.segment import GatewayOfEvil, Room, Segment
 class Board:
     """Board class.
 
-    It is responsible for rendering the board and moving the party counter. It also stores the map and
-    monsters.
+    It is responsible for rendering the board and moving the party counter.
+
+    It also stores the map and monsters.
     """
 
     def __init__(self) -> None:
@@ -74,7 +75,8 @@ class Board:
             exits = self.get_adjacent_segment_exits(position)
             s = Segment(exits=exits)
 
-            # In the original Citadel of Blood core there are 200 segments and 80 of them are rooms.
+            # In the original Citadel of Blood core there are 200 segments and 80 of
+            # them are rooms.
             # In Polish pirated version the ratio room:corridor is 0.38.
             # Here, we use the extended ratio.
             if Exit.ROOM in exits and Exit.CORRIDOR not in exits:

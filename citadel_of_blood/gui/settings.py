@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Settings for the GUI."""
+
+from __future__ import annotations
 
 
 class Settings:

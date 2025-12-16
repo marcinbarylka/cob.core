@@ -56,7 +56,10 @@ class Action(abc.ABC):
 
 
 class CastSpell(Action):
-    """CastSpell class. It is used to represent a spell casting action of a character."""
+    """CastSpell class.
+
+    It is used to represent a spell casting action of a character.
+    """
 
     def __init__(self, scene: Scene, spell: Spell) -> None:
         """Initialize the CastSpell class.
@@ -76,7 +79,7 @@ class CastSpell(Action):
         """Execute the method after the action is executed."""
 
     def execute(self) -> None:
-        """Execute the spell casting action by calling the cast method of the spell object."""
+        """Execute the spell casting action by calling the cast method of the spell."""
         self.spell.cast(self.scene)
 
 
@@ -99,5 +102,5 @@ class Attack(Action):
         """Execute the method after the action is executed."""
 
     def execute(self) -> None:
-        """Execute the attack action by calling the attack method of the scene object."""
+        """Execute the attack action by calling the attack method of the scene."""
         self.scene.attack()

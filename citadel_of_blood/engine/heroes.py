@@ -25,7 +25,9 @@ from citadel_of_blood.errors.engine_errors import (
 class Hero:
     """A hero that can be played by a player.
 
-    A hero is a character with various attributes and abilities that can be used in the game_gui.
+    A hero is a character with various attributes and abilities that can be used
+    in the game.
+
     Heroes can fight using weapons, cast spells, and use skills.
 
     Attributes:
@@ -139,7 +141,8 @@ class Initiate(Hero):
             weapon: The weapon to add
 
         Raises:
-            MaxWeaponsReachedError: If the initiate already has the maximum number of weapons
+            MaxWeaponsReachedError: If the initiate already has the maximum
+                number of weapons
 
         """
         if len(self.weapons) >= self.MAX_WEAPONS:

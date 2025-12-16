@@ -113,7 +113,7 @@ class PanelRendererMixin:
     _ASSETS: dict[str, pygame.Surface] = {}
 
     def init_panel_renderer(self: Any, pattern: int) -> None:
-        """Initialize panel rendering assets and calculate layout based on size and pattern."""
+        """Initialize panel rendering assets and calculate layout based on size and pattern."""  # noqa: E501
         if pattern not in (0, 1, 2):
             raise PanelRendererError(
                 "invalid_pattern", f"Pattern {pattern} is not supported."

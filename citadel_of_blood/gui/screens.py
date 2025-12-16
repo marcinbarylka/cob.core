@@ -91,7 +91,8 @@ class GameScreen:
         """Handle pygame events for the screen and its widgets.
 
         Args:
-            events (list[pygame.event.Event] | None, optional): List of events to handle.
+            events (list[pygame.event.Event] | None, optional):
+                List of events to handle.
                 If None, gets current events. Defaults to None.
 
         Returns:

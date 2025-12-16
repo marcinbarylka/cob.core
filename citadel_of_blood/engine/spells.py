@@ -36,7 +36,7 @@ class Spell(abc.ABC):
 
     @staticmethod
     def get_spells_by_type(spell_type):
-        """Return a list of instances of Spell subclasses that match the given spell_type.
+        """Return a list of instances of Spell subclasses.
 
         Args:
             spell_type: SpellType
