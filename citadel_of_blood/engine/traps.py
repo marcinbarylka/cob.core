@@ -171,3 +171,4 @@ def roll_trap() -> list[Trap]:
             return [FlamingOil()]
         case 6:
             return roll_trap() + roll_trap()
+    return []  # should not happen

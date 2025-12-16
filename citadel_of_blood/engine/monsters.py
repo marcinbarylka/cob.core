@@ -108,20 +108,20 @@ class Monster:
         return self._wound_points
 
     @property
-    def hold_treasure(self) -> Treasure:
+    def hold_treasure(self) -> Treasure | None:
         """Get the appropriate treasure type based on monster status (wandering or not).
 
         Returns:
-            Treasure: The treasure of the monster.
+            Treasure | None: The treasure of the monster.
 
         """
         return self.treasure[1] if self.is_wandering else self.treasure[0]
 
-    def get_treasure(self) -> Treasure:
+    def get_treasure(self) -> Treasure | None:
         """Get the treasure of the monster.
 
         Returns:
-             Treasure: The treasure of the monster.
+             Treasure | None: The treasure of the monster.
 
         """
         if self.is_wandering:
@@ -546,13 +546,13 @@ def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Mons
     """
     code = WANDERING_MONSTER_TABLE[d1][d2] if wandering else ROOM_MONSTER_TABLE[d1][d2]
     if ":" in code:
-        monster, number = code.split(":")
+        monster, number_str = code.split(":")
     else:
         monster = code
-        number = "1"
-    number = roll(number) if "d" in number else int(number)
+        number_str = "1"
+    count = roll(number_str) if "d" in number_str else int(number_str)
     monsters = []
-    for _ in range(number):
+    for _ in range(count):
         monster_class = globals()[monster]
         monsters += spawn_monster(monster_class, level, wandering)
     return monsters

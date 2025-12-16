@@ -126,7 +126,7 @@ class Treasure(enum.Enum):
         has_gold = roll("d6") <= probability if probability else False
         if not has_gold:
             return 0
-        return roll(dice_code)
+        return roll(dice_code) if dice_code else 0
 
     def roll_jewelery(self) -> list[int]:
         """Roll for jewelery.
@@ -152,7 +152,7 @@ class Treasure(enum.Enum):
             dict: dictionary of magic items
 
         """
-        result = {key: [] for key in MAGIC_ITEM_TYPES}
+        result: dict[str, list[Any]] = {key: [] for key in MAGIC_ITEM_TYPES}
         probability, code = Treasure.parse_treasure_code(self.value.magic_items)
 
         # Try to parse dice code. If it fails, that means there is arbitrary value.
