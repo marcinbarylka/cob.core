@@ -8,6 +8,7 @@ from citadel_of_blood import Exit
 from citadel_of_blood.engine.segment import Segment
 from citadel_of_blood.gui.colors import ColorsEnum
 from citadel_of_blood.gui.settings import Settings
+from engine.map import Board
 
 
 class FontInitMixin:
@@ -32,16 +33,27 @@ class FontInitMixin:
 
         return font_file
 
+    def _init_surface(self):
+        """Initialize the console surface."""
+        # load font once and measure
+        self.font = Font(self.font_file)
+        char_w, char_h = self.measure_bdf(self.font_file)
+        self.char_width = int(char_w)
+        self.char_height = int(char_h)
+
+        self.surface = pygame.Surface((self.width, self.height))
+        self.surface.fill(self.background)
+
 
 class SegmentConsole(FontInitMixin, BDFConsole):
     """Segment of the board."""
 
     def __init__(
-        self,
-        x: int,
-        y: int,
-        font: str | None = None,
-        segment: Segment | None = None,
+            self,
+            x: int,
+            y: int,
+            font: str | None = None,
+            segment: Segment | None = None,
     ) -> None:
         """Initialize the segment console.
 
@@ -66,17 +78,6 @@ class SegmentConsole(FontInitMixin, BDFConsole):
             margin=(0, 0, 0, 0),
         )
         self.segment = segment
-
-    def _init_surface(self):
-        """Initialize the console surface."""
-        # load font once and measure
-        self.font = Font(self.font_file)
-        char_w, char_h = self.measure_bdf(self.font_file)
-        self.char_width = int(char_w)
-        self.char_height = int(char_h)
-
-        self.surface = pygame.Surface((self.width, self.height))
-        self.surface.fill(self.background)
 
     def render(self) -> None:
         """Render the segment console."""
@@ -178,17 +179,18 @@ class SegmentConsole(FontInitMixin, BDFConsole):
         return
 
 
-class MapConsole(FontInitMixin, BDFConsole):
+class BoardConsole(FontInitMixin, BDFConsole):
     """Map console."""
 
     def __init__(
-        self,
-        x: int,
-        y: int,
-        width: int,
-        height: int,
-        font: str | None = None,
-        level: int = 1,
+            self,
+            x: int,
+            y: int,
+            width: int,
+            height: int,
+            font: str | None = None,
+            level: int = 1,
+            board: Board | None = None,
     ) -> None:
         """Initialize the map console.
 
@@ -212,3 +214,25 @@ class MapConsole(FontInitMixin, BDFConsole):
             margin=(0, 0, 0, 0),
         )
         self.level = level
+        self.board = board
+
+    def render(self) -> None:
+        """Render the map console."""
+        # super().render()
+        if self.board is None:
+            return
+
+        self.clear()
+
+        settings = Settings()
+
+        # Placeholder: Draw segments in a grid
+        for position, segment in self.board.map.items():
+            x = (position[0] + 5) * settings.segment_size[0]  # Offset to center
+            y = (position[1] + 5) * settings.segment_size[1]  # Offset to center
+
+            # Draw segment representation (simple square)
+            rect = pygame.Rect(x, y, settings.segment_size[0] - 1, settings.segment_size[1] - 1)
+            pygame.draw.rect(self.surface, ColorsEnum.WHITE, rect)
+
+        self._changed = True

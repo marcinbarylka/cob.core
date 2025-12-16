@@ -17,7 +17,7 @@ class Board:
         """Initialize the Board class."""
         self.map: dict[tuple[int, int, int], Segment] = {(0, 0, 0): GatewayOfEvil()}
         self.monsters: dict[tuple[int, int, int], Monster] = {}
-        self.party_position: tuple[int, int, int] = (0, 0, 0)
+        self.party_position: tuple[int, int, int] = [0, 0, 0]
 
     def get_adjacent_segment_exits(self, position: tuple[int, int, int]) -> list[int]:
         """Get exits of the segments adjacent to the segment at given position.
