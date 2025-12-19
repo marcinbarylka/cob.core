@@ -51,7 +51,7 @@ LEVEL_CHART = [
 ]
 
 ROOM_MONSTER_TABLE = [
-    ["EvilMage", "EvilHero", "Cronk:d6", "Garogyle", "Chimaera", "Medusa"],
+    ["EvilMage", "EvilHero", "Cronk:d6", "Gargoyle", "Chimaera", "Medusa"],
     ["Orc:d3", "Troll", "Vampire", "Harpy:d3+2", "Ogre", "Minotaur"],
     ["DireWolf:d6", "Wight", "Warg:d3", "EvilMage", "EvilHero", "Cronk:d6+1"],
     ["Gargoyle:2", "Chimaera:2", "Medusa", "Orc:d6+1", "Hydra", "Vampire"],
@@ -531,14 +531,14 @@ def spawn_monster(
     return monsters
 
 
-def roll_monster(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Monster]:
-    """Roll a random monster.
+def roll_monsters(wandering: bool, d1: int, d2: int, level: int = 1) -> list[Monster]:
+    """Roll a random monster (returns a list of monsters).
 
     Args:
         wandering (bool): True if the monster is a wandering monster.
         d1 (int): The first die roll.
         d2 (int): The second die roll.
-        level (int): The level of the maze.
+        level (int): The le``vel of the maze.
 
     Returns:
         list[Monster]: A list of monsters.
@@ -570,7 +570,7 @@ def roll_room_monster(level: int = 1):
     """
     d6_1 = roll("d6") - 1
     d6_2 = roll("d6") - 1
-    return roll_monster(False, d6_1, d6_2, level)
+    return roll_monsters(False, d6_1, d6_2, level)
 
 
 def roll_wandering_monster(level: int = 1) -> list[Monster]:
@@ -585,4 +585,4 @@ def roll_wandering_monster(level: int = 1) -> list[Monster]:
     """
     d3_1 = roll("d3") - 1
     d6_2 = roll("d6") - 1
-    return roll_monster(True, d3_1, d6_2, level)
+    return roll_monsters(True, d3_1, d6_2, level)
