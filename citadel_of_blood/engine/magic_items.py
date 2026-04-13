@@ -59,7 +59,9 @@ class Strength(Potion):
 
     def __init__(self):
         """Initialize the Strength class."""
-        super().__init__("Strength Potion", "A magical potion that increases the drinker's strength.")
+        super().__init__(
+            "Strength Potion", "A magical potion that increases the drinker's strength."
+        )
 
     def effect(self):
         """Effect of the strength potion."""
@@ -71,7 +73,9 @@ class CharmPerson(Potion):
 
     def __init__(self):
         """Initialize the CharmPerson class."""
-        super().__init__("Charm Person", "A magical potion that can be used to charm people.")
+        super().__init__(
+            "Charm Person", "A magical potion that can be used to charm people."
+        )
 
     def effect(self):
         """Effect of the charm person potion."""
@@ -83,7 +87,9 @@ class CharmMonster(Potion):
 
     def __init__(self):
         """Initialize the CharmMonster class."""
-        super().__init__("Charm Monster", "A magical potion that can be used to charm monsters.")
+        super().__init__(
+            "Charm Monster", "A magical potion that can be used to charm monsters."
+        )
 
     def effect(self):
         """Effect of the charm monster potion."""
@@ -197,7 +203,9 @@ class Evil(Talisman):
 
     def __init__(self):
         """Initialize the Evil class."""
-        super().__init__("Talisman of Evil", "A talisman that can be used to curse the wearer.")
+        super().__init__(
+            "Talisman of Evil", "A talisman that can be used to curse the wearer."
+        )
 
     def effect(self):
         """Effect of the evil talisman."""
@@ -328,7 +336,9 @@ class Sleep(Ring):
 
     def __init__(self):
         """Initialize the Sleep class."""
-        super().__init__("Ring of Sleep", "A ring that can be used to put enemies to sleep.")
+        super().__init__(
+            "Ring of Sleep", "A ring that can be used to put enemies to sleep."
+        )
 
     def effect(self):
         """Effect of the sleep ring."""
@@ -367,7 +377,9 @@ class Resurrect(Ring):
 
     def __init__(self):
         """Initialize the Resurrect class."""
-        super().__init__("Ring of Resurrect", "A ring that can be used to resurrect the dead.")
+        super().__init__(
+            "Ring of Resurrect", "A ring that can be used to resurrect the dead."
+        )
 
     def effect(self):
         """Effect of the resurrect ring."""

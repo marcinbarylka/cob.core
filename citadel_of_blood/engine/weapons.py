@@ -1,4 +1,4 @@
-"""Weapons used in the game."""
+"""Weapons used in the game_gui."""
 
 
 class Weapon:

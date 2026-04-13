@@ -1,6 +1,6 @@
-"""A module for game screens.
+"""A module for game_gui screens.
 
-This module provides base classes for creating and managing game screens.
+This module provides base classes for creating and managing game_gui screens.
 Each screen can contain multiple widgets and handle their rendering and events.
 """
 
@@ -18,7 +18,7 @@ from citadel_of_blood.gui.widgets.panels import Panel
 
 
 class GameScreen:
-    """Base class for game screens.
+    """Base class for game_gui screens.
 
     This class provides core functionality for creating screens that can contain
     and manage multiple widgets, handle events, and perform rendering.
@@ -33,7 +33,7 @@ class GameScreen:
     """
 
     def __init__(self, colors: ColorPair, settings: Settings | None = None) -> None:
-        """Initialize a new game screen.
+        """Initialize a new game_gui screen.
 
         Args:
             colors (ColorPair): The color scheme for the screen
@@ -85,11 +85,14 @@ class GameScreen:
                 widget.settings = self.settings
             widget.update()
 
-    def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event] | None:
+    def handle_events(
+        self, events: list[pygame.event.Event] | None = None
+    ) -> list[pygame.event.Event] | None:
         """Handle pygame events for the screen and its widgets.
 
         Args:
-            events (list[pygame.event.Event] | None, optional): List of events to handle.
+            events (list[pygame.event.Event] | None, optional):
+                List of events to handle.
                 If None, gets current events. Defaults to None.
 
         Returns:
@@ -179,18 +182,27 @@ class GameScreen:
 
 
 class DefaultScreen(GameScreen):
-    """Default implementation of a game screen.
+    """Default implementation of a game_gui screen.
 
     This screen provides a basic setup with a sample button widget.
     It serves as an example of how to create custom screen classes.
     """
 
-    DEFAULT_COLORS = ColorPair(background_color=ColorsEnum.DEFAULT_BACKGROUND, foreground_color=ColorsEnum.WHITE)
+    DEFAULT_COLORS = ColorPair(
+        background_color=ColorsEnum.DEFAULT_BACKGROUND,
+        foreground_color=ColorsEnum.WHITE,
+    )
 
     DEFAULT_WIDGET_COLORS = WidgetColors(
-        normal=ColorPair(background_color=ColorsEnum.GRAY, foreground_color=ColorsEnum.WHITE),
-        hover=ColorPair(background_color=(0x11, 0x11, 0x11, 0xFF), foreground_color=ColorsEnum.WHITE),
-        click=ColorPair(background_color=ColorsEnum.WHITE, foreground_color=ColorsEnum.BLACK),
+        normal=ColorPair(
+            background_color=ColorsEnum.GRAY, foreground_color=ColorsEnum.WHITE
+        ),
+        hover=ColorPair(
+            background_color=(0x11, 0x11, 0x11, 0xFF), foreground_color=ColorsEnum.WHITE
+        ),
+        click=ColorPair(
+            background_color=ColorsEnum.WHITE, foreground_color=ColorsEnum.BLACK
+        ),
     )
 
     def __init__(self, settings: Settings | None = None) -> None:
@@ -275,7 +287,9 @@ class OpenModalButton(PixelButton):
         play_sfx: bool = True,
     ) -> None:
         """Initialize the OpenModalButton."""
-        super().__init__(x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx)
+        super().__init__(
+            x=x, y=y, width=width, caption=caption, font=font, play_sfx=play_sfx
+        )
         self.modal = modal
 
     def on_click(self) -> None:

@@ -14,7 +14,9 @@ SF = TypeVar("SF", bound="SerializableFont")
 class SerializableFont:
     """Serialized font class."""
 
-    def __init__(self, font_path: str | Path, size: int, bold: bool = False, italic: bool = False):
+    def __init__(
+        self, font_path: str | Path, size: int, bold: bool = False, italic: bool = False
+    ):
         """Initialize the SerializedFont class."""
         self.font_path = font_path
         self.size = size
@@ -24,7 +26,9 @@ class SerializableFont:
         self.font.bold = bold
         self.font.italic = italic
 
-    def render(self, caption: str, antialias: bool = True, color: GUIColor = (0xFF, 0xFF, 0xFF)) -> pygame.Surface:
+    def render(
+        self, caption: str, antialias: bool = True, color: GUIColor = (0xFF, 0xFF, 0xFF)
+    ) -> pygame.Surface:
         """Render the font.
 
         Args:

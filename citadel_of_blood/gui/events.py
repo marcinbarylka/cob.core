@@ -10,7 +10,9 @@ class EventsHandler:
         """Initialize the EventsHandler class."""
         self.running: bool = True
 
-    def handle_events(self, events: list[pygame.event.Event] | None = None) -> list[pygame.event.Event]:
+    def handle_events(
+        self, events: list[pygame.event.Event] | None = None
+    ) -> list[pygame.event.Event]:
         """Handle the events."""
         if not events:
             events = pygame.event.get()

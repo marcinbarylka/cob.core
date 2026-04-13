@@ -90,7 +90,9 @@ class Dice:
 
         self._components.number = int(number_str) if number_str else 1
         self._components.type = int(type_str)
-        self._components.modifier, self._components.multiplier = self._parse_modifier(operator, mod_str)
+        self._components.modifier, self._components.multiplier = self._parse_modifier(
+            operator, mod_str
+        )
 
     def roll(self, dice_code: str | None = None) -> int:
         """Roll the dice according to the parsed dice code.
@@ -108,7 +110,9 @@ class Dice:
         if dice_code:
             self.parse(dice_code)
 
-        result = sum(randint(1, self._components.type) for _ in range(self._components.number))
+        result = sum(
+            randint(1, self._components.type) for _ in range(self._components.number)
+        )
         return result * self._components.multiplier + self._components.modifier
 
     @property
@@ -119,7 +123,12 @@ class Dice:
             The maximum possible roll value
 
         """
-        return self._components.type * self._components.number * self._components.multiplier + self._components.modifier
+        return (
+            self._components.type
+            * self._components.number
+            * self._components.multiplier
+            + self._components.modifier
+        )
 
     @property
     def min(self) -> int:
@@ -129,7 +138,10 @@ class Dice:
             The minimum possible roll value
 
         """
-        return self._components.number * self._components.multiplier + self._components.modifier
+        return (
+            self._components.number * self._components.multiplier
+            + self._components.modifier
+        )
 
 
 def roll(dice_code: str) -> int:

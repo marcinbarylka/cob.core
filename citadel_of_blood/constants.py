@@ -1,4 +1,4 @@
-"""Constants for the game."""
+"""Constants for the game_gui."""
 
 from pathlib import Path
 

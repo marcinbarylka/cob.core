@@ -37,7 +37,10 @@ class Trap(ABC):
 
     @abstractmethod
     def spring(self, detrapper: Hero | Initiate, party: Party) -> None:
-        """Run trap. This method should be implemented in child classes. It should contain all the logic of the trap.
+        """Run trap.
+
+        This method should be implemented in child classes. It should contain
+        all the logic of the trap.
 
         Args:
             detrapper: hero or initiate that triggered the trap
@@ -168,3 +171,4 @@ def roll_trap() -> list[Trap]:
             return [FlamingOil()]
         case 6:
             return roll_trap() + roll_trap()
+    return []  # should not happen

@@ -9,8 +9,9 @@ from citadel_of_blood.engine.segment import GatewayOfEvil, Room, Segment
 class Board:
     """Board class.
 
-    It is responsible for rendering the board and moving the party counter. It also stores the map and
-    monsters.
+    It is responsible for rendering the board and moving the party counter.
+
+    It also stores the map and monsters.
     """
 
     def __init__(self) -> None:
@@ -29,14 +30,28 @@ class Board:
             list of exits of the adjacent segments
 
         """
-        directions = [Direction.north.value, Direction.east.value, Direction.south.value, Direction.west.value]
-        opposite_directions = [Direction.south.value, Direction.west.value, Direction.north.value, Direction.east.value]
+        directions = [
+            Direction.NORTH.value,
+            Direction.EAST.value,
+            Direction.SOUTH.value,
+            Direction.WEST.value,
+        ]
+        opposite_directions = [
+            Direction.SOUTH.value,
+            Direction.WEST.value,
+            Direction.NORTH.value,
+            Direction.EAST.value,
+        ]
         offsets = [(0, -1, 0), (1, 0, 0), (0, 1, 0), (-1, 0, 0)]
 
-        exits = [Exit.undefined for _ in directions]
+        exits = [Exit.UNDEFINED for _ in directions]
 
         for i, (dx, dy, dz) in enumerate(offsets):
-            neighbor_position = (position[Axis.x.value] + dx, position[Axis.y.value] + dy, position[Axis.z.value] + dz)
+            neighbor_position = (
+                position[Axis.X.value] + dx,
+                position[Axis.Y.value] + dy,
+                position[Axis.Z.value] + dz,
+            )
             neighbor_segment = self.map.get(neighbor_position)
 
             if neighbor_segment:
@@ -45,7 +60,9 @@ class Board:
         return exits
 
     def get_segment(self, position: tuple[int, int, int]) -> Segment:
-        """Get segment at given position. If there is no segment at given position, then it is created.
+        """Get segment at given position.
+
+        If there is no segment at given position, then it is created.
 
         Args:
             position: position of the segment
@@ -58,10 +75,11 @@ class Board:
             exits = self.get_adjacent_segment_exits(position)
             s = Segment(exits=exits)
 
-            # In the original Citadel of Blood core there are 200 segments and 80 of them are rooms.
+            # In the original Citadel of Blood core there are 200 segments and 80 of
+            # them are rooms.
             # In Polish pirated version the ratio room:corridor is 0.38.
             # Here, we use the extended ratio.
-            if Exit.room in exits and Exit.corridor not in exits:
+            if Exit.ROOM in exits and Exit.CORRIDOR not in exits:
                 d100 = dice.roll("d100")
                 if d100 <= 50:
                     s = Room(exits=exits)
@@ -70,3 +88,7 @@ class Board:
             return s
 
         return self.map[position]
+
+    def __str__(self) -> str:
+        """Return string representation of the board."""
+        return f"Board: {self.map}"

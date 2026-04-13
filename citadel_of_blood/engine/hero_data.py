@@ -18,7 +18,7 @@ from citadel_of_blood.engine.weapons import Ax, Bow, Dagger, Hammer, Sword, Thro
 
 
 class HeroesEnum(enum.Enum):
-    """Available heroes in the game."""
+    """Available heroes in the game_gui."""
 
     almuric = Hero(
         "Almuric",
@@ -31,7 +31,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), Dagger()],
         SwordSkill(1),
         Hellgate(1),
-        FontMap.almuric.value,
+        FontMap.ALMURIC.value,
     )
     alric = Hero(
         "Alric",
@@ -44,7 +44,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), ThrowDagger()],
         None,
         Hellgate(1),
-        FontMap.alric.value,
+        FontMap.ALRIC.value,
     )
     curvenol = Hero(
         "Curvenol",
@@ -57,7 +57,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), ThrowDagger()],
         None,
         Hellgate(2),
-        FontMap.curvenol.value,
+        FontMap.CURVENOL.value,
     )
     dalmilandril = Hero(
         "Dalmilandril",
@@ -70,7 +70,7 @@ class HeroesEnum(enum.Enum):
         [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(2),
-        FontMap.dalmilandril.value,
+        FontMap.DALMILANDRIL.value,
     )
     dierdra = Hero(
         "Dierdra",
@@ -83,7 +83,7 @@ class HeroesEnum(enum.Enum):
         [Hammer(), Sword()],
         HammerSkill(1),
         Hellgate(1),
-        FontMap.dierdra.value,
+        FontMap.DIERDRA.value,
     )
     eodred = Hero(
         "Eodred",
@@ -96,7 +96,7 @@ class HeroesEnum(enum.Enum):
         [Bow(), ThrowDagger()],
         None,
         Hellgate(2),
-        FontMap.eodred.value,
+        FontMap.EODRED.value,
     )
     gerudirr = Hero(
         "Gerudirr",
@@ -109,7 +109,7 @@ class HeroesEnum(enum.Enum):
         [Ax(), Dagger()],
         AxSkill(3),
         Detrap(3),
-        FontMap.gerudirr.value,
+        FontMap.GERUDIRR.value,
     )
     gilith = Hero(
         "Gilith",
@@ -122,7 +122,7 @@ class HeroesEnum(enum.Enum):
         [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(2),
-        FontMap.gilith.value,
+        FontMap.GILITH.value,
     )
     gislan = Hero(
         "Gislan",
@@ -135,7 +135,7 @@ class HeroesEnum(enum.Enum):
         [Ax(), Hammer()],
         AxSkill(2),
         Detrap(3),
-        FontMap.gislan.value,
+        FontMap.GISLAN.value,
     )
     gwaigilion = Hero(
         "Gwaigilion",
@@ -148,7 +148,7 @@ class HeroesEnum(enum.Enum):
         [Bow(), Dagger()],
         BowSkill(2),
         Negotiation(1),
-        FontMap.gwaigilion.value,
+        FontMap.GWAIGILION.value,
     )
     larraka = Hero(
         "Larraka",
@@ -161,7 +161,7 @@ class HeroesEnum(enum.Enum):
         [Bow(), Dagger()],
         None,
         Hellgate(1),
-        FontMap.larraka.value,
+        FontMap.LARRAKA.value,
     )
     linfalas = Hero(
         "Linfalas",
@@ -174,7 +174,7 @@ class HeroesEnum(enum.Enum):
         [Bow(), Sword()],
         BowSkill(2),
         Negotiation(3),
-        FontMap.linfalas.value,
+        FontMap.LINFALAS.value,
     )
     lord_dil = Hero(
         "Lord Dil",
@@ -187,7 +187,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), Dagger()],
         SwordSkill(2),
         Hellgate(2),
-        FontMap.lord_dil.value,
+        FontMap.LORD_DIL.value,
     )
     maytwist = Hero(
         "Maytwist",
@@ -200,7 +200,7 @@ class HeroesEnum(enum.Enum):
         [ThrowDagger(), Bow()],
         BowSkill(2),
         Negotiation(2),
-        FontMap.maytwist.value,
+        FontMap.MAYTWIST.value,
     )
     paladin_glade = Hero(
         "Paladin Glade",
@@ -213,7 +213,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), ThrowDagger()],
         SwordSkill(2),
         Hellgate(2),
-        FontMap.paladin_glade.value,
+        FontMap.PALADIN_GLADE.value,
     )
     raman = Hero(
         "Raman",
@@ -226,7 +226,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), Dagger()],
         SwordSkill(1),
         Detrap(1),
-        FontMap.raman.value,
+        FontMap.RAMAN.value,
     )
     sliggoth = Hero(
         "Sliggoth",
@@ -239,7 +239,7 @@ class HeroesEnum(enum.Enum):
         [Ax(), Bow()],
         AxSkill(1),
         Detrap(1),
-        FontMap.sliggoth.value,
+        FontMap.SLIGGOTH.value,
     )
     stephen_paladin = Hero(
         "Stephen Paladin",
@@ -252,7 +252,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), Dagger()],
         SwordSkill(2),
         Hellgate(2),
-        FontMap.stephen_paladin.value,
+        FontMap.STEPHEN_PALADIN.value,
     )
     theregond = Hero(
         "Theregond",
@@ -265,7 +265,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), ThrowDagger()],
         SwordSkill(3),
         Hellgate(3),
-        FontMap.theregond.value,
+        FontMap.THEREGOND.value,
     )
     weldron = Hero(
         "Weldron",
@@ -278,7 +278,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), Bow()],
         SwordSkill(2),
         Hellgate(3),
-        FontMap.weldron.value,
+        FontMap.WELDRON.value,
     )
     wendolyn = Hero(
         "Wendolyn",
@@ -291,7 +291,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), Dagger()],
         DaggerSkill(2),
         Hellgate(4),
-        FontMap.wendolyn.value,
+        FontMap.WENDOLYN.value,
     )
     zareth = Hero(
         "Zareth",
@@ -304,7 +304,7 @@ class HeroesEnum(enum.Enum):
         [Sword(), ThrowDagger()],
         SwordSkill(1),
         Hellgate(3),
-        FontMap.zareth.value,
+        FontMap.ZARETH.value,
     )
     zurik = Hero(
         "Zurik",
@@ -317,7 +317,7 @@ class HeroesEnum(enum.Enum):
         [Ax(), Dagger()],
         AxSkill(2),
         Detrap(3),
-        FontMap.zurik.value,
+        FontMap.ZURIK.value,
     )
 
     @staticmethod
@@ -325,14 +325,14 @@ class HeroesEnum(enum.Enum):
         """Get a list of all available heroes.
 
         Returns:
-            List of all heroes in the game
+            List of all heroes in the game_gui
 
         """
         return list(HeroesEnum.__members__.values())
 
 
 class InitiatesEnum(enum.Enum):
-    """Available initiates in the game."""
+    """Available initiates in the game_gui."""
 
     human_a = Initiate(
         name="",
@@ -345,7 +345,7 @@ class InitiatesEnum(enum.Enum):
         skill=Hellgate(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.human_a.value,
+        icon=FontMap.HUMAN_A.value,
     )
     human_b = Initiate(
         name="",
@@ -358,7 +358,7 @@ class InitiatesEnum(enum.Enum):
         skill=Hellgate(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.human_b.value,
+        icon=FontMap.HUMAN_B.value,
     )
     human_c = Initiate(
         name="",
@@ -371,7 +371,7 @@ class InitiatesEnum(enum.Enum):
         skill=Hellgate(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.human_c.value,
+        icon=FontMap.HUMAN_C.value,
     )
     elf_a = Initiate(
         name="",
@@ -384,7 +384,7 @@ class InitiatesEnum(enum.Enum):
         skill=Negotiation(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.elf_a.value,
+        icon=FontMap.ELF_A.value,
     )
     elf_b = Initiate(
         name="",
@@ -397,7 +397,7 @@ class InitiatesEnum(enum.Enum):
         skill=Negotiation(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.elf_b.value,
+        icon=FontMap.ELF_B.value,
     )
     elf_c = Initiate(
         name="",
@@ -410,7 +410,7 @@ class InitiatesEnum(enum.Enum):
         skill=Negotiation(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.elf_c.value,
+        icon=FontMap.ELF_C.value,
     )
     dwarf_a = Initiate(
         name="",
@@ -423,7 +423,7 @@ class InitiatesEnum(enum.Enum):
         skill=Detrap(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.dwarf_a.value,
+        icon=FontMap.DWARF_A.value,
     )
     dwarf_b = Initiate(
         name="",
@@ -436,7 +436,7 @@ class InitiatesEnum(enum.Enum):
         skill=Detrap(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.dwarf_b.value,
+        icon=FontMap.DWARF_B.value,
     )
     dwarf_c = Initiate(
         name="",
@@ -449,7 +449,7 @@ class InitiatesEnum(enum.Enum):
         skill=Detrap(1),
         combat_bonus=0,
         magic_potential=(0, 0, 0),
-        icon=FontMap.dwarf_c.value,
+        icon=FontMap.DWARF_C.value,
     )
 
     @staticmethod
@@ -457,7 +457,7 @@ class InitiatesEnum(enum.Enum):
         """Get a list of all available initiates.
 
         Returns:
-            List of all initiates in the game
+            List of all initiates in the game_gui
 
         """
         return list(InitiatesEnum.__members__.values())

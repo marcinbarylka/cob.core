@@ -6,99 +6,99 @@ import enum
 class Exit(enum.IntEnum):
     """Exit."""
 
-    undefined = -1
-    wall = 0
-    corridor = 1
-    room = 2
-    room_closed = 3
+    UNDEFINED = -1
+    WALL = 0
+    CORRIDOR = 1
+    ROOM = 2
+    ROOM_CLOSED = 3
 
 
 class Direction(enum.IntEnum):
     """Direction."""
 
-    north = 0
-    east = 1
-    south = 2
-    west = 3
+    NORTH = 0
+    EAST = 1
+    SOUTH = 2
+    WEST = 3
 
 
 class Axis(enum.IntEnum):
     """Axis."""
 
-    x = 0
-    y = 1
-    z = 2
+    X = 0
+    Y = 1
+    Z = 2
 
 
 class FontMap(enum.StrEnum):
     """Font map."""
 
     # Room features
-    fountain = "F"
-    statue = "S"
-    trap_door = "T"
-    furniture = "f"
-    staircase = "s"
-    mirror = "M"
-    artwork = "a"
-    altair = "A"
+    FOUNTAIN = "F"
+    STATUE = "S"
+    TRAP_DOOR = "T"
+    FURNITURE = "f"
+    STAIRCASE = "s"
+    MIRROR = "M"
+    ARTWORK = "a"
+    ALTAR = "A"
 
-    party = "@"
-    entrance = "E"
-    hellgate = "H"
+    PARTY = "@"
+    ENTRANCE = "E"
+    HELLGATE = "H"
 
     # Monsters
-    chimaera = "C"
-    demon = "D"
-    gargoyle = "G"
-    ogre = "O"
-    unknown = "U"
-    vampire = "V"
-    wight = "W"
-    cronk = "c"
-    dire_wolf = "d"
-    evil_mage = "e"
-    harpy = "h"
-    minotaur = "m"
-    orc = "o"
-    troll = "t"
-    warg = "v"
-    wraith = "w"
-    hydra = "x"
-    skeleton = "z"
-    medusa = "{"
-    evil_hero = "~"
+    CHIMAERA = "C"
+    DEMON = "D"
+    GARGOYLE = "G"
+    OGRE = "O"
+    UNKNOWN = "U"
+    VAMPIRE = "V"
+    WIGHT = "W"
+    CRONK = "c"
+    DIRE_WOLF = "d"
+    EVIL_MAGE = "e"
+    HARPY = "h"
+    MINOTAUR = "m"
+    ORC = "o"
+    TROLL = "t"
+    WARG = "v"
+    WRAITH = "w"
+    HYDRA = "x"
+    SKELETON = "z"
+    MEDUSA = "{"
+    EVIL_HERO = "~"
 
     # Heroes & initiates
-    gilith = chr(0x100)
-    gislan = chr(0x101)
-    gwaigilion = chr(0x102)
-    larraka = chr(0x103)
-    linfalas = chr(0x104)
-    lord_dil = chr(0x105)
-    maytwist = chr(0x106)
-    paladin_glade = chr(0x107)
-    raman = chr(0x108)
-    sliggoth = chr(0x109)
-    stephen_paladin = chr(0x10A)
-    theregond = chr(0x10B)
-    weldron = chr(0x10C)
-    wendolyn = chr(0x10D)
-    zurik = chr(0x10E)
-    zareth = chr(0x10F)
-    alric = chr(0x110)
-    curvenol = chr(0x111)
-    dalmilandril = chr(0x112)
-    dierdra = chr(0x113)
-    eodred = chr(0x114)
-    gerudirr = chr(0x115)
-    almuric = chr(0x116)
-    human_a = chr(0x117)
-    human_b = chr(0x118)
-    human_c = chr(0x119)
-    elf_a = chr(0x11A)
-    elf_b = chr(0x11B)
-    elf_c = chr(0x11C)
-    dwarf_a = chr(0x11D)
-    dwarf_b = chr(0x11E)
-    dwarf_c = chr(0x11F)
+    GILITH = chr(0x100)
+    GISLAN = chr(0x101)
+    GWAIGILION = chr(0x102)
+    LARRAKA = chr(0x103)
+    LINFALAS = chr(0x104)
+    LORD_DIL = chr(0x105)
+    MAYTWIST = chr(0x106)
+    PALADIN_GLADE = chr(0x107)
+    RAMAN = chr(0x108)
+    SLIGGOTH = chr(0x109)
+    STEPHEN_PALADIN = chr(0x10A)
+    THEREGOND = chr(0x10B)
+    WELDRON = chr(0x10C)
+    WENDOLYN = chr(0x10D)
+    ZURIK = chr(0x10E)
+    ZARETH = chr(0x10F)
+    ALRIC = chr(0x110)
+    CURVENOL = chr(0x111)
+    DALMILANDRIL = chr(0x112)
+    DIERDRA = chr(0x113)
+    EODRED = chr(0x114)
+    GERUDIRR = chr(0x115)
+    ALMURIC = chr(0x116)
+    HUMAN_A = chr(0x117)
+    HUMAN_B = chr(0x118)
+    HUMAN_C = chr(0x119)
+    ELF_A = chr(0x11A)
+    ELF_B = chr(0x11B)
+    ELF_C = chr(0x11C)
+    DWARF_A = chr(0x11D)
+    DWARF_B = chr(0x11E)
+    DWARF_C = chr(0x11F)

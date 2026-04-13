@@ -1,8 +1,14 @@
-"""Module for managing party of characters in the game."""
+"""Module for managing party of characters in the game_gui."""
 
 from citadel_of_blood.engine.heroes import Hero, Initiate
 from citadel_of_blood.engine.monsters import Monster
-from citadel_of_blood.engine.types import MAX_CHARACTERS_IN_RANK, MIN_RANK, Character, PartyPosition, PartyRank
+from citadel_of_blood.engine.types import (
+    MAX_CHARACTERS_IN_RANK,
+    MIN_RANK,
+    Character,
+    PartyPosition,
+    PartyRank,
+)
 from citadel_of_blood.errors.engine_errors import (
     CharacterAlreadyInPartyError,
     CharacterNotInPartyError,
@@ -73,7 +79,9 @@ class Party(list):
             InvalidPartyCharacterError: If the character is not of a valid type
 
         """
-        if character is not None and not isinstance(character, Hero | Initiate | Monster):
+        if character is not None and not isinstance(
+            character, Hero | Initiate | Monster
+        ):
             raise InvalidPartyCharacterError()
 
     def calculate_linear_index(self, x_pos: int, y_pos: int) -> int:
@@ -99,7 +107,10 @@ class Party(list):
             Tuple of (x_pos, y_pos) coordinates
 
         """
-        return linear_index % MAX_CHARACTERS_IN_RANK, linear_index // MAX_CHARACTERS_IN_RANK
+        return (
+            linear_index % MAX_CHARACTERS_IN_RANK,
+            linear_index // MAX_CHARACTERS_IN_RANK,
+        )
 
     def add_character(self, character: Character | None) -> None:
         """Add a character to the next available position.
@@ -165,7 +176,9 @@ class Party(list):
             raise CharacterNotInPartyError()
         return self.calculate_position(self.index(character))
 
-    def add_character_at(self, character: Character | None, x_pos: int, y_pos: int) -> None:
+    def add_character_at(
+        self, character: Character | None, x_pos: int, y_pos: int
+    ) -> None:
         """Place a character at a specific position.
 
         If the position is beyond the current party size, the party will be

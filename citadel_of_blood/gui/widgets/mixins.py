@@ -56,7 +56,10 @@ class ClickableMixin(abc.ABC):
                 if self.rect.collidepoint(event.pos):
                     self.on_mouse_down()
                     self.state = WidgetStateEnum.MOUSE_DOWN
-            elif event.type == pygame.MOUSEBUTTONUP and self.state == WidgetStateEnum.MOUSE_DOWN:
+            elif (
+                event.type == pygame.MOUSEBUTTONUP
+                and self.state == WidgetStateEnum.MOUSE_DOWN
+            ):
                 self.on_mouse_up()
                 if self.rect.collidepoint(event.pos):
                     self.on_click()
@@ -110,15 +113,19 @@ class PanelRendererMixin:
     _ASSETS: dict[str, pygame.Surface] = {}
 
     def init_panel_renderer(self: Any, pattern: int) -> None:
-        """Initialize panel rendering assets and calculate layout based on size and pattern."""
+        """Initialize panel rendering assets and calculate layout based on size and pattern."""  # noqa: E501
         if pattern not in (0, 1, 2):
-            raise PanelRendererError("invalid_pattern", f"Pattern {pattern} is not supported.")
+            raise PanelRendererError(
+                "invalid_pattern", f"Pattern {pattern} is not supported."
+            )
         self.pattern = f"p{pattern}"
 
         # Load assets only once
         if not PanelRendererMixin._ASSETS:
             for key, path in PanelRendererMixin._ASSET_PATHS.items():
-                PanelRendererMixin._ASSETS[key] = load_pygame_image(str(path)).convert_alpha()
+                PanelRendererMixin._ASSETS[key] = load_pygame_image(
+                    str(path)
+                ).convert_alpha()
 
         # Cache surfaces and dimensions
         self._pattern_surface = PanelRendererMixin._ASSETS[self.pattern]
@@ -132,7 +139,9 @@ class PanelRendererMixin:
     def render_panel(self) -> None:
         """Render the panel onto its surface."""
         # Calculate panel rectangle and pattern position for current size
-        self._panel_rect = pygame.Rect(self.x, self.y, self.width, self.height - self._pattern_height // 2)
+        self._panel_rect = pygame.Rect(
+            self.x, self.y, self.width, self.height - self._pattern_height // 2
+        )
         self._pattern_x = self.x + (self.width - self._pattern_width) // 2
         self._pattern_y = self.y
         # Clear the surface
@@ -153,7 +162,9 @@ class PanelRendererMixin:
 
         # Calculate border positions
         top_y = self._panel_rect.y + self._pattern_height // 4
-        bottom_y = self._panel_rect.y + self._panel_rect.height + self._line_left_height * 2
+        bottom_y = (
+            self._panel_rect.y + self._panel_rect.height + self._line_left_height * 2
+        )
         left_x = self._panel_rect.x
         right_x = self._panel_rect.x + self._panel_rect.width - self._line_right_width
 
